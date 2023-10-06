@@ -1,0 +1,21 @@
+### General
+.gradle
+local.properties
+build/
+**/build
+**/*.db
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.hprof
+out/
+
+### iOS Xcode generated ###
+iOSDemoApp/iOSDemoApp.xcodeproj/*
+!iOSDemoApp/iOSDemoApp.xcodeproj/project.pbxproj
+
+### Mac OS ###
+.DS_Store
