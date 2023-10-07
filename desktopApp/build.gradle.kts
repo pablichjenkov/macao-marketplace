@@ -16,6 +16,7 @@ kotlin {
                 implementation(compose.desktop.currentOs)
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             }
         }
     }
@@ -23,7 +24,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.pablichj.incubator.amadeus.demo.MainKt"
+        mainClass = "com.macaosoftware.sdui.app.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "Amadeus Demo"

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
@@ -6,9 +8,11 @@ plugins {
 kotlin {
     js(IR) {
         browser {
-            commonWebpackConfig {
-                outputFileName = "amadeus-demo-app.js"
-            }
+            commonWebpackConfig(
+                Action<KotlinWebpackConfig> {
+                    outputFileName = "sdui-demo-app.js"
+                }
+            )
         }
         binaries.executable()
     }
