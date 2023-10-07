@@ -128,18 +128,20 @@ kotlin {
     }
 */
     sourceSets {
-        val ktorVersion = "2.3.4"
+        val ktorVersion = "2.3.5"
         // COMMON
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+
+                // ktor
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-                implementation ("ch.qos.logback:logback-classic:1.3.5")
+                implementation ("ch.qos.logback:logback-classic:1.4.6")
             }
         }
         val commonTest by getting {

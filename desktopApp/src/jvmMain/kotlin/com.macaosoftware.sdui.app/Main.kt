@@ -1,4 +1,4 @@
-package com.pablichj.incubator.amadeus.demo
+package com.macaosoftware.sdui.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,15 +34,43 @@ import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.addJsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.putJsonArray
 import kotlin.system.exitProcess
 
 fun main() {
+
+    val componentsJsonRepresentation= buildJsonObject {
+        put(
+            SduiConstants.JsonKeyName.componentType,
+            JsonPrimitive(SduiConstants.ComponentType.AppBottomNavigation)
+        )
+        putJsonArray(SduiConstants.JsonKeyName.children) {
+            addJsonObject {
+                put(
+                    SduiConstants.JsonKeyName.componentType,
+                    JsonPrimitive(SduiConstants.ComponentType.HotelDemoComponent)
+                )
+            }
+            addJsonObject {
+                put(
+                    SduiConstants.JsonKeyName.componentType,
+                    JsonPrimitive(SduiConstants.ComponentType.AirportDemoComponent)
+                )
+            }
+        }
+    }
+
     val windowState = WindowState(size = DpSize(500.dp, 800.dp))
 
     val database = runBlocking { createDatabase(DriverFactory()) }
 
     val navBarComponent = BottomNavigationComponent(
         viewModelFactory = AppBottomNavigationViewModelFactory(
+            sduiHandler = AppBottomSduiHandler(componentsJsonRepresentation),
             database = database,
             BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                 dispatcher = Dispatchers.Main
