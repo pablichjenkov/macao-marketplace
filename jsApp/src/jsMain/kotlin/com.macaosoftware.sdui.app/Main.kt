@@ -7,17 +7,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.component.BrowserComponentRender
-import com.macaosoftware.component.navbar.BottomNavigationComponent
-import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.platform.JsBridge
-import com.macaosoftware.sdui.app.AppBottomSduiHandler
-import com.macaosoftware.sdui.app.SduiService
+import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.SharedKoinContext
 import com.pablichj.incubator.amadeus.Database
-import com.macaosoftware.sdui.app.viewmodel.factory.AppBottomNavigationViewModelFactory
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
-import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skiko.wasm.onWasmReady
 import org.koin.dsl.module
 
@@ -25,7 +20,8 @@ import org.koin.dsl.module
 fun main() {
     onWasmReady {
 
-        val rootComponentJson = SduiService().getRootJson()
+        val rootComponentJson = SduiRemoteService.getRootJson()
+        val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
         val jsBridge = JsBridge()
 
         CanvasBasedWindow("Amadeus API Demo") {
@@ -38,27 +34,15 @@ fun main() {
                 Text("Loading SQDelight Success")
 
                 // Init Koin after getting the database instance
-                val storageModule = module { single <Database> { databaseCopy } }
+                val storageModule = module { single<Database> { databaseCopy } }
                 /*startKoin {
                     modules(storageModule)
                 }*/
                 SharedKoinContext.initKoin(
                     listOf(storageModule)
                 )
-                val navBarComponent = remember {
-                    BottomNavigationComponent(
-                        viewModelFactory = AppBottomNavigationViewModelFactory(
-                            sduiHandler = AppBottomSduiHandler(rootComponentJson),
-                            database = databaseCopy,
-                            bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
-                                dispatcher = Dispatchers.Main
-                            )
-                        ),
-                        content = BottomNavigationComponentDefaults.BottomNavigationComponentView
-                    )
-                }
                 BrowserComponentRender(
-                    rootComponent = navBarComponent,
+                    rootComponent = rootComponent,
                     jsBridge = jsBridge,
                     onBackPress = {
                         println("Back press dispatched in root node")
