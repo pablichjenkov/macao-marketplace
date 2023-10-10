@@ -1,11 +1,11 @@
-package com.pablichj.incubator.amadeus.demo.viewmodel.factory
+package com.macaosoftware.sdui.app.viewmodel.factory
 
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentViewModelFactory
 import com.macaosoftware.component.navbar.BottomNavigationStatePresenterDefault
 import com.macaosoftware.sdui.app.AppBottomSduiHandler
 import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.demo.viewmodel.AppBottomNavigationViewModel
+import com.macaosoftware.sdui.app.viewmodel.AppBottomNavigationViewModel
 
 class AppBottomNavigationViewModelFactory(
     private val sduiHandler: AppBottomSduiHandler,
@@ -18,7 +18,6 @@ class AppBottomNavigationViewModelFactory(
     ): AppBottomNavigationViewModel {
         return AppBottomNavigationViewModel(
             sduiHandler = sduiHandler,
-            database = database,
             bottomNavigationComponent = bottomNavigationComponent,
             bottomNavigationStatePresenter = bottomNavigationStatePresenter
         )

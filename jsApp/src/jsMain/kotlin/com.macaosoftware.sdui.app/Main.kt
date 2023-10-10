@@ -1,4 +1,4 @@
-package com.pablichj.incubator.amadeus.demo
+package com.macaosoftware.sdui.app
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
@@ -10,33 +10,47 @@ import com.macaosoftware.component.BrowserComponentRender
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.platform.JsBridge
+import com.macaosoftware.sdui.app.AppBottomSduiHandler
+import com.macaosoftware.sdui.app.SduiService
+import com.macaosoftware.sdui.app.di.SharedKoinContext
 import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.demo.viewmodel.factory.AppBottomNavigationViewModelFactory
+import com.macaosoftware.sdui.app.viewmodel.factory.AppBottomNavigationViewModelFactory
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skiko.wasm.onWasmReady
+import org.koin.dsl.module
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
 
+        val rootComponentJson = SduiService().getRootJson()
         val jsBridge = JsBridge()
 
         CanvasBasedWindow("Amadeus API Demo") {
             Text("Loading SQDelight")
             val database = remember(Unit) { mutableStateOf<Database?>(null) }
-
             val databaseCopy = database.value
 
             if (databaseCopy != null) {
                 println("JS_Main::onWasmReady databaseCopy != null")
                 Text("Loading SQDelight Success")
+
+                // Init Koin after getting the database instance
+                val storageModule = module { single <Database> { databaseCopy } }
+                /*startKoin {
+                    modules(storageModule)
+                }*/
+                SharedKoinContext.initKoin(
+                    listOf(storageModule)
+                )
                 val navBarComponent = remember {
                     BottomNavigationComponent(
                         viewModelFactory = AppBottomNavigationViewModelFactory(
+                            sduiHandler = AppBottomSduiHandler(rootComponentJson),
                             database = databaseCopy,
-                            BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
+                            bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                                 dispatcher = Dispatchers.Main
                             )
                         ),
@@ -61,29 +75,5 @@ fun main() {
 
         }
 
-        /*
-                BrowserViewportWindow("Amadeus API Demo") {
-                    val database = remember(key1 = Unit) { mutableStateOf<Database?>(null) }
-                    val databaseCopy = database.value
-
-                    if (databaseCopy != null) {
-                        val hotelDemoComponent = TreeBuilder.getRootComponent(databaseCopy)
-
-                        BrowserComponentRender(
-                            rootComponent = hotelDemoComponent,
-                            onBackPress = {
-                                println("Back press dispatched in root node")
-                            }
-                        )
-
-                    } else {
-                        Text("Loading SQDelight")
-                    }
-                    LaunchedEffect(key1 = Unit) {
-                        database.value = createDatabase(DriverFactory())
-                    }
-                }
-        */
     }
 }
-

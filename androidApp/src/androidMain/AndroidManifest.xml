@@ -10,7 +10,7 @@
         android:theme="@style/Theme.Widget">
         <activity
             android:exported="true"
-            android:name=".MainActivity">
+            android:name="com.macaosoftware.sdui.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

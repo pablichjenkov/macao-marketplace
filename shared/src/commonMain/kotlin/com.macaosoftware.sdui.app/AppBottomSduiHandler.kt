@@ -1,13 +1,6 @@
 package com.macaosoftware.sdui.app
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem
-import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.demo.AirportDemoComponent
-import com.pablichj.incubator.amadeus.demo.HotelDemoComponent
 import kotlinx.coroutines.delay
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -17,9 +10,9 @@ class AppBottomSduiHandler(
     private val jsonObject: JsonObject
 ) {
 
-    suspend fun loadNavItems(
-        database: Database
-    ): MutableList<NavItem> {
+    private val sduiService = SduiService()
+
+    suspend fun loadNavItems(): MutableList<NavItem> {
         delay(3000)
 
         val children = jsonObject.get(
@@ -34,27 +27,9 @@ class AppBottomSduiHandler(
                     .getValue(SduiConstants.JsonKeyName.componentType)
                     .jsonPrimitive
                     .content
-            when (childComponentType) {
-                SduiConstants.ComponentType.AirportDemoComponent -> {
-                    navItems.add(
-                        NavItem(
-                            label = "Hotel",
-                            component = HotelDemoComponent(database),
-                            icon = Icons.Default.Home
-                        )
-                    )
-                }
-                SduiConstants.ComponentType.HotelDemoComponent -> {
-                    navItems.add(
-                        NavItem(
-                            label = "Air",
-                            component = AirportDemoComponent(database),
-                            icon = Icons.Default.Search
-                        )
-                    )
-                }
-                else -> {}
-            }
+            navItems.add(
+                sduiService.getNavItemOf(childComponentType)
+            )
         }
 
         return navItems
