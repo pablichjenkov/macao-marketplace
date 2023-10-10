@@ -7,13 +7,13 @@ plugins {
 
 kotlin {
     js(IR) {
-        browser {
+        browser() /*{ // todo: report error when uncommenting the block bellow
             commonWebpackConfig(
                 Action<KotlinWebpackConfig> {
                     outputFileName = "sdui-demo-app.js"
                 }
             )
-        }
+        }*/
         binaries.executable()
     }
     sourceSets {
@@ -27,6 +27,8 @@ kotlin {
                 implementation(project(":amadeus-api"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+                implementation("io.insert-koin:koin-core:3.5.0")
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
                 implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
                 implementation(npm("sql.js", "1.8.0"))

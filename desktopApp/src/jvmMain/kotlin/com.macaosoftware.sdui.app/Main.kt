@@ -29,7 +29,9 @@ import com.macaosoftware.component.DesktopComponentRender
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.platform.DesktopBridge
-import com.pablichj.incubator.amadeus.demo.viewmodel.factory.AppBottomNavigationViewModelFactory
+import com.macaosoftware.sdui.app.di.SharedKoinContext
+import com.macaosoftware.sdui.app.viewmodel.factory.AppBottomNavigationViewModelFactory
+import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.Dispatchers
@@ -39,40 +41,32 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.addJsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.putJsonArray
+import org.koin.core.context.startKoin
+import org.koin.dsl.koinApplication
+import org.koin.dsl.module
 import kotlin.system.exitProcess
 
 fun main() {
 
-    val componentsJsonRepresentation= buildJsonObject {
-        put(
-            SduiConstants.JsonKeyName.componentType,
-            JsonPrimitive(SduiConstants.ComponentType.AppBottomNavigation)
-        )
-        putJsonArray(SduiConstants.JsonKeyName.children) {
-            addJsonObject {
-                put(
-                    SduiConstants.JsonKeyName.componentType,
-                    JsonPrimitive(SduiConstants.ComponentType.HotelDemoComponent)
-                )
-            }
-            addJsonObject {
-                put(
-                    SduiConstants.JsonKeyName.componentType,
-                    JsonPrimitive(SduiConstants.ComponentType.AirportDemoComponent)
-                )
-            }
-        }
-    }
+    val rootComponentJson = SduiService().getRootJson()
 
     val windowState = WindowState(size = DpSize(500.dp, 800.dp))
 
     val database = runBlocking { createDatabase(DriverFactory()) }
 
+    val storageModule = module { single <Database> { database } }
+    /*startKoin {
+        modules(storageModule)
+    }*/
+    SharedKoinContext.initKoin(
+        listOf(storageModule)
+    )
+
     val navBarComponent = BottomNavigationComponent(
         viewModelFactory = AppBottomNavigationViewModelFactory(
-            sduiHandler = AppBottomSduiHandler(componentsJsonRepresentation),
+            sduiHandler = AppBottomSduiHandler(rootComponentJson),
             database = database,
-            BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
+            bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                 dispatcher = Dispatchers.Main
             )
         ),

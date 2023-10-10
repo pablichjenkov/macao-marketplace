@@ -1,4 +1,6 @@
-package com.pablichj.incubator.amadeus.demo
+package com.macaosoftware.sdui.app.data
+
+import com.pablichj.incubator.amadeus.demo.BuildConfig
 
 object ApiCredentials {
     val apiKey = BuildConfig.AMADEUS_API_KEY

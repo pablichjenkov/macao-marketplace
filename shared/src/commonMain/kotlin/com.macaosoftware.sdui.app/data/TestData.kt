@@ -1,4 +1,4 @@
-package com.pablichj.incubator.amadeus.demo
+package com.macaosoftware.sdui.app.data
 
 import com.pablichj.incubator.amadeus.endpoint.booking.hotel.model.*
 import com.pablichj.incubator.amadeus.endpoint.offers.flight.model.FlightOffersRequestBody
