@@ -38,12 +38,6 @@ import kotlin.system.exitProcess
 
 fun main() {
 
-    val rootComponentJson = SduiRemoteService.getRootJson()
-    val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
-
-    val windowState = WindowState(size = DpSize(500.dp, 800.dp))
-    val desktopBridge = DesktopBridge()
-
     val database = runBlocking { createDatabase(DriverFactory()) }
     val storageModule = module { single<Database> { database } }
     /*startKoin {
@@ -52,6 +46,10 @@ fun main() {
     SharedKoinContext.initKoin(
         listOf(storageModule)
     )
+    val windowState = WindowState(size = DpSize(500.dp, 800.dp))
+    val desktopBridge = DesktopBridge()
+    val rootComponentJson = SduiRemoteService.getRootJson()
+    val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
 
     singleWindowApplication(
         title = "Amadeus Desktop Demo",

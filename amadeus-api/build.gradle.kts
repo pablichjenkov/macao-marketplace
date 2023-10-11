@@ -141,7 +141,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
-                implementation ("ch.qos.logback:logback-classic:1.4.6")
             }
         }
         val commonTest by getting {
@@ -165,6 +164,8 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
                 implementation("app.cash.sqldelight:android-driver:2.0.0")
+                // Do not update, latest versions have some issues and no logging is printed
+                implementation("ch.qos.logback:logback-classic:1.3.5")
             }
         }
         val androidUnitTest by getting {
@@ -214,6 +215,7 @@ kotlin {
         // JVM
         val desktopMain by getting {
             dependencies {
+                implementation ("ch.qos.logback:logback-classic:1.4.11")
                 implementation("io.ktor:ktor-client-jvm:$ktorVersion")
                 implementation("io.ktor:ktor-client-java:$ktorVersion")
                 implementation("app.cash.sqldelight:sqlite-driver:2.0.0")

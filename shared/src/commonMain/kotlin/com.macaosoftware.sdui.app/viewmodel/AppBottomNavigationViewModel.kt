@@ -17,7 +17,8 @@ class AppBottomNavigationViewModel(
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    override fun onCreate() {
+    override fun onAttach() {
+        println("AppBottomNavigationViewModel::onAttach()")
         coroutineScope.launch {
             val navItems = sduiHandler.loadNavItems()
             bottomNavigationComponent.setNavItems(
@@ -29,11 +30,14 @@ class AppBottomNavigationViewModel(
     }
 
     override fun onStart() {
+        println("AppBottomNavigationViewModel::onStart()")
     }
 
     override fun onStop() {
+        println("AppBottomNavigationViewModel::onStop()")
     }
 
-    override fun onDestroy() {
+    override fun onDetach() {
+        println("AppBottomNavigationViewModel::onDetach()")
     }
 }
