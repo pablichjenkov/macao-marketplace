@@ -19,11 +19,6 @@ import org.koin.dsl.module
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
-
-        val rootComponentJson = SduiRemoteService.getRootJson()
-        val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
-        val jsBridge = JsBridge()
-
         CanvasBasedWindow("Amadeus API Demo") {
             Text("Loading SQDelight")
             val database = remember(Unit) { mutableStateOf<Database?>(null) }
@@ -41,6 +36,10 @@ fun main() {
                 SharedKoinContext.initKoin(
                     listOf(storageModule)
                 )
+                val rootComponentJson = SduiRemoteService.getRootJson()
+                val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
+                val jsBridge = JsBridge()
+
                 BrowserComponentRender(
                     rootComponent = rootComponent,
                     jsBridge = jsBridge,

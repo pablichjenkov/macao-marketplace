@@ -20,6 +20,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
                 implementation("io.insert-koin:koin-core:3.5.0")
+                implementation("io.github.pablichjenkov:component-toolkit:0.5.10-rc01")
             }
         }
     }

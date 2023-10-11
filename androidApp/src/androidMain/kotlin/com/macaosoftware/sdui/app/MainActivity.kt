@@ -16,10 +16,6 @@ import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
 
-    private val rootComponentJson = SduiRemoteService.getRootJson()
-    private val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
-    private val androidBridge = AndroidBridge()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
@@ -33,6 +29,11 @@ class MainActivity : ComponentActivity() {
             SharedKoinContext.initKoin(
                 listOf(storageModule)
             )
+
+            val rootComponentJson = SduiRemoteService.getRootJson()
+            val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
+            val androidBridge = AndroidBridge()
+
             setContent {
                 AndroidComponentRender(
                     rootComponent = rootComponent,

@@ -28,6 +28,11 @@ class HotelDemoViewModel(
     private val database: Database
 ) : ComponentViewModel() {
 
+    override fun onAttach() {
+        println("HotelDemoViewModel::onAttach()")
+        output("HotelDemoViewModel::onAttach()")
+    }
+
     override fun onStart() {
         println("HotelDemoViewModel::onStart()")
         output("HotelDemoViewModel::onStart()")
@@ -38,9 +43,9 @@ class HotelDemoViewModel(
         output("HotelDemoViewModel::onStop()")
     }
 
-    override fun onDestroy() {
-        println("HotelDemoViewModel::onDestroy()")
-        output("HotelDemoViewModel::onDestroy()")
+    override fun onDetach() {
+        println("HotelDemoViewModel::onDetach()")
+        output("HotelDemoViewModel::onDetach()")
     }
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)

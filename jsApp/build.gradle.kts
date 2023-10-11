@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+// import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     kotlin("multiplatform")
@@ -25,6 +25,7 @@ kotlin {
                 implementation(compose.material3)
                 implementation(project(":shared"))
                 implementation(project(":amadeus-api"))
+                implementation("io.github.pablichjenkov:component-toolkit:0.5.10-rc01")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.7.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")

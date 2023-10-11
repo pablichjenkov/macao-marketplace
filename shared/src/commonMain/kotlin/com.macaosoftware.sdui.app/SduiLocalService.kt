@@ -88,14 +88,14 @@ class SduiLocalService : SharedKoinComponent() {
                 )
             }
 
-            SduiConstants.ComponentType.AirportDemoComponent -> {
+            SduiConstants.ComponentType.HotelDemoComponent -> {
                 StateComponent<HotelDemoViewModel>(
                     viewModelFactory = HotelDemoViewModelFactory(this),
                     content = HotelDemoComponentView
                 )
             }
 
-            SduiConstants.ComponentType.HotelDemoComponent -> {
+            SduiConstants.ComponentType.AirportDemoComponent -> {
                 StateComponent<AirportDemoViewModel>(
                     viewModelFactory = AirportDemoViewModelFactory(this),
                     content = AirportDemoComponentView

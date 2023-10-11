@@ -42,18 +42,24 @@ class AirportDemoViewModel(
     val console = mutableStateOf("")
     private var flightOffers: List<FlightOffer>? = null
 
+    override fun onAttach() {
+        println("AirportDemoComponent::onAttach()")
+        output("AirportDemoComponent::onAttach()")
+    }
+
     override fun onStart() {
-        println("AirportDemoComponent::start()")
-        output("AirportDemoComponent::start()")
+        println("AirportDemoComponent::onStart()")
+        output("AirportDemoComponent::onStart()")
     }
 
     override fun onStop() {
-        println("AirportDemoComponent::stop()")
-        output("AirportDemoComponent::stop()")
+        println("AirportDemoComponent::onStop()")
+        output("AirportDemoComponent::onStop()")
     }
 
-    override fun onDestroy() {
-        TODO("Not yet implemented")
+    override fun onDetach() {
+        println("AirportDemoComponent::onDetach()")
+        output("AirportDemoComponent::onDetach()")
     }
 
     fun getAccessToken() {
