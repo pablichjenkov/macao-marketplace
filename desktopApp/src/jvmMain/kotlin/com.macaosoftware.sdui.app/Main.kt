@@ -28,6 +28,7 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.component.DesktopComponentRender
 import com.macaosoftware.platform.DesktopBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase

@@ -9,6 +9,7 @@ import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.component.BrowserComponentRender
 import com.macaosoftware.platform.JsBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase

@@ -5,6 +5,7 @@ import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.DefaultAppLifecycleDispatcher
 import com.macaosoftware.platform.IosBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase

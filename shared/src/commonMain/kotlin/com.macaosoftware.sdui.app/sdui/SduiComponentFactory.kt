@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app
+package com.macaosoftware.sdui.app.sdui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox

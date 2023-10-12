@@ -4,7 +4,7 @@ import com.macaosoftware.component.core.setNavItems
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentViewModel
 import com.macaosoftware.component.navbar.BottomNavigationStatePresenterDefault
-import com.macaosoftware.sdui.app.AppBottomSduiHandler
+import com.macaosoftware.sdui.app.sdui.AppBottomSduiHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

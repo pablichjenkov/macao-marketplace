@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app
+package com.macaosoftware.sdui.app.sdui
 
 import kotlinx.serialization.json.JsonObject
 
