@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.macaosoftware.component.AndroidComponentRender
 import com.macaosoftware.platform.AndroidBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
