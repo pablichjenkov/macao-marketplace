@@ -9,7 +9,7 @@ import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.sdui.app.di.SharedKoinComponent
+import com.macaosoftware.sdui.app.data.SduiConstants
 import com.macaosoftware.sdui.app.view.AirportDemoComponentView
 import com.macaosoftware.sdui.app.view.HotelDemoComponentView
 import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
@@ -20,8 +20,15 @@ import com.macaosoftware.sdui.app.viewmodel.factory.HotelDemoViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import org.koin.core.Koin
+import org.koin.core.KoinApplication
+import org.koin.core.component.KoinComponent
 
-class SduiLocalService : SharedKoinComponent() {
+class SduiComponentFactory(
+    private val koinApplication: KoinApplication
+) : KoinComponent {
+
+    override fun getKoin(): Koin = koinApplication.koin
 
     fun getNavItemOf(
         componentJson: JsonObject
@@ -79,7 +86,7 @@ class SduiLocalService : SharedKoinComponent() {
             SduiConstants.ComponentType.AppBottomNavigation -> {
                 BottomNavigationComponent(
                     viewModelFactory = AppBottomNavigationViewModelFactory(
-                        sduiHandler = AppBottomSduiHandler(componentJson),
+                        sduiHandler = AppBottomSduiHandler(componentJson, this),
                         bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                             dispatcher = Dispatchers.Main
                         )
