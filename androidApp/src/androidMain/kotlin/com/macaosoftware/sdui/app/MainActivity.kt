@@ -7,11 +7,11 @@ import androidx.lifecycle.lifecycleScope
 import com.macaosoftware.component.AndroidComponentRender
 import com.macaosoftware.platform.AndroidBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
-import com.macaosoftware.sdui.app.di.SharedKoinContext
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.launch
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
@@ -26,12 +26,14 @@ class MainActivity : ComponentActivity() {
             /*startKoin {
                 modules(storageModule)
             }*/
-            SharedKoinContext.initKoin(
-                listOf(storageModule)
-            )
+            val koinRootContainer = koinApplication {
+                printLogger()
+                modules(storageModule)
+            }
+            val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
 
             val rootComponentJson = SduiRemoteService.getRootJson()
-            val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
+            val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
             val androidBridge = AndroidBridge()
 
             setContent {

@@ -28,11 +28,11 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.component.DesktopComponentRender
 import com.macaosoftware.platform.DesktopBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
-import com.macaosoftware.sdui.app.di.SharedKoinContext
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.runBlocking
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import kotlin.system.exitProcess
 
@@ -40,16 +40,15 @@ fun main() {
 
     val database = runBlocking { createDatabase(DriverFactory()) }
     val storageModule = module { single<Database> { database } }
-    /*startKoin {
+    val koinRootContainer = koinApplication {
+        printLogger()
         modules(storageModule)
-    }*/
-    SharedKoinContext.initKoin(
-        listOf(storageModule)
-    )
+    }
+    val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
     val windowState = WindowState(size = DpSize(500.dp, 800.dp))
     val desktopBridge = DesktopBridge()
     val rootComponentJson = SduiRemoteService.getRootJson()
-    val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
+    val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
 
     singleWindowApplication(
         title = "Amadeus Desktop Demo",

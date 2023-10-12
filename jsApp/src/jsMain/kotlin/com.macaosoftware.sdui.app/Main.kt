@@ -9,11 +9,11 @@ import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.component.BrowserComponentRender
 import com.macaosoftware.platform.JsBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
-import com.macaosoftware.sdui.app.di.SharedKoinContext
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import org.jetbrains.skiko.wasm.onWasmReady
+import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -30,14 +30,13 @@ fun main() {
 
                 // Init Koin after getting the database instance
                 val storageModule = module { single<Database> { databaseCopy } }
-                /*startKoin {
+                val koinRootContainer = koinApplication {
+                    printLogger()
                     modules(storageModule)
-                }*/
-                SharedKoinContext.initKoin(
-                    listOf(storageModule)
-                )
+                }
+                val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
                 val rootComponentJson = SduiRemoteService.getRootJson()
-                val rootComponent = SduiLocalService().getComponentInstanceOf(rootComponentJson)
+                val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
                 val jsBridge = JsBridge()
 
                 BrowserComponentRender(
