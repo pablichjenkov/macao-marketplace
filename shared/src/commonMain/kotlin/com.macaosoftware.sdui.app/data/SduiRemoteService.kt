@@ -7,10 +7,13 @@ import kotlinx.serialization.json.putJsonArray
 
 object SduiRemoteService {
 
+    //const val RootComponent = SduiConstants.ComponentType.BottomNavigation
+    const val RootComponent = SduiConstants.ComponentType.Drawer
+
     fun getRootJson() = buildJsonObject {
         put(
             SduiConstants.JsonKeyName.componentType,
-            JsonPrimitive(SduiConstants.ComponentType.AppBottomNavigation)
+            JsonPrimitive(RootComponent)
         )
         putJsonArray(SduiConstants.JsonKeyName.children) {
             addJsonObject {

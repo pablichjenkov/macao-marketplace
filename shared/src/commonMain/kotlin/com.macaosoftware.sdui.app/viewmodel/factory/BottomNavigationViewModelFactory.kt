@@ -3,18 +3,18 @@ package com.macaosoftware.sdui.app.viewmodel.factory
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentViewModelFactory
 import com.macaosoftware.component.navbar.BottomNavigationStatePresenterDefault
-import com.macaosoftware.sdui.app.sdui.AppBottomSduiHandler
-import com.macaosoftware.sdui.app.viewmodel.AppBottomNavigationViewModel
+import com.macaosoftware.sdui.app.sdui.BottomNavigationSduiHandler
+import com.macaosoftware.sdui.app.viewmodel.BottomNavigationViewModel
 
-class AppBottomNavigationViewModelFactory(
-    private val sduiHandler: AppBottomSduiHandler,
+class BottomNavigationViewModelFactory(
+    private val sduiHandler: BottomNavigationSduiHandler,
     private val bottomNavigationStatePresenter: BottomNavigationStatePresenterDefault
-) : BottomNavigationComponentViewModelFactory<AppBottomNavigationViewModel> {
+) : BottomNavigationComponentViewModelFactory<BottomNavigationViewModel> {
 
     override fun create(
-        bottomNavigationComponent: BottomNavigationComponent<AppBottomNavigationViewModel>
-    ): AppBottomNavigationViewModel {
-        return AppBottomNavigationViewModel(
+        bottomNavigationComponent: BottomNavigationComponent<BottomNavigationViewModel>
+    ): BottomNavigationViewModel {
+        return BottomNavigationViewModel(
             sduiHandler = sduiHandler,
             bottomNavigationComponent = bottomNavigationComponent,
             bottomNavigationStatePresenter = bottomNavigationStatePresenter
