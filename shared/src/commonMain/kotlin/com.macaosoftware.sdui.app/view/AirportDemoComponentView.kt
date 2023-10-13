@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
 
@@ -29,6 +30,7 @@ val AirportDemoComponentView: @Composable StateComponent<AirportDemoViewModel>.(
 ) -> Unit = { modifier: Modifier,
               viewModel: AirportDemoViewModel ->
 
+    BackPressHandler()
     AirportDemoView(modifier, viewModel)
 }
 

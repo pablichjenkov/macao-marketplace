@@ -6,6 +6,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem
+import com.macaosoftware.component.drawer.DrawerComponent
+import com.macaosoftware.component.drawer.DrawerComponentDefaults
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
@@ -15,7 +17,8 @@ import com.macaosoftware.sdui.app.view.HotelDemoComponentView
 import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
 import com.macaosoftware.sdui.app.viewmodel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.viewmodel.factory.AirportDemoViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.AppBottomNavigationViewModelFactory
+import com.macaosoftware.sdui.app.viewmodel.factory.BottomNavigationViewModelFactory
+import com.macaosoftware.sdui.app.viewmodel.factory.DrawerViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.HotelDemoViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
@@ -41,7 +44,7 @@ class SduiComponentFactory(
 
         return when (childComponentType) {
 
-            SduiConstants.ComponentType.AppBottomNavigation -> {
+            SduiConstants.ComponentType.BottomNavigation -> {
                 NavItem(
                     label = "AppBottomNavigation",
                     component = getComponentInstanceOf(componentJson),
@@ -83,10 +86,22 @@ class SduiComponentFactory(
 
         return when (componentType) {
 
-            SduiConstants.ComponentType.AppBottomNavigation -> {
+            SduiConstants.ComponentType.Drawer -> {
+                DrawerComponent(
+                    viewModelFactory = DrawerViewModelFactory(
+                        sduiHandler = DrawerSduiHandler(componentJson, this),
+                        drawerStatePresenter = DrawerComponentDefaults.createDrawerStatePresenter(
+                            dispatcher = Dispatchers.Main
+                        )
+                    ),
+                    content = DrawerComponentDefaults.DrawerComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.BottomNavigation -> {
                 BottomNavigationComponent(
-                    viewModelFactory = AppBottomNavigationViewModelFactory(
-                        sduiHandler = AppBottomSduiHandler(componentJson, this),
+                    viewModelFactory = BottomNavigationViewModelFactory(
+                        sduiHandler = BottomNavigationSduiHandler(componentJson, this),
                         bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                             dispatcher = Dispatchers.Main
                         )

@@ -4,21 +4,21 @@ import com.macaosoftware.component.core.setNavItems
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentViewModel
 import com.macaosoftware.component.navbar.BottomNavigationStatePresenterDefault
-import com.macaosoftware.sdui.app.sdui.AppBottomSduiHandler
+import com.macaosoftware.sdui.app.sdui.BottomNavigationSduiHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AppBottomNavigationViewModel(
-    private val sduiHandler: AppBottomSduiHandler,
-    bottomNavigationComponent: BottomNavigationComponent<AppBottomNavigationViewModel>,
+class BottomNavigationViewModel(
+    private val sduiHandler: BottomNavigationSduiHandler,
+    bottomNavigationComponent: BottomNavigationComponent<BottomNavigationViewModel>,
     override val bottomNavigationStatePresenter: BottomNavigationStatePresenterDefault,
 ) : BottomNavigationComponentViewModel(bottomNavigationComponent) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onAttach() {
-        println("AppBottomNavigationViewModel::onAttach()")
+        println("BottomNavigationViewModel::onAttach()")
         coroutineScope.launch {
             val navItems = sduiHandler.loadNavItems()
             bottomNavigationComponent.setNavItems(
@@ -30,14 +30,14 @@ class AppBottomNavigationViewModel(
     }
 
     override fun onStart() {
-        println("AppBottomNavigationViewModel::onStart()")
+        println("BottomNavigationViewModel::onStart()")
     }
 
     override fun onStop() {
-        println("AppBottomNavigationViewModel::onStop()")
+        println("BottomNavigationViewModel::onStop()")
     }
 
     override fun onDetach() {
-        println("AppBottomNavigationViewModel::onDetach()")
+        println("BottomNavigationViewModel::onDetach()")
     }
 }
