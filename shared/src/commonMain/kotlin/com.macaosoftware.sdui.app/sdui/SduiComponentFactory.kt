@@ -46,7 +46,7 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.BottomNavigation -> {
                 NavItem(
-                    label = "AppBottomNavigation",
+                    label = SduiConstants.ComponentType.BottomNavigation,
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.AccountBox
                 )

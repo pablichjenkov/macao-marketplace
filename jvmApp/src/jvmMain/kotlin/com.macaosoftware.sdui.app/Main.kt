@@ -17,6 +17,12 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,13 +32,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.component.DesktopComponentRender
+import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.DesktopBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import kotlin.system.exitProcess
@@ -48,14 +60,18 @@ fun main() {
     val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
     val windowState = WindowState(size = DpSize(500.dp, 800.dp))
     val desktopBridge = DesktopBridge()
-    val rootComponentJson = SduiRemoteService.getRootJson()
-    val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
+    //val rootComponentJson = SduiRemoteService.getRootJson()
+    //val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
 
     singleWindowApplication(
         title = "Amadeus Desktop Demo",
         state = windowState,
         undecorated = true
     ) {
+
+        val coroutineScope = rememberCoroutineScope()
+        var rootComponent by remember(key1 = this) { mutableStateOf<Component?>(null) }
+
         MaterialTheme {
             Column {
                 WindowDraggableArea {
@@ -99,7 +115,15 @@ fun main() {
                             )
                         }
                         Row(
-                            modifier = Modifier.align(Alignment.CenterEnd),
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        val rootComponentJson = SduiRemoteService.getRemoteRootComponent() as JsonObject
+                                        println("Sample Json = $rootComponentJson")
+                                        rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
+                                    }
+                                },
                             horizontalArrangement = Arrangement.End,
                         ) {
                             Icon(
@@ -111,11 +135,14 @@ fun main() {
 
                     }
                 }
-                DesktopComponentRender(
-                    rootComponent = rootComponent,
-                    windowState = windowState,
-                    desktopBridge = desktopBridge
-                )
+                rootComponent?.let {
+                    DesktopComponentRender(
+                        rootComponent = it,
+                        windowState = windowState,
+                        desktopBridge = desktopBridge,
+                        onBackPress = {}
+                    )
+                }
             }
         }
     }

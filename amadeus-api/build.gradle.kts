@@ -119,7 +119,7 @@ kotlin {
     }
 
     // JVM
-    jvm("desktop")
+    jvm()
 
     /*sourceSets.forEach {
         it.dependencies {
@@ -213,7 +213,7 @@ kotlin {
         }
 
         // JVM
-        val desktopMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation ("ch.qos.logback:logback-classic:1.4.11")
                 implementation("io.ktor:ktor-client-jvm:$ktorVersion")
