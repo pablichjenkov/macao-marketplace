@@ -33,7 +33,7 @@ include(":amadeus-api")
 include(":shared")
 include(":androidApp")
 include(":jsApp")
-include(":desktopApp")
+include(":jvmApp")
 
 //include(":component")
 //project(":component").projectDir = File("../component/component")

@@ -12,6 +12,7 @@ import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
             }
             val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
 
-            val rootComponentJson = SduiRemoteService.getRootJson()
+            val rootComponentJson = SduiRemoteService.getRemoteRootComponent() as JsonObject
             val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
             val androidBridge = AndroidBridge()
 
