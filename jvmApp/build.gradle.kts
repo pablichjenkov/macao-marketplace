@@ -8,18 +8,16 @@ plugins {
 kotlin {
     jvm()
     sourceSets {
-        val jvmMain by getting  {
-            dependencies {
-                implementation(project(":amadeus-api"))
-                implementation(project(":shared"))
-                implementation(compose.desktop.common)
-                implementation(compose.desktop.currentOs)
-                implementation("io.github.pablichjenkov:component-toolkit:0.5.10-rc01")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-                implementation("io.insert-koin:koin-core:3.5.0")
-            }
+        jvmMain.dependencies {
+            implementation(project(":amadeus-api"))
+            implementation(project(":shared"))
+            implementation(compose.desktop.common)
+            implementation(compose.desktop.currentOs)
+            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            implementation("io.insert-koin:koin-core:3.5.0")
         }
     }
 }

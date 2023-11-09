@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-import AmadeusDemoKt
+import MacaoSuiDemoKt
 
 struct ComposeView : UIViewControllerRepresentable {
 
@@ -9,9 +9,12 @@ struct ComposeView : UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let amadeusDemoRootComponent = BindingsKt.getSduiRootComponent()
 
-        let mainViewController = BindingsKt.ComponentRenderer(
+        let mainViewController = BindingsKt.buildDemoViewController(
             rootComponent: amadeusDemoRootComponent,
-            iosBridge: iosBridge
+            iosBridge: iosBridge,
+            onBackPress: {
+                exit(0)
+            }
         )
 
         return mainViewController

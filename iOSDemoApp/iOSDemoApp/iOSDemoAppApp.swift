@@ -1,5 +1,5 @@
 import SwiftUI
-import AmadeusDemoKt
+import MacaoSuiDemoKt
 
 @main
 struct iOSDemoAppApp: App {

@@ -1,5 +1,6 @@
 package com.macaosoftware.sdui.app
 
+import androidx.compose.ui.window.ComposeUIViewController
 import com.macaosoftware.component.IosComponentRender
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.DefaultAppLifecycleDispatcher
@@ -14,10 +15,14 @@ import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import platform.UIKit.UIViewController
 
-fun ComponentRenderer(
+fun buildDemoViewController(
     rootComponent: Component,
-    iosBridge: IosBridge
-): UIViewController = IosComponentRender(rootComponent, iosBridge)
+    iosBridge: IosBridge,
+    onBackPress: () -> Unit = {}
+): UIViewController = ComposeUIViewController {
+    // DemoMainView(iosBridge, onBackPress)
+    IosComponentRender(rootComponent, iosBridge, onBackPress)
+}
 
 fun getSduiRootComponent(): Component = runBlocking {
 

@@ -45,8 +45,8 @@ object SduiRemoteService {
     }
 
     suspend fun getRemoteRootComponent(): JsonElement {
-        //val resp = httpClient.get("https://ktor-gae-401000.appspot.com/")
-        val resp = httpClient.get("http://localhost:8080/macao-demo.json")
+        val resp = httpClient.get("https://ktor-gae-401000.appspot.com/customer-project/123")
+        // val resp = httpClient.get("http://localhost:8080/macao-demo.json")
         val bodyText = resp.bodyAsText(Charset.forName("UTF-8"))
         println("status = ${resp.status}")
         println("bodyText = $bodyText")
