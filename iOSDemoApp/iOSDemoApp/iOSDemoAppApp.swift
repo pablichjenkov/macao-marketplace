@@ -6,8 +6,8 @@ struct iOSDemoAppApp: App {
 
     let iosBridge = BindingsKt.createPlatformBridge()
        
-       init() {
-       }
+    init() {
+    }
        
        var body: some Scene {
            WindowGroup {

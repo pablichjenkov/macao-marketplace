@@ -12,8 +12,6 @@ abstract class JsonObjectHandler(
     private val sduiComponentFactory: SduiComponentFactory
 ) {
     suspend fun loadChildren(): List<Component> {
-        delay(3000)
-
         val children = jsonObject.get(
             SduiConstants.JsonKeyName.children
         ) as JsonArray
@@ -24,8 +22,6 @@ abstract class JsonObjectHandler(
     }
 
     suspend fun loadNavItems(): List<NavItem> {
-        delay(3000)
-
         val children = jsonObject.get(
             SduiConstants.JsonKeyName.children
         ) as JsonArray
