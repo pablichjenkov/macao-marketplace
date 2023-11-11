@@ -1,26 +1,21 @@
 package com.macaosoftware.sdui.app.data
 
-import com.macaosoftware.sdui.app.network.httpClient
-import com.pablichj.incubator.amadeus.endpoint.airport.AirportAndCitySearchUseCase
+import com.macaosoftware.sdui.app.domain.MacaoApiError
+import com.macaosoftware.sdui.app.http.httpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import io.ktor.utils.io.charsets.Charset
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
+import io.ktor.http.isSuccess
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.addJsonObject
 import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.internal.decodeStringToJsonTree
 import kotlinx.serialization.json.putJsonArray
 
 object SduiRemoteService {
 
-    //const val RootComponent = SduiConstants.ComponentType.BottomNavigation
+    // const val RootComponent = SduiConstants.ComponentType.BottomNavigation
     const val RootComponent = SduiConstants.ComponentType.Drawer
 
     fun getRootJson() = buildJsonObject {
@@ -44,25 +39,27 @@ object SduiRemoteService {
         }
     }
 
-    suspend fun getRemoteRootComponent(): JsonElement {
-        val resp = httpClient.get("https://ktor-gae-401000.appspot.com/customer-project/123")
-        // val resp = httpClient.get("http://localhost:8080/macao-demo.json")
-        val bodyText = resp.bodyAsText(Charset.forName("UTF-8"))
-        println("status = ${resp.status}")
-        println("bodyText = $bodyText")
-        return resp.body<JsonElement>()
+    suspend fun getRemoteRootComponent(ownerId: String): JsonObject? {
+        // val baseUrl = "http://localhost:8080"
+        val baseUrl = "https://ktor-gae-401000.appspot.com"
+        val resp = httpClient.get(
+            urlString = "${baseUrl}/customer-project/json-data/${ownerId}"
+        )
+        return if (resp.status.isSuccess()) {
+            val bodyAsText = resp.bodyAsText()
+            // println("bodyText = $bodyText")
+            val jsonObject = Json.decodeFromString<JsonObject>(bodyAsText)
+            jsonObject
+        } else {
+            val macaoError = resp.body<MacaoApiError>()
+            println("macaoError = $macaoError")
+            null
+        }
+
+
     }
 
 }
-
-/*class MyDeserializationStrategy(
-    override val descriptor: SerialDescriptor
-) : DeserializationStrategy<JsonElement> {
-    override fun deserialize(decoder: Decoder): JsonElement {
-        //decoder.
-    }
-}*/
-
 
 /* Convert from Component tree to JsonObject tree
 fun Component.jsonify(

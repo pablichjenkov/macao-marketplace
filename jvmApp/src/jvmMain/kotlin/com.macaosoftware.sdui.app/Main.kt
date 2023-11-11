@@ -119,7 +119,7 @@ fun main() {
                                 .align(Alignment.CenterEnd)
                                 .clickable {
                                     coroutineScope.launch {
-                                        val rootComponentJson = SduiRemoteService.getRemoteRootComponent() as JsonObject
+                                        val rootComponentJson = SduiRemoteService.getRemoteRootComponent("123") ?: return@launch
                                         println("Sample Json = $rootComponentJson")
                                         rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
                                     }
