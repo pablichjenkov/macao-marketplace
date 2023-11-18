@@ -6,33 +6,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import com.macaosoftware.component.IosComponentRender
+import androidx.compose.ui.window.WindowState
+import com.macaosoftware.component.DesktopComponentRender
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.IosBridge
+import com.macaosoftware.platform.DesktopBridge
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable
-fun IosMacaoApplication(
-    iosBridge: IosBridge,
+fun JvmMacaoApplication(
+    windowState: WindowState,
+    desktopBridge: DesktopBridge,
     onBackPress: () -> Unit,
     rootComponentProvider: RootComponentProvider,
     splashScreenContent: @Composable () -> Unit
 ) {
-    var rootComponent by remember(iosBridge, rootComponentProvider) {
+    val coroutineScope = rememberCoroutineScope()
+    var rootComponent by remember(desktopBridge, rootComponentProvider) {
         mutableStateOf<Component?>(null)
     }
     rootComponent.ifNotNull {
-        IosComponentRender(
+        DesktopComponentRender(
             rootComponent = it,
-            iosBridge = iosBridge,
+            windowState = windowState,
+            desktopBridge = desktopBridge,
             onBackPress = onBackPress
         )
     }.elseIfNull {
         splashScreenContent()
-        rememberCoroutineScope().launch {
+        coroutineScope.launch {
             rootComponent = withContext(Dispatchers.IO) {
                 rootComponentProvider.provideRootComponent()
             }
