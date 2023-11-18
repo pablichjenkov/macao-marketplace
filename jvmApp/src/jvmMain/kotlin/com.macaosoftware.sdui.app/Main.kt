@@ -33,7 +33,9 @@ fun main() {
             onRefreshClick = {
                 rootComponentProvider = JvmRootComponentProvider()
             },
-            onBackClick = { exitProcess(0) }
+            onBackClick = {
+                desktopBridge.backPressDispatcher.dispatchBackPressed()
+            }
         ) {
             JvmMacaoApplication(
                 windowState = windowState,

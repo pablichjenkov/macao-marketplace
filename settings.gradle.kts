@@ -29,7 +29,6 @@ pluginManagement {
 
 }
 
-include(":amadeus-api")
 include(":shared")
 include(":androidApp")
 include(":jsApp")

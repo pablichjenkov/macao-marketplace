@@ -23,8 +23,6 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(project(":shared"))
-            implementation(project(":amadeus-api"))
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.7.3")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -32,6 +30,10 @@ kotlin {
             implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
             implementation(npm("sql.js", "1.8.0"))
+
+            // Third Party
+            implementation("io.github.pablichjenkov:amadeus-api:0.3.3")
+            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
         }
     }
 }

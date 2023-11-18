@@ -36,13 +36,15 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.material3)
-            implementation(project(":amadeus-api"))
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation("org.jetbrains.compose.components:components-resources:1.5.10")
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
             implementation("io.insert-koin:koin-core:3.5.0")
+
+            // Third Party
+            implementation("io.github.pablichjenkov:amadeus-api:0.3.3")
+            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
 
             // ktor
             implementation("io.ktor:ktor-client-core:$ktorVersion")
