@@ -6,7 +6,7 @@ import com.macaosoftware.platform.AndroidBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.storage.DriverFactory
+import com.pablichj.incubator.amadeus.storage.AndroidDriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.delay
 import org.koin.dsl.koinApplication
@@ -19,13 +19,13 @@ class AndroidRootComponentProvider(
 
     override suspend fun provideRootComponent(): Component {
         delay(1000)
-        val database = createDatabase(DriverFactory(context))
-        val platformModule = module {
+        val database = createDatabase(AndroidDriverFactory(context))
+        val pluginsModule = module {
             single<Database> { database }
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(platformModule)
+            modules(pluginsModule)
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()
