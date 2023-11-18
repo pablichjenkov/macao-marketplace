@@ -10,6 +10,8 @@ import com.macaosoftware.component.drawer.DrawerComponent
 import com.macaosoftware.component.drawer.DrawerComponentDefaults
 import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
+import com.macaosoftware.component.panel.PanelComponent
+import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.data.SduiConstants
 import com.macaosoftware.sdui.app.view.AirportDemoComponentView
@@ -20,6 +22,7 @@ import com.macaosoftware.sdui.app.viewmodel.factory.AirportDemoViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.BottomNavigationViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.DrawerViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.HotelDemoViewModelFactory
+import com.macaosoftware.sdui.app.viewmodel.factory.PanelViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -52,9 +55,17 @@ class SduiComponentFactory(
                 )
             }
 
+            SduiConstants.ComponentType.Panel -> {
+                NavItem(
+                    label = SduiConstants.ComponentType.Panel,
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Default.Home
+                )
+            }
+
             SduiConstants.ComponentType.AirportDemoComponent -> {
                 NavItem(
-                    label = "Hotel",
+                    label = "Air",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.Home
                 )
@@ -62,7 +73,7 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.HotelDemoComponent -> {
                 NavItem(
-                    label = "Air",
+                    label = "Hotel",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.Search
                 )
@@ -85,6 +96,18 @@ class SduiComponentFactory(
                 .content
 
         return when (componentType) {
+
+            SduiConstants.ComponentType.Panel -> {
+                PanelComponent(
+                    viewModelFactory = PanelViewModelFactory(
+                        sduiHandler = PanelSduiHandler(componentJson, this),
+                        panelStatePresenter = PanelComponentDefaults.createPanelStatePresenter(
+                            dispatcher = Dispatchers.Main
+                        )
+                    ),
+                    content = PanelComponentDefaults.PanelComponentView
+                )
+            }
 
             SduiConstants.ComponentType.Drawer -> {
                 DrawerComponent(
