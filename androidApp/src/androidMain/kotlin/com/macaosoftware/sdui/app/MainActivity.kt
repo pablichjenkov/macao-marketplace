@@ -3,47 +3,35 @@ package com.macaosoftware.sdui.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.lifecycleScope
-import com.macaosoftware.component.AndroidComponentRender
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.macaosoftware.platform.AndroidBridge
-import com.macaosoftware.sdui.app.data.SduiRemoteService
-import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
-import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.storage.DriverFactory
-import com.pablichj.incubator.amadeus.storage.createDatabase
-import kotlinx.coroutines.launch
-import kotlinx.serialization.json.JsonObject
-import org.koin.dsl.koinApplication
-import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
 
+    private val androidBridge = AndroidBridge()
+    private val rootComponentProvider = AndroidRootComponentProvider(
+        this@MainActivity,
+        androidBridge
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            val database = createDatabase(DriverFactory(this@MainActivity))
-
-            // Init Koin after getting the database instance
-            val storageModule = module { single<Database> { database } }
-            /*startKoin {
-                modules(storageModule)
-            }*/
-            val koinRootContainer = koinApplication {
-                printLogger()
-                modules(storageModule)
-            }
-            val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
-
-            val rootComponentJson = SduiRemoteService.getRemoteRootComponent() as JsonObject
-            val rootComponent = sduiComponentFactory.getComponentInstanceOf(rootComponentJson)
-            val androidBridge = AndroidBridge()
-
-            setContent {
-                AndroidComponentRender(
-                    rootComponent = rootComponent,
-                    androidBridge = androidBridge,
-                    onBackPress = { finishAffinity() }
-                )
+        setContent {
+            AndroidMacaoApplication(
+                androidBridge = androidBridge,
+                onBackPress = { finish() },
+                rootComponentProvider = rootComponentProvider
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        modifier = Modifier.align(Alignment.Center),
+                        text = "Example of Android Splash Screen"
+                    )
+                }
             }
         }
     }

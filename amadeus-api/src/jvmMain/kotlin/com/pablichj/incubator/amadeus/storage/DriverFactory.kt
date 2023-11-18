@@ -1,6 +1,5 @@
 package com.pablichj.incubator.amadeus.storage
 
-import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.pablichj.incubator.amadeus.Database

@@ -1,8 +1,7 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.AppLifecycleDispatcher
-import com.macaosoftware.platform.IosBridge
+import com.macaosoftware.platform.JsBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
@@ -12,22 +11,23 @@ import kotlinx.coroutines.delay
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
-class IosRooComponentProvider(
-    private val iosBridge: IosBridge
+class BrowserRootComponentProvider(
+    private val jsBridge: JsBridge
 ) : RootComponentProvider {
+
     override suspend fun provideRootComponent(): Component {
-        delay(2000)
+        delay(1000)
         val database = createDatabase(DriverFactory())
-        val storageModule = module { single<Database> { database } }
         val platformLifecycleModule = module {
-            single<AppLifecycleDispatcher> { iosBridge.appLifecycleDispatcher }
+            single<Database> { database }
+            // single<AppLifecycleDispatcher> { jsBridge.appLifecycleDispatcher }
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(storageModule, platformLifecycleModule)
+            modules(platformLifecycleModule)
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
-        val rootComponentJsonResilience = SduiRemoteService.getRootJson()
+        val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()
         val rootComponentJson = SduiRemoteService.getRemoteRootComponent("123")
 
         return sduiComponentFactory.getComponentInstanceOf(

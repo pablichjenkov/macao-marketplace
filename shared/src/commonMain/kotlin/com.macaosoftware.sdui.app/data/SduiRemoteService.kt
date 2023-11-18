@@ -15,10 +15,9 @@ import kotlinx.serialization.json.putJsonArray
 
 object SduiRemoteService {
 
-    // const val RootComponent = SduiConstants.ComponentType.BottomNavigation
     const val RootComponent = SduiConstants.ComponentType.Drawer
 
-    fun getRootJson() = buildJsonObject {
+    fun getRootJsonResilience() = buildJsonObject {
         put(
             SduiConstants.JsonKeyName.componentType,
             JsonPrimitive(RootComponent)
@@ -55,8 +54,6 @@ object SduiRemoteService {
             println("macaoError = $macaoError")
             null
         }
-
-
     }
 
 }
