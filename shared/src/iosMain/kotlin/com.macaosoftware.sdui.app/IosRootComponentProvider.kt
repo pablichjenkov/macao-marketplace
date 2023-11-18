@@ -6,7 +6,7 @@ import com.macaosoftware.platform.IosBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.storage.DriverFactory
+import com.pablichj.incubator.amadeus.storage.IosDriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.delay
 import org.koin.dsl.koinApplication
@@ -18,14 +18,14 @@ class IosRootComponentProvider(
 
     override suspend fun provideRootComponent(): Component {
         delay(1000)
-        val database = createDatabase(DriverFactory())
-        val platformLifecycleModule = module {
+        val database = createDatabase(IosDriverFactory())
+        val pluginsModule = module {
             single<Database> { database }
             single<AppLifecycleDispatcher> { iosBridge.appLifecycleDispatcher }
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(platformLifecycleModule)
+            modules(pluginsModule)
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()

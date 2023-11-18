@@ -5,7 +5,7 @@ import com.macaosoftware.platform.JsBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
-import com.pablichj.incubator.amadeus.storage.DriverFactory
+import com.pablichj.incubator.amadeus.storage.BrowserDriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.delay
 import org.koin.dsl.koinApplication
@@ -17,14 +17,14 @@ class BrowserRootComponentProvider(
 
     override suspend fun provideRootComponent(): Component {
         delay(1000)
-        val database = createDatabase(DriverFactory())
-        val platformLifecycleModule = module {
+        val database = createDatabase(BrowserDriverFactory())
+        val pluginsModule = module {
             single<Database> { database }
             // single<AppLifecycleDispatcher> { jsBridge.appLifecycleDispatcher }
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(platformLifecycleModule)
+            modules(pluginsModule)
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()

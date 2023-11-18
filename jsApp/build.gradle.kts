@@ -32,7 +32,7 @@ kotlin {
             implementation(npm("sql.js", "1.8.0"))
 
             // Third Party
-            implementation("io.github.pablichjenkov:amadeus-api:0.3.3")
+            implementation("io.github.pablichjenkov:amadeus-api:0.3.4")
             implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
         }
     }
