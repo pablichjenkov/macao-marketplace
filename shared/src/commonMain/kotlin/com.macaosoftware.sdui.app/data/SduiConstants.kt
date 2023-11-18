@@ -10,6 +10,7 @@ object SduiConstants {
     object ComponentType {
         const val BottomNavigation = "BottomNavigation"
         const val Drawer = "Drawer"
+        const val Panel = "Panel"
         const val HotelDemoComponent = "HotelDemoComponent"
         const val AirportDemoComponent = "AirportDemoComponent"
     }
