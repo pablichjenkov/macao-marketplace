@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.viewmodel
+package com.macaosoftware.sdui.app.viewmodel.panelViewModel
 
 import com.macaosoftware.component.core.setNavItems
 import com.macaosoftware.component.panel.PanelComponent

@@ -36,6 +36,13 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.material3)
+
+            //Awesome Icons
+            implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
+
+            //Credit Card
+
+
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation("org.jetbrains.compose.components:components-resources:1.5.10")
