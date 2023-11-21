@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.drawer.DrawerComponent
@@ -14,15 +15,19 @@ import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.data.SduiConstants
+import com.macaosoftware.sdui.app.marketplace.SettingsVoyager2
 import com.macaosoftware.sdui.app.view.AirportDemoComponentView
 import com.macaosoftware.sdui.app.view.HotelDemoComponentView
+import com.macaosoftware.sdui.app.view.SettingsComponentView
 import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
 import com.macaosoftware.sdui.app.viewmodel.HotelDemoViewModel
+import com.macaosoftware.sdui.app.viewmodel.SettingsViewModel
 import com.macaosoftware.sdui.app.viewmodel.factory.AirportDemoViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.BottomNavigationViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.DrawerViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.HotelDemoViewModelFactory
 import com.macaosoftware.sdui.app.viewmodel.factory.PanelViewModelFactory
+import com.macaosoftware.sdui.app.viewmodel.factory.SettingsViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -76,6 +81,22 @@ class SduiComponentFactory(
                     label = "Hotel",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.Search
+                )
+            }
+
+            SduiConstants.ComponentType.Setting -> {
+                NavItem(
+                    label = "Setting",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Default.Settings
+                )
+            }
+
+            SduiConstants.ComponentType.Setting2 -> {
+                NavItem(
+                    label = "Setting 2",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Default.Settings
                 )
             }
 
@@ -145,6 +166,17 @@ class SduiComponentFactory(
                     viewModelFactory = AirportDemoViewModelFactory(this),
                     content = AirportDemoComponentView
                 )
+            }
+
+            SduiConstants.ComponentType.Setting -> {
+                StateComponent<SettingsViewModel>(
+                    viewModelFactory = SettingsViewModelFactory(),
+                    content = SettingsComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.Setting2 -> {
+                SettingsVoyager2()
             }
 
             else -> {

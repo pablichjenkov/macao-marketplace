@@ -13,5 +13,7 @@ object SduiConstants {
         const val Panel = "Panel"
         const val HotelDemoComponent = "HotelDemoComponent"
         const val AirportDemoComponent = "AirportDemoComponent"
+        const val Setting = "Setting"
+        const val Setting2 = "Setting2"
     }
 }
