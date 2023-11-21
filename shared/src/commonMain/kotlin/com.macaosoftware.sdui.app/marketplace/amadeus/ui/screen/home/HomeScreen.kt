@@ -37,8 +37,10 @@ import com.macaosoftware.sdui.app.viewmodel.amadeus.viewmodel.AHomeScreenViewMod
 
 @Composable
 fun HomeScreen() {
-    val repository = Repository()
-    val viewModel = MainViewModel(repository)
+//    val repository = Repository()
+//    val viewModel = MainViewModel(repository)
+    val repository = remember { Repository() }
+    val viewModel = remember { MainViewModel(repository) }
 
     var hotelState by remember { mutableStateOf<HotelState>(HotelState.Loading) }
     var data by remember { mutableStateOf<CityCodeHotel?>(null) }

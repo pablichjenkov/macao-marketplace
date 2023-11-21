@@ -34,7 +34,7 @@ object KtorClientApi {
         }
 
         install(HttpTimeout) {
-            val timeout = 30000L
+            val timeout = 300000L
             requestTimeoutMillis = timeout
             socketTimeoutMillis = timeout
             connectTimeoutMillis = timeout

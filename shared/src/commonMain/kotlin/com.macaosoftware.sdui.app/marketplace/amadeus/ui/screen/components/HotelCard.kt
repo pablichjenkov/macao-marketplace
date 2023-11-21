@@ -37,7 +37,7 @@ fun HotelList(apiResponse: CityCodeHotel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        items(apiResponse.data) { hotelDetails ->
+        items(apiResponse.dataList) { hotelDetails ->
             HotelCard(hotelDetails)
             Spacer(modifier = Modifier.height(16.dp))
         }
