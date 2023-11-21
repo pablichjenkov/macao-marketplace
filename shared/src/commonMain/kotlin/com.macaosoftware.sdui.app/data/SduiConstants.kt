@@ -28,5 +28,8 @@ object SduiConstants {
         //Panel Components
         const val Panel = "Panel"
         const val PanelSetting = "PanelSetting"
+
+        //Amadeus Api Screens
+        const val HomeScreen = "HomeScreen"
     }
 }

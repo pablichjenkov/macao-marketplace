@@ -40,7 +40,8 @@ kotlin {
             //Awesome Icons
             implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
 
-            //Credit Card
+            //Moko MVVM
+            implementation("dev.icerock.moko:mvvm-core:0.16.1")
 
 
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
