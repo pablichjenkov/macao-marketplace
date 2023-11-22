@@ -2,13 +2,13 @@ package com.macaosoftware.sdui.app.sdui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material.icons.sharp.List
-import androidx.compose.material.icons.sharp.Search
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.drawer.DrawerComponent
@@ -19,37 +19,37 @@ import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.data.SduiConstants
-import com.macaosoftware.sdui.app.marketplace.SettingsVoyager2
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.home.HomeScreen
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.MainViewModel
-import com.macaosoftware.sdui.app.view.panel.PanelSettingComponentView
-import com.macaosoftware.sdui.app.view.root.AHomeScreen
-import com.macaosoftware.sdui.app.view.root.AirportDemoComponentView
-import com.macaosoftware.sdui.app.view.root.topappbar.CustomTopAppBar
-import com.macaosoftware.sdui.app.view.root.home.HomeComponentView
-import com.macaosoftware.sdui.app.view.root.HotelDemoComponentView
-import com.macaosoftware.sdui.app.view.root.SettingsComponentView
-import com.macaosoftware.sdui.app.view.root.search.SearchComponentView
-import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
-import com.macaosoftware.sdui.app.viewmodel.CustomTopAppBarViewModel
-import com.macaosoftware.sdui.app.viewmodel.HomeViewModel
-import com.macaosoftware.sdui.app.viewmodel.HotelDemoViewModel
-import com.macaosoftware.sdui.app.viewmodel.SearchViewModel
-import com.macaosoftware.sdui.app.viewmodel.SettingsViewModel
-import com.macaosoftware.sdui.app.viewmodel.amadeus.factory.AHomeViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.amadeus.viewmodel.AHomeScreenViewModel
-import com.macaosoftware.sdui.app.viewmodel.factory.AirportDemoViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.BottomNavigationViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.CustomTopAppBarFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.DrawerViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.HomeViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.HotelDemoViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.panelfactory.PanelViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.SearchViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.SettingsViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.factory.panelfactory.PanelSettingViewModelFactory
-import com.macaosoftware.sdui.app.viewmodel.panelViewModel.PanelSettingViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreen
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreenViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.error.ComponentMissingImplementation
+import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationSduiHandler
+import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.drawer.DrawerSduiHandler
+import com.macaosoftware.sdui.app.marketplace.navigator.drawer.DrawerViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.panel.PanelSduiHandler
+import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelViewModel.PanelSettingViewModel
+import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelSettingViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.settings.PanelSettingComponentView
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBar
+import com.macaosoftware.sdui.app.marketplace.settings.SettingsComponentView
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarViewModel
+import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModel
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarFactory
+import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -114,14 +114,6 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Setting2 -> {
-                NavItem(
-                    label = "Setting 2",
-                    component = getComponentInstanceOf(componentJson),
-                    icon = Icons.Default.Settings
-                )
-            }
-
             SduiConstants.ComponentType.SimpleTopAppBar -> {
                 NavItem(
                     label = "TopAppBar",
@@ -163,8 +155,14 @@ class SduiComponentFactory(
                     icon = Icons.Default.Home
                 )
             }
+
             else -> {
-                throw Exception("Missing NavItem factory for $childComponentType")
+                println("Missing NavItem factory for $childComponentType")
+                NavItem(
+                    label = "Missing Factory",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Default.Close
+                )
             }
         }
     }
@@ -238,39 +236,35 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Setting2 -> {
-                SettingsVoyager2()
-            }
-
-            SduiConstants.ComponentType.SimpleTopAppBar ->{
+            SduiConstants.ComponentType.SimpleTopAppBar -> {
                 StateComponent<CustomTopAppBarViewModel>(
                     viewModelFactory = CustomTopAppBarFactory(),
                     content = CustomTopAppBar
                 )
             }
 
-            SduiConstants.ComponentType.HomeView ->{
+            SduiConstants.ComponentType.HomeView -> {
                 StateComponent<HomeViewModel>(
                     viewModelFactory = HomeViewModelFactory(this),
                     content = HomeComponentView
                 )
             }
 
-            SduiConstants.ComponentType.SearchView ->{
+            SduiConstants.ComponentType.SearchView -> {
                 StateComponent<SearchViewModel>(
                     viewModelFactory = SearchViewModelFactory(),
                     content = SearchComponentView
                 )
             }
 
-            SduiConstants.ComponentType.PanelSetting ->{
+            SduiConstants.ComponentType.PanelSetting -> {
                 StateComponent<PanelSettingViewModel>(
                     viewModelFactory = PanelSettingViewModelFactory(),
                     content = PanelSettingComponentView
                 )
             }
 
-            SduiConstants.ComponentType.HomeScreen ->{
+            SduiConstants.ComponentType.HomeScreen -> {
                 StateComponent<AHomeScreenViewModel>(
                     viewModelFactory = AHomeViewModelFactory(),
                     content = AHomeScreen
@@ -278,9 +272,9 @@ class SduiComponentFactory(
             }
 
 
-
             else -> {
-                throw Exception("Missing Component factory for $componentType")
+                println("Missing Component factory for $componentType")
+                ComponentMissingImplementation(componentType)
             }
         }
 

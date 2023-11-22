@@ -14,7 +14,6 @@ object SduiConstants {
         const val HotelDemoComponent = "HotelDemoComponent"
         const val AirportDemoComponent = "AirportDemoComponent"
         const val Setting = "Setting"
-        const val Setting2 = "Setting2"
 
         //Simple TopAppBar
         const val SimpleTopAppBar = "SimpleTopAppBar"

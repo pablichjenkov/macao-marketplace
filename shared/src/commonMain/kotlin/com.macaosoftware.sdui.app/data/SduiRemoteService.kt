@@ -1,6 +1,6 @@
 package com.macaosoftware.sdui.app.data
 
-import com.macaosoftware.sdui.app.domain.MacaoApiError
+import com.macaosoftware.sdui.app.sdui.MacaoApiError
 import com.macaosoftware.sdui.app.http.httpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

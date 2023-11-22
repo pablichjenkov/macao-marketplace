@@ -1,8 +1,7 @@
-package com.macaosoftware.sdui.app.viewmodel.factory
+package com.macaosoftware.sdui.app.marketplace.amadeus.home
 
 import com.macaosoftware.component.viewmodel.ComponentViewModelFactory
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.sdui.app.viewmodel.HomeViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
