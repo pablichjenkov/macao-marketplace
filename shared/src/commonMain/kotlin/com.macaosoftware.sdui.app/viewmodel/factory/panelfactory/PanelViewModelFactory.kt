@@ -1,10 +1,10 @@
-package com.macaosoftware.sdui.app.viewmodel.factory
+package com.macaosoftware.sdui.app.viewmodel.factory.panelfactory
 
 import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentViewModelFactory
 import com.macaosoftware.component.panel.PanelStatePresenterDefault
 import com.macaosoftware.sdui.app.sdui.PanelSduiHandler
-import com.macaosoftware.sdui.app.viewmodel.PanelViewModel
+import com.macaosoftware.sdui.app.viewmodel.panelViewModel.PanelViewModel
 
 class PanelViewModelFactory(
     private val sduiHandler: PanelSduiHandler,

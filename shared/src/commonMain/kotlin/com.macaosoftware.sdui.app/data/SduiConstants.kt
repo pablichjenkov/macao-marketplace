@@ -10,10 +10,26 @@ object SduiConstants {
     object ComponentType {
         const val BottomNavigation = "BottomNavigation"
         const val Drawer = "Drawer"
-        const val Panel = "Panel"
+
         const val HotelDemoComponent = "HotelDemoComponent"
         const val AirportDemoComponent = "AirportDemoComponent"
         const val Setting = "Setting"
         const val Setting2 = "Setting2"
+
+        //Simple TopAppBar
+        const val SimpleTopAppBar = "SimpleTopAppBar"
+
+        //Home Screen
+        const val HomeView = "HomeView"
+
+        //Search Screen
+        const val SearchView = "SearchView"
+
+        //Panel Components
+        const val Panel = "Panel"
+        const val PanelSetting = "PanelSetting"
+
+        //Amadeus Api Screens
+        const val HomeScreen = "HomeScreen"
     }
 }

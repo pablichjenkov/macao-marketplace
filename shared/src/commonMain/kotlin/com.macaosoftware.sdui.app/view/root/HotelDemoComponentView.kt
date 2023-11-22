@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.view
+package com.macaosoftware.sdui.app.view.root
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,23 +22,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.sdui.app.viewmodel.AirportDemoViewModel
+import com.macaosoftware.sdui.app.viewmodel.HotelDemoViewModel
 
-val AirportDemoComponentView: @Composable StateComponent<AirportDemoViewModel>.(
+val HotelDemoComponentView: @Composable StateComponent<HotelDemoViewModel>.(
     modifier: Modifier,
-    viewModel: AirportDemoViewModel
+    viewModel: HotelDemoViewModel
 ) -> Unit = { modifier: Modifier,
-              viewModel: AirportDemoViewModel ->
+              viewModel: HotelDemoViewModel ->
 
     BackPressHandler()
-    AirportDemoView(modifier, viewModel)
+    HotelDemoView(modifier, viewModel)
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AirportDemoView(
+fun HotelDemoView(
     modifier: Modifier,
-    airportDemoViewModel: AirportDemoViewModel
+    hotelDemoViewModel: HotelDemoViewModel
 ) {
     Column(
         modifier.fillMaxSize()
@@ -46,7 +46,7 @@ fun AirportDemoView(
         Spacer(Modifier.fillMaxWidth().height(24.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Welcome to Amadeus Flight Booking API",
+            text = "Welcome to Amadeus Hotel Booking API",
             textAlign = TextAlign.Center,
             fontSize = 20.sp
         )
@@ -55,34 +55,47 @@ fun AirportDemoView(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(onClick = {
-                airportDemoViewModel.getAccessToken()
+                hotelDemoViewModel.getAccessToken()
             }) {
                 Text("Get Access Token")
             }
             Button(onClick = {
-                airportDemoViewModel.searchAirportByKeyword()
+                hotelDemoViewModel.getCitiesByKeyword()
             }) {
-                Text("Search Airport")
+                Text("City Search")
             }
             Button(onClick = {
-                airportDemoViewModel.searchFlightOffersGet()
+                hotelDemoViewModel.getHotelsByCity()
             }) {
-                Text("Search Flight Offers")
+                Text("Get Hotels By City")
             }
             Button(onClick = {
-                airportDemoViewModel.confirmFlightOffersGet()
+                hotelDemoViewModel.getMultiHotelsOffers()
             }) {
-                Text("Confirm Flight Offers")
+                Text("Get Multi Hotel Offers")
             }
-            /*Button(
-                onClick = {
-                    getFlightDestinations()
+            Button(onClick = {
+                if (hotelDemoViewModel.hotelOffers?.size == 0) {
+                    hotelDemoViewModel.output("hotelOffers.size == 0. Do a successful hotel offer search before calling this function.")
+                    return@Button
                 }
-            ) {
-                Text("Get Flight Destinations")
-            }*/
+                val offers = hotelDemoViewModel.hotelOffers?.get(0)?.offers
+                if (offers.isNullOrEmpty()) {
+                    hotelDemoViewModel.output("offers.size == 0. This Hotel Offer has zero offers")
+                    return@Button
+                }
+                val offerId = offers[0].id
+                hotelDemoViewModel.getFullOfferDetails(offerId)
+            }) {
+                Text("Get Offer")
+            }
             Button(onClick = {
-                airportDemoViewModel.console.value = ""
+                hotelDemoViewModel.hotelBook()
+            }) {
+                Text("Book a Hotel")
+            }
+            Button(onClick = {
+                hotelDemoViewModel.console.value = ""
             }) {
                 Text("Clear")
             }
@@ -90,7 +103,7 @@ fun AirportDemoView(
         Text(
             modifier = Modifier.fillMaxSize().padding(8.dp)
                 .verticalScroll(rememberScrollState()).background(Color.White),
-            text = airportDemoViewModel.console.value
+            text = hotelDemoViewModel.console.value
         )
     }
 }
