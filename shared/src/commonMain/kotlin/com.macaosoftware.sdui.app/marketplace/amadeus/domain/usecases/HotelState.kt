@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.util.states
+package com.macaosoftware.sdui.app.marketplace.amadeus.domain.usecases
 
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
 

@@ -1,7 +1,7 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.viewmodel
+package com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel
 
-import com.macaosoftware.sdui.app.marketplace.amadeus.repository.Repository
-import com.macaosoftware.sdui.app.marketplace.amadeus.util.states.HotelState
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
+import com.macaosoftware.sdui.app.marketplace.amadeus.domain.usecases.HotelState
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

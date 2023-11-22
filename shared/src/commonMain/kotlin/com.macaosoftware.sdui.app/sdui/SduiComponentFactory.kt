@@ -20,9 +20,9 @@ import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.data.SduiConstants
 import com.macaosoftware.sdui.app.marketplace.SettingsVoyager2
-import com.macaosoftware.sdui.app.marketplace.amadeus.repository.Repository
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.home.HomeScreen
-import com.macaosoftware.sdui.app.marketplace.amadeus.viewmodel.MainViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.MainViewModel
 import com.macaosoftware.sdui.app.view.panel.PanelSettingComponentView
 import com.macaosoftware.sdui.app.view.root.AHomeScreen
 import com.macaosoftware.sdui.app.view.root.AirportDemoComponentView

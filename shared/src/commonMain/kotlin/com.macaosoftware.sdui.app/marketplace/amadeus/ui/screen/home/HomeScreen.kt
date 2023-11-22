@@ -27,18 +27,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
-import com.macaosoftware.sdui.app.marketplace.amadeus.repository.Repository
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.HotelList
-import com.macaosoftware.sdui.app.marketplace.amadeus.util.states.HotelState
-import com.macaosoftware.sdui.app.marketplace.amadeus.viewmodel.MainViewModel
-import com.macaosoftware.sdui.app.viewmodel.amadeus.viewmodel.AHomeScreenViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.domain.usecases.HotelState
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.MainViewModel
 
 @Composable
 fun HomeScreen() {
-//    val repository = Repository()
-//    val viewModel = MainViewModel(repository)
+
     val repository = remember { Repository() }
     val viewModel = remember { MainViewModel(repository) }
 
