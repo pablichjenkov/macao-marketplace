@@ -59,11 +59,11 @@ import org.koin.core.component.KoinComponent
 
 class SduiComponentFactory(
     private val koinApplication: KoinApplication
-) : KoinComponent {
+) : MacaoComponentFactory, KoinComponent {
 
     override fun getKoin(): Koin = koinApplication.koin
 
-    fun getNavItemOf(
+    override fun getNavItemOf(
         componentJson: JsonObject
     ): NavItem {
         val childComponentType: String =
@@ -159,7 +159,7 @@ class SduiComponentFactory(
             else -> {
                 println("Missing NavItem factory for $childComponentType")
                 NavItem(
-                    label = "Missing Factory",
+                    label = "Missing_Factory",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.Close
                 )
@@ -167,7 +167,7 @@ class SduiComponentFactory(
         }
     }
 
-    fun getComponentInstanceOf(
+    override fun getComponentInstanceOf(
         componentJson: JsonObject
     ): Component {
 
@@ -270,7 +270,6 @@ class SduiComponentFactory(
                     content = AHomeScreen
                 )
             }
-
 
             else -> {
                 println("Missing Component factory for $componentType")

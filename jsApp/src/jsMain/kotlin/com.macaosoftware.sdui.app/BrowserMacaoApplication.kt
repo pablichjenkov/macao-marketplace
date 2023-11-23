@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import com.macaosoftware.component.BrowserComponentRender
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.JsBridge
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,12 +18,11 @@ import kotlinx.coroutines.withContext
 fun BrowserMacaoApplication(
     jsBridge: JsBridge,
     onBackPress: () -> Unit,
-    rootComponentProvider: RootComponentProvider,
+    macaoApplicationState: MacaoApplicationState,
     splashScreenContent: @Composable () -> Unit
 ) {
-    var rootComponent by remember(jsBridge, rootComponentProvider) {
-        mutableStateOf<Component?>(null)
-    }
+
+    val rootComponent = macaoApplicationState.rootComponentState.value
     rootComponent.ifNotNull {
         BrowserComponentRender(
             rootComponent = it,
@@ -31,10 +31,6 @@ fun BrowserMacaoApplication(
         )
     }.elseIfNull {
         splashScreenContent()
-        rememberCoroutineScope().launch {
-            rootComponent = withContext(Dispatchers.Default) {
-                rootComponentProvider.provideRootComponent()
-            }
-        }
+        macaoApplicationState.fetchRootComponent()
     }
 }

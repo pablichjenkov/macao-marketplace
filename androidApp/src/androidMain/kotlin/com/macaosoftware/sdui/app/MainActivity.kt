@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.macaosoftware.platform.AndroidBridge
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {
 
@@ -17,6 +19,10 @@ class MainActivity : ComponentActivity() {
         this@MainActivity,
         androidBridge
     )
+    val macaoApplicationState = MacaoApplicationState(
+        Dispatchers.IO,
+        rootComponentProvider
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +30,7 @@ class MainActivity : ComponentActivity() {
             AndroidMacaoApplication(
                 androidBridge = androidBridge,
                 onBackPress = { finish() },
-                rootComponentProvider = rootComponentProvider
+                macaoApplicationState = macaoApplicationState
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(

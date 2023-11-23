@@ -55,7 +55,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.SlidersH
 
 
-class HomeScreen (): Screen{
+class HomeScreen(): Screen{
     @Composable
     override fun Content() {
         val repository = remember { Repository() }
@@ -74,7 +74,7 @@ class HomeScreen (): Screen{
 
 
         Column(
-            modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing).fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),//windowInsetsPadding(WindowInsets.safeDrawing).fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
