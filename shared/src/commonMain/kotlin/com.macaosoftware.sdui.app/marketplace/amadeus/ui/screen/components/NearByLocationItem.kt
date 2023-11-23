@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -38,6 +36,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
@@ -94,11 +93,15 @@ fun NearByLocationItem(
     data: Data
 ) {
     var isLiked by remember { mutableStateOf(true) }
+    val navigator = LocalNavigator.current
 
     Card(
         modifier = Modifier
             .width(367.dp)
-            .height(313.dp),
+            .height(313.dp)
+            .clickable {
+                navigator?.push(DetailScreen(data, IMAGE))
+            },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults
             .cardColors(
@@ -144,8 +147,8 @@ fun NearByLocationItem(
                         .padding(start = 6.dp, top = 6.dp, end = 6.dp, bottom = 6.dp)
                 ) {
                     Icon(
-                       // modifier = Modifier.align(alignment = Alignment.TopEnd),
-                        imageVector =if (isLiked)   FontAwesomeIcons.Solid.Heart else Icons.Default.FavoriteBorder,
+                        // modifier = Modifier.align(alignment = Alignment.TopEnd),
+                        imageVector = if (isLiked) FontAwesomeIcons.Solid.Heart else Icons.Default.FavoriteBorder,
                         contentDescription = null,
                         tint = if (isLiked) Color.Red else Color.Black
                     )

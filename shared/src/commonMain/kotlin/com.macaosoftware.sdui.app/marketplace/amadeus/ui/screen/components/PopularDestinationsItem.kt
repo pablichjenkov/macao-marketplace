@@ -1,6 +1,7 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
@@ -80,6 +83,7 @@ fun PopularList(apiResponse: CityCodeHotel) {
 
 @Composable
 fun PopularDestinationItem(data: Data) {
+    val navigator = LocalNavigator.current
     Row(
         modifier = Modifier
             .shadow(
@@ -89,6 +93,9 @@ fun PopularDestinationItem(data: Data) {
             )
             .width(357.dp)
             .height(108.dp)
+            .clickable {
+                navigator?.push(DetailScreen(data, IMAGE))
+            }
             .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 12.dp))
             .padding(
                 end = 12.dp,
