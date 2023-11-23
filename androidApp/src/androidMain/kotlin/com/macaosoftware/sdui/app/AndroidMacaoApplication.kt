@@ -1,28 +1,19 @@
 package com.macaosoftware.sdui.app
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import com.macaosoftware.component.AndroidComponentRender
-import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.AndroidBridge
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 
 @Composable
 fun AndroidMacaoApplication(
     androidBridge: AndroidBridge,
     onBackPress: () -> Unit,
-    rootComponentProvider: RootComponentProvider,
+    macaoApplicationState: MacaoApplicationState,
     splashScreenContent: @Composable () -> Unit
 ) {
-    var rootComponent by remember(androidBridge, rootComponentProvider) {
-        mutableStateOf<Component?>(null)
-    }
+
+    val rootComponent = macaoApplicationState.rootComponentState.value
     rootComponent.ifNotNull {
         AndroidComponentRender(
             rootComponent = it,
@@ -31,10 +22,6 @@ fun AndroidMacaoApplication(
         )
     }.elseIfNull {
         splashScreenContent()
-        rememberCoroutineScope().launch {
-            rootComponent = withContext(Dispatchers.IO) {
-                rootComponentProvider.provideRootComponent()
-            }
-        }
+        macaoApplicationState.fetchRootComponent()
     }
 }

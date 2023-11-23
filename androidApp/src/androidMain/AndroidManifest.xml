@@ -10,6 +10,7 @@
         android:theme="@style/Theme.Widget">
         <activity
             android:exported="true"
+            android:configChanges="orientation|screenLayout|smallestScreenSize|screenSize|keyboardHidden"
             android:name="com.macaosoftware.sdui.app.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

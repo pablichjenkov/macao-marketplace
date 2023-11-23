@@ -13,13 +13,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.platform.DesktopBridge
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import kotlinx.coroutines.Dispatchers
 import kotlin.system.exitProcess
 
 fun main() {
 
     val desktopBridge = DesktopBridge()
     val windowState = WindowState(size = DpSize(800.dp, 600.dp))
-    var rootComponentProvider by mutableStateOf(JvmRootComponentProvider())
+    val macaoApplicationState = MacaoApplicationState(
+        Dispatchers.IO,
+        JvmRootComponentProvider()
+    )
 
     singleWindowApplication(
         title = "Macao SDUI Demo",
@@ -31,7 +36,7 @@ fun main() {
             onMaximizeClick = { windowState.isMinimized = false },
             onCloseClick = { exitProcess(0) },
             onRefreshClick = {
-                rootComponentProvider = JvmRootComponentProvider()
+                macaoApplicationState.fetchRootComponent()
             },
             onBackClick = {
                 desktopBridge.backPressDispatcher.dispatchBackPressed()
@@ -41,7 +46,7 @@ fun main() {
                 windowState = windowState,
                 desktopBridge = desktopBridge,
                 onBackPress = { exitProcess(0) },
-                rootComponentProvider = rootComponentProvider
+                macaoApplicationState = macaoApplicationState
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(

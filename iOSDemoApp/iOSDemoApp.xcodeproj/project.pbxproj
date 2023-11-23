@@ -464,8 +464,6 @@
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
-					"-framework",
-					"\"MacaoSuiDemoKt\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pablichj.incubator.uistate3.iOSDemoApp;
@@ -511,8 +509,6 @@
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
-					"-framework",
-					"\"MacaoSuiDemoKt\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pablichj.incubator.uistate3.iOSDemoApp;
