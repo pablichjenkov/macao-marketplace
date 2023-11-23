@@ -36,5 +36,6 @@ object SduiConstants {
         const val ScheduleScreen = "ScheduleScreen"
         const val HotelOffers = "HotelOffers"
         const val Travel = "TravelScreen"
+        const val Profile = "Profile"
     }
 }

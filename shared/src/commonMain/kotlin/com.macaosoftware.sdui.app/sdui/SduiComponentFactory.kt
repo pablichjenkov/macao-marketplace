@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.sharp.DateRange
@@ -34,6 +35,9 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFa
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModelFactory
@@ -192,6 +196,14 @@ class SduiComponentFactory(
                 )
             }
 
+            SduiConstants.ComponentType.Profile -> {
+                NavItem(
+                    label = "Profile",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Filled.Person
+                )
+            }
+
             else -> {
                 println("Missing NavItem factory for $childComponentType")
                 NavItem(
@@ -325,6 +337,13 @@ class SduiComponentFactory(
                 StateComponent<TravelViewModel>(
                     viewModelFactory = TravelViewModelFactory(),
                     content = TravelComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.Profile -> {
+                StateComponent<ProfileViewModel>(
+                    viewModelFactory = ProfileViewModelFactory(),
+                    content = ProfileComponentView
                 )
             }
 
