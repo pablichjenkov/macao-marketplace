@@ -2,9 +2,13 @@ package com.macaosoftware.sdui.app.sdui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AirplanemodeActive
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.sharp.DateRange
@@ -28,9 +32,21 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreenViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeViewModelFactory
@@ -156,6 +172,38 @@ class SduiComponentFactory(
                 )
             }
 
+            SduiConstants.ComponentType.ScheduleScreen -> {
+                NavItem(
+                    label = "Schedule",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Default.DateRange
+                )
+            }
+
+            SduiConstants.ComponentType.HotelOffers -> {
+                NavItem(
+                    label = "Offers",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Filled.Notifications
+                )
+            }
+
+            SduiConstants.ComponentType.Travel -> {
+                NavItem(
+                    label = "Travel",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Filled.AirplanemodeActive
+                )
+            }
+
+            SduiConstants.ComponentType.Profile -> {
+                NavItem(
+                    label = "Profile",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Filled.Person
+                )
+            }
+
             else -> {
                 println("Missing NavItem factory for $childComponentType")
                 NavItem(
@@ -268,6 +316,34 @@ class SduiComponentFactory(
                 StateComponent<AHomeScreenViewModel>(
                     viewModelFactory = AHomeViewModelFactory(),
                     content = AHomeScreen
+                )
+            }
+
+            SduiConstants.ComponentType.ScheduleScreen -> {
+                StateComponent<ScheduleViewModel>(
+                    viewModelFactory = ScheduleViewModelFactory(),
+                    content = ScheduleComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.HotelOffers -> {
+                StateComponent<OffersViewModel>(
+                    viewModelFactory = OffersViewModelFactory(),
+                    content = OffersComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.Travel -> {
+                StateComponent<TravelViewModel>(
+                    viewModelFactory = TravelViewModelFactory(),
+                    content = TravelComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.Profile -> {
+                StateComponent<ProfileViewModel>(
+                    viewModelFactory = ProfileViewModelFactory(),
+                    content = ProfileComponentView
                 )
             }
 
