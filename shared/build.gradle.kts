@@ -36,6 +36,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
 
             //Awesome Icons
             implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
