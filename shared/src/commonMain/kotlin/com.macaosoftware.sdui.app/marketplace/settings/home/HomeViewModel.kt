@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.home
+package com.macaosoftware.sdui.app.marketplace.settings.home
 
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.viewmodel.ComponentViewModel
@@ -28,6 +28,7 @@ class HomeViewModel(
     private val database: Database,
    // private val homeComponent: StateComponent<HomeViewModel>
 ): ComponentViewModel() {
+
     override fun onAttach() {
         println("HomeViewModel -  onAttach() : ")
     }

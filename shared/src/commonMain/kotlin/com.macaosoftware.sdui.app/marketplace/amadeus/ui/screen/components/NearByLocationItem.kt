@@ -37,9 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
+import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Heart
@@ -48,7 +47,10 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun NearByLocationList(apiResponse: CityCodeHotel) {
+fun NearByLocationList(
+    hotelListings: List<HotelListing>,
+    onItemClick: (HotelListing) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 12.dp, end = 12.dp, top = 25.dp),
@@ -82,26 +84,25 @@ fun NearByLocationList(apiResponse: CityCodeHotel) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.Top
     ) {
-        items(apiResponse.dataList) { hotelDetails ->
-            NearByLocationItem(hotelDetails)
+        items(hotelListings) { hotelDetails ->
+            NearByLocationItem(hotelDetails, onItemClick)
         }
     }
 }
 
 @Composable
 fun NearByLocationItem(
-    data: Data
+    hotelListing: HotelListing,
+    onClick: (HotelListing) -> Unit
 ) {
     var isLiked by remember { mutableStateOf(true) }
-    val navigator = LocalNavigator.current
+    //val navigator = LocalNavigator.current
 
     Card(
         modifier = Modifier
             .width(367.dp)
             .height(313.dp)
-            .clickable {
-                navigator?.push(DetailScreen(data, IMAGE))
-            },
+            .clickable { onClick(hotelListing) },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults
             .cardColors(
@@ -166,7 +167,7 @@ fun NearByLocationItem(
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Text(
                             modifier = Modifier.weight(0.65f),
-                            text = data.name.toString(),
+                            text = hotelListing.name.toString(),
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 lineHeight = 21.sp,
@@ -193,7 +194,7 @@ fun NearByLocationItem(
                     //Location
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            text = data.address.toString(),
+                            text = hotelListing.address.toString(),
                             style = TextStyle(
                                 fontSize = 12.sp,
                                 lineHeight = 18.sp,

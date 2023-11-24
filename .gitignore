@@ -12,6 +12,7 @@ build/
 *.ipr
 *.hprof
 out/
+.fleet/
 
 ### iOS Xcode generated ###
 iOSDemoApp/iOSDemoApp.xcodeproj/*

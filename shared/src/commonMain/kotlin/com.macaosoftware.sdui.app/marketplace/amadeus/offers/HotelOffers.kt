@@ -1,12 +1,8 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.offers
+package com.macaosoftware.sdui.app.marketplace.amadeus.offers
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,13 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalViewConfiguration
 import cafe.adriel.voyager.core.screen.Screen
-import com.macaosoftware.component.core.collectAsStateWithLifecycle
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
-import com.macaosoftware.sdui.app.marketplace.amadeus.domain.usecases.HotelState
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.HotelsList
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.MainViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.MainViewModel
 
 class HotelOffers() : Screen {
     @Composable
@@ -38,7 +31,7 @@ class HotelOffers() : Screen {
         }
         hotelState = viewModel.hotels.collectAsState().value
 
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+        Column(modifier = Modifier.fillMaxSize()) {//Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             when (hotelState) {
                 is HotelOffersState.Loading -> {

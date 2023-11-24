@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.schedule
+package com.macaosoftware.sdui.app.marketplace.amadeus.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,11 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Address
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.GeoCode
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.DetailScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -119,7 +117,7 @@ fun MySchedules() {
 
 @Composable
 fun MyScheduleItem(data: Data) {
-    val navigator = LocalNavigator.current
+    //val navigator = LocalNavigator.current
     Row(
         modifier = Modifier
             .shadow(
@@ -130,7 +128,7 @@ fun MyScheduleItem(data: Data) {
             .width(357.dp)
             .height(108.dp)
             .clickable {
-                navigator?.push(DetailScreen(data, Util.IMAGE))
+                // navigator?.push(DetailScreen(data, Util.IMAGE))
             }
             .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 12.dp))
             .padding(

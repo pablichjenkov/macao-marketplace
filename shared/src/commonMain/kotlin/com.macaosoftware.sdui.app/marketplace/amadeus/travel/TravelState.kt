@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.travel
+package com.macaosoftware.sdui.app.marketplace.amadeus.travel
 
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.travel.Travel
 

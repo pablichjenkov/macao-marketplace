@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.offers
+package com.macaosoftware.sdui.app.marketplace.amadeus.offers
 
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.hotels.Hotels
 

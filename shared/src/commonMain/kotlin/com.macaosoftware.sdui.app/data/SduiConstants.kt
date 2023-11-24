@@ -1,8 +1,5 @@
 package com.macaosoftware.sdui.app.data
 
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.offers.HotelOffers
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.schedule.ScheduleScreen
-
 object SduiConstants {
 
     object JsonKeyName {
@@ -32,10 +29,12 @@ object SduiConstants {
         const val PanelSetting = "PanelSetting"
 
         //Amadeus Api Screens
-        const val HomeScreen = "HomeScreen"
-        const val ScheduleScreen = "ScheduleScreen"
-        const val HotelOffers = "HotelOffers"
-        const val Travel = "TravelScreen"
-        const val Profile = "Profile"
+        object Amadeus {
+            const val HomeScreen = "HomeScreen"
+            const val ScheduleScreen = "ScheduleScreen"
+            const val HotelOffers = "HotelOffers"
+            const val Travel = "TravelScreen"
+            const val Profile = "Profile"
+        }
     }
 }

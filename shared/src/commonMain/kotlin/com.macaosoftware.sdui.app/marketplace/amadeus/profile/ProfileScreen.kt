@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.profile
+package com.macaosoftware.sdui.app.marketplace.amadeus.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -56,8 +56,7 @@ import io.kamel.image.asyncPainterResource
 class ProfileScreen() : Screen {
     @Composable
     override fun Content() {
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
-
+        Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             // Row containing both the image and the details
             Row(modifier = Modifier.fillMaxSize()) {

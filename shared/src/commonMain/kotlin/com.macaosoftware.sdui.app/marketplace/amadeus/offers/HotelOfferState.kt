@@ -1,6 +1,5 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.domain.usecases
+package com.macaosoftware.sdui.app.marketplace.amadeus.offers
 
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.hoteloffers.HotelOffers
 
 sealed class HotelOfferState {

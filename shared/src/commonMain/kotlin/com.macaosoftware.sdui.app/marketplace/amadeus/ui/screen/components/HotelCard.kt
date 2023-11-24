@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -20,7 +18,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.sharp.Build
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -36,18 +33,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
-import org.jetbrains.skia.FontFeature
+import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 
 @Composable
-fun HotelList(apiResponse: CityCodeHotel) {
+fun HotelList(hotelListings: List<HotelListing>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        items(apiResponse.dataList) { hotelDetails ->
+        items(hotelListings) { hotelDetails ->
             HotelCard(hotelDetails)
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -55,7 +50,7 @@ fun HotelList(apiResponse: CityCodeHotel) {
 }
 
 @Composable
-fun HotelCard(hotelDetails: Data) {
+fun HotelCard(hotelListing: HotelListing) {
     var isVisible by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -78,7 +73,7 @@ fun HotelCard(hotelDetails: Data) {
                 backgroundColor = MaterialTheme.colorScheme.surface,
                 content = {
                     Text(
-                        text = hotelDetails.name.toString(),
+                        text = hotelListing.name.toString(),
                     )
                 }
             )
@@ -88,7 +83,7 @@ fun HotelCard(hotelDetails: Data) {
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
-            hotelDetails.name?.let {
+            hotelListing.name?.let {
                 Text(
                     text = it,
                     style = typography.headlineSmall,
@@ -98,31 +93,31 @@ fun HotelCard(hotelDetails: Data) {
             }
 
             Text(
-                text = "Chain Code: ${hotelDetails.chainCode}",
+                text = "Chain Code: ${hotelListing.chainCode}",
                 style = typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
             Text(
-                text = "Hotel ID: ${hotelDetails.hotelId}",
+                text = "Hotel ID: ${hotelListing.hotelId}",
                 style = typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
             Text(
-                text = "IATA Code: ${hotelDetails.iataCode}",
+                text = "IATA Code: ${hotelListing.iataCode}",
                 style = typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
             Text(
-                text = "Dupe ID: ${hotelDetails.dupeId}",
+                text = "Dupe ID: ${hotelListing.dupeId}",
                 style = typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
             Text(
-                text = "Country Code: ${hotelDetails.address?.countryCode}",
+                text = "Country Code: ${hotelListing.address?.countryCode}",
                 style = typography.bodyMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )

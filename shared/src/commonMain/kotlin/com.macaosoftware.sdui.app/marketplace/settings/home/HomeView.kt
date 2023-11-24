@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.home
+package com.macaosoftware.sdui.app.marketplace.settings.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
