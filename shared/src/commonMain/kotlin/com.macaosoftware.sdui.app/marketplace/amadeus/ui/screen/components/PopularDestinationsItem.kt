@@ -31,17 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
+import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun PopularList(apiResponse: CityCodeHotel) {
+fun PopularList(
+    hotelListings: List<HotelListing>,
+    onItemClick: (HotelListing) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 12.dp, end = 12.dp, top = 25.dp),
@@ -68,22 +68,23 @@ fun PopularList(apiResponse: CityCodeHotel) {
             )
         )
     }
-
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(apiResponse.dataList) { hotelDetails ->
-            PopularDestinationItem(hotelDetails)
+        items(hotelListings) { hotelDetails ->
+            PopularDestinationItem(hotelDetails, onItemClick)
         }
     }
 }
 
 @Composable
-fun PopularDestinationItem(data: Data) {
-    val navigator = LocalNavigator.current
+fun PopularDestinationItem(
+    hotelListing: HotelListing,
+    onClick: (HotelListing) -> Unit
+) {
     Row(
         modifier = Modifier
             .shadow(
@@ -94,12 +95,10 @@ fun PopularDestinationItem(data: Data) {
             .width(357.dp)
             .height(108.dp)
             .clickable {
-                navigator?.push(DetailScreen(data, IMAGE))
+                onClick(hotelListing)
             }
             .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 12.dp))
-            .padding(
-                end = 12.dp,
-            )
+            .padding(end = 12.dp)
     ) {
         // Image
         val image: Resource<Painter> = asyncPainterResource(data = IMAGE)
@@ -140,7 +139,7 @@ fun PopularDestinationItem(data: Data) {
             ) {
                 Text(
                     modifier = Modifier.weight(0.65f),
-                    text = data.name.toString(),
+                    text = hotelListing.name.toString(),
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,

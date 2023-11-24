@@ -1,16 +1,13 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.travel
+package com.macaosoftware.sdui.app.marketplace.amadeus.travel
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,7 +29,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.travel.Travel
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.TravelRecommendations
-import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.MainViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.MainViewModel
 
 class TravelScreen() : Screen {
     @Composable
@@ -49,7 +46,7 @@ class TravelScreen() : Screen {
         }
         travelState = viewModel.travel.collectAsState().value
 
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+        Column(modifier = Modifier.fillMaxSize()) {// Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             //Soon Will work on this....
             //Text("TravelScreen Recommendations")

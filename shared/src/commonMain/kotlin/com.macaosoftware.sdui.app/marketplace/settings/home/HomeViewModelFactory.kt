@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.marketplace.amadeus.home
+package com.macaosoftware.sdui.app.marketplace.settings.home
 
 import com.macaosoftware.component.viewmodel.ComponentViewModelFactory
 import com.macaosoftware.component.viewmodel.StateComponent

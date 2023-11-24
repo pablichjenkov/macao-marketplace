@@ -4,6 +4,7 @@ import android.content.Context
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.AndroidBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.AndroidDriverFactory
@@ -25,7 +26,7 @@ class AndroidRootComponentProvider(
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(pluginsModule)
+            modules(pluginsModule, commonModule)
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()
