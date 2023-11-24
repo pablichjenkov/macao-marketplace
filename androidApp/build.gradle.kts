@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.application")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.multiplatform).apply(true)
+    alias(libs.plugins.android.application).apply(true)
+    alias(libs.plugins.compose).apply(true)
 }
 
 kotlin {
@@ -13,15 +13,15 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.ui)
             implementation(compose.material3)
-            implementation("androidx.activity:activity-compose:1.8.1")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-            implementation("io.insert-koin:koin-core:3.5.0")
+            implementation(libs.androidx.activityCompose)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.core)
 
             // Third Party
-            implementation("io.github.pablichjenkov:amadeus-api:0.3.4")
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
+            implementation(libs.amadeus.api)
+            implementation(libs.component.toolkit)
         }
     }
 }
