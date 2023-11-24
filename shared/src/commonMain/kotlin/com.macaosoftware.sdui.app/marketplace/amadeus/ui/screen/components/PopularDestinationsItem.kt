@@ -44,7 +44,7 @@ import io.kamel.image.asyncPainterResource
 fun PopularList(apiResponse: CityCodeHotel) {
     Row(
         modifier = Modifier.fillMaxWidth()
-            .padding(start = 12.dp, end = 12.dp, top = 25.dp),
+            .padding(start = 6.dp, end = 12.dp, top = 25.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -72,7 +72,7 @@ fun PopularList(apiResponse: CityCodeHotel) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(apiResponse.dataList) { hotelDetails ->

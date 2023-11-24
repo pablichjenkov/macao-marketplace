@@ -51,7 +51,7 @@ import io.kamel.image.asyncPainterResource
 fun NearByLocationList(apiResponse: CityCodeHotel) {
     Row(
         modifier = Modifier.fillMaxWidth()
-            .padding(start = 12.dp, end = 12.dp, top = 25.dp),
+            .padding(start = 6.dp, end = 12.dp, top = 25.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -78,7 +78,7 @@ fun NearByLocationList(apiResponse: CityCodeHotel) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(6.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.Top
     ) {

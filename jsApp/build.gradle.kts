@@ -1,8 +1,8 @@
 // import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose)
 }
 
 kotlin {
@@ -23,17 +23,17 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(project(":shared"))
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-            implementation("io.insert-koin:koin-core:3.5.0")
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.coroutines.core.js)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.core)
             implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
             implementation(npm("sql.js", "1.8.0"))
 
             // Third Party
-            implementation("io.github.pablichjenkov:amadeus-api:0.3.4")
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
+            implementation(libs.amadeus.api)
+            implementation(libs.component.toolkit)
         }
     }
 }

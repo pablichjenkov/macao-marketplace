@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.macaosoftware.component.core.collectAsStateWithLifecycle
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.repository.Repository
@@ -38,7 +39,7 @@ class HotelOffers() : Screen {
         }
         hotelState = viewModel.hotels.collectAsState().value
 
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+        Column(modifier = Modifier.windowInsetsPadding(WindowInsets(8.dp))) {
 
             when (hotelState) {
                 is HotelOffersState.Loading -> {

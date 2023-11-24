@@ -66,7 +66,7 @@ class DetailScreen(
         val navigator = LocalNavigator.current
         val image: Resource<Painter> = asyncPainterResource(data = imageUrl)
         Column(
-            modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+            modifier = Modifier.windowInsetsPadding(WindowInsets(8.dp))
                 .verticalScroll(state = rememberScrollState())
         ) {
 

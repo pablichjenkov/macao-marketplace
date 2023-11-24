@@ -49,7 +49,7 @@ class TravelScreen() : Screen {
         }
         travelState = viewModel.travel.collectAsState().value
 
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+        Column(modifier = Modifier.windowInsetsPadding(WindowInsets(8.dp))) {
 
             //Soon Will work on this....
             //Text("TravelScreen Recommendations")

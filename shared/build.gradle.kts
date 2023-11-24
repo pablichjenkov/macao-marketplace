@@ -1,8 +1,8 @@
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
-    kotlin("plugin.serialization")
-    id("com.github.gmazzo.buildconfig")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.gmazzo)
 }
 
 version = "1.0.0"
@@ -39,37 +39,37 @@ kotlin {
             implementation(compose.materialIconsExtended)
 
             //Awesome Icons
-            implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
+            implementation(libs.font.awesome)
 
             //Moko MVVM
-            implementation("dev.icerock.moko:mvvm-core:0.16.1")
+            implementation(libs.mvvm.core)
 
             //Kamel
-            implementation("media.kamel:kamel-image:0.8.3")
+            implementation(libs.kamel.image)
 
             //Voygar
-            implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc09")
+            implementation(libs.voyager.navigator)
 
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-            implementation("org.jetbrains.compose.components:components-resources:1.5.10")
-            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
-            implementation("io.insert-koin:koin-core:3.5.0")
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.components.resources)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.koin.core)
 
             // Third Party
-            implementation("io.github.pablichjenkov:amadeus-api:0.3.4")
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
+            implementation(libs.amadeus.api)
+            implementation(libs.component.toolkit)
 
             // ktor
-            implementation("io.ktor:ktor-client-core:$ktorVersion")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-            implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-            implementation("io.ktor:ktor-client-logging:$ktorVersion")
+            implementation(libs.ktor.core)
+            implementation(libs.io.ktor.ktor.client.serialization)
+            implementation(libs.io.ktor.client.content.negotiation)
+            implementation(libs.io.ktor.ktor.client.serialization)
+            implementation(libs.ktor.client.logging)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation("io.insert-koin:koin-test:3.5.0")
+            implementation(libs.koin.test)
         }
     }
 

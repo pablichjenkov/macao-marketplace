@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -76,16 +78,14 @@ class HomeScreen() : Screen {
 
 
         Column(
-            modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing).fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.windowInsetsPadding(WindowInsets(8.dp)),
         ) {
 
             TextField(
                 value = searchText,
                 onValueChange = { searchText = it },
                 Modifier
-                    .padding(top = 20.dp)
+                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
                     .border(
                         width = 1.dp,
                         color = Color(0xFFD6D6D6),

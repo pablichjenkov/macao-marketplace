@@ -41,7 +41,7 @@ class ScheduleScreen() : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        Column(modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
+        Column(modifier = Modifier.windowInsetsPadding(WindowInsets(8.dp))) {
 
 
             // Row containing both the image and the details
