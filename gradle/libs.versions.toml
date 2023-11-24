@@ -1,0 +1,82 @@
+[versions]
+
+amadeusApi = "0.3.4"
+componentsResources = "1.5.10"
+componentToolkit = "0.5.10"
+kamelImage = "0.8.3"
+koinCore = "3.5.0"
+kotlin = "1.9.20"
+agp = "8.1.2"
+compose = "1.5.10"
+androidx-appcompat = "1.6.1"
+androidx-activityCompose = "1.8.1"
+compose-uitooling = "1.5.4"
+libres = "1.2.1"
+precompose = "1.5.6"
+skiko = "0.7.85"
+voyager = "1.0.0-rc10"
+composeImageLoader = "1.7.0"
+napier = "2.6.1"
+kotlinx-coroutines = "1.7.3"
+moko-mvvm = "0.16.1"
+ktor = "2.3.6"
+gson = "2.10.1"
+composeIcons = "1.1.0"
+kotlinx-serialization = "1.6.0"
+kotlinx-datetime = "0.4.1"
+multiplatformSettings = "1.1.0"
+gmazzo = "4.0.4"
+sqldeligh = "2.0.0"
+dokka = "1.9.10"
+realm = "1.12.0"
+
+[libraries]
+
+amadeus-api = { module = "io.github.pablichjenkov:amadeus-api", version.ref = "amadeusApi" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+component-toolkit = { module = "io.github.pablichjenkov:component-toolkit", version.ref = "componentToolkit" }
+components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "componentsResources" }
+compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+font-awesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
+kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
+kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
+mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "moko-mvvm" }
+precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
+precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose" }
+skiko = { module = "org.jetbrains.skiko:skiko", version.ref = "skiko" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+moko-mvvm = { module = "dev.icerock.moko:mvvm-compose", version.ref = "moko-mvvm" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+composeIcons-featherIcons = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "composeIcons" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
+io-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+io-ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version = "1.0.0-alpha01" }
+
+[plugins]
+
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+gmazzo = { id = "com.github.gmazzo.buildconfig", version.ref = "gmazzo" }
+sqldeligh = { id = "app.cash.sqldelight", version.ref = "sqldeligh" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+realm = { id = "io.realm.kotlin", version.ref = "realm" }

@@ -1,8 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose)
 }
 
 kotlin {
@@ -12,14 +12,14 @@ kotlin {
             implementation(project(":shared"))
             implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-            implementation("io.insert-koin:koin-core:3.5.0")
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.core)
 
             // Third Party
-            implementation("io.github.pablichjenkov:amadeus-api:0.3.4")
-            implementation("io.github.pablichjenkov:component-toolkit:0.5.10")
+            implementation(libs.amadeus.api)
+            implementation(libs.component.toolkit)
         }
     }
 }
