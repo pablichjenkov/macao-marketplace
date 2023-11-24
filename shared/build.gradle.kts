@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.mvvm.core)
 
             //Kamel
+<<<<<<< HEAD
             implementation(libs.kamel.image)
 
             //Voygar
@@ -55,6 +56,18 @@ kotlin {
             implementation(libs.components.resources)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+=======
+            implementation("media.kamel:kamel-image:0.8.3")
+
+            //Voyager
+            implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc10")
+
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            implementation("org.jetbrains.compose.components:components-resources:1.5.10")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+            implementation("io.insert-koin:koin-core:3.5.0")
+>>>>>>> origin
 
             // Third Party
             implementation(libs.amadeus.api)

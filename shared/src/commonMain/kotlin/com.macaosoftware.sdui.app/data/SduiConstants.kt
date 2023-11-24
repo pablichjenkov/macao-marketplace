@@ -32,10 +32,20 @@ object SduiConstants {
         const val PanelSetting = "PanelSetting"
 
         //Amadeus Api Screens
+<<<<<<< HEAD
         const val HomeScreen = "HomeScreen"
         const val ScheduleScreen = "ScheduleScreen"
         const val HotelOffers = "HotelOffers"
         const val Travel = "TravelScreen"
         const val Profile = "Profile"
+=======
+        object Amadeus {
+            const val HomeScreen = "HomeScreen"
+            const val ScheduleScreen = "ScheduleScreen"
+            const val HotelOffers = "HotelOffers"
+            const val Travel = "TravelScreen"
+            const val Profile = "Profile"
+        }
+>>>>>>> origin
     }
 }

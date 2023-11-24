@@ -1,11 +1,13 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.data.remote
 
+<<<<<<< HEAD
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.CityCodeHotel
+=======
+>>>>>>> origin
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.hoteloffers.HotelOffers
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.hotels.Hotels
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.travel.Travel
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.Authorization
-import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.BASE_URL
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.Token
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -54,16 +56,19 @@ object KtorClientApi {
         }
     }
 
-    suspend fun getHotelByCity(cityCode: String): CityCodeHotel {
-        val url = "$BASE_URL/reference-data/locations/hotels/by-city?cityCode=${cityCode}"
-        return client.get(url).body()
-    }
-
     suspend fun getHotelOffers(hotelId: String): HotelOffers {
         val url = "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${hotelId}"
         return client.get(url).body()
     }
 
+<<<<<<< HEAD
+    suspend fun getHotelOffers(hotelId: String): HotelOffers {
+        val url = "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=${hotelId}"
+        return client.get(url).body()
+    }
+
+=======
+>>>>>>> origin
     suspend fun getHotels(): Hotels {
         val url = "https://test.api.amadeus.com/v1/reference-data/locations/hotel?keyword=Star&subType=HOTEL_LEISURE&subType=HOTEL_GDS&countryCode=US&lang=EN&max=20"
         return client.get(url).body()

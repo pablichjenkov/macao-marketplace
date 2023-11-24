@@ -21,14 +21,18 @@ import com.macaosoftware.component.navbar.BottomNavigationComponent
 import com.macaosoftware.component.navbar.BottomNavigationComponentDefaults
 import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentDefaults
+import com.macaosoftware.component.topbar.TopBarComponent
+import com.macaosoftware.component.topbar.TopBarComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.data.SduiConstants
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeComponentView
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
@@ -47,10 +51,16 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFact
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModelFactory
+<<<<<<< HEAD
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeScreenViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.viewmodel.AHomeViewModelFactory
+=======
+>>>>>>> origin
 import com.macaosoftware.sdui.app.marketplace.error.ComponentMissingImplementation
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBar
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarFactory
+import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarViewModel
 import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationSduiHandler
 import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigator.drawer.DrawerSduiHandler
@@ -60,26 +70,26 @@ import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelViewModel.Pan
 import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelSettingViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.settings.PanelSettingComponentView
-import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBar
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsComponentView
-import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModel
-import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarFactory
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
+import com.pablichj.incubator.amadeus.Database
+import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 class SduiComponentFactory(
     private val koinApplication: KoinApplication
-) : KoinComponent {
+) : MacaoComponentFactory, KoinComponent {
 
     override fun getKoin(): Koin = koinApplication.koin
 
-    fun getNavItemOf(
+    override fun getNavItemOf(
         componentJson: JsonObject
     ): NavItem {
         val childComponentType: String =
@@ -162,9 +172,8 @@ class SduiComponentFactory(
                 )
             }
 
-
-            //Amadeus Api Screens
-            SduiConstants.ComponentType.HomeScreen -> {
+            // Amadeus Api Screens
+            SduiConstants.ComponentType.Amadeus.HomeScreen -> {
                 NavItem(
                     label = "Home",
                     component = getComponentInstanceOf(componentJson),
@@ -172,7 +181,11 @@ class SduiComponentFactory(
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.ScheduleScreen -> {
+=======
+            SduiConstants.ComponentType.Amadeus.ScheduleScreen -> {
+>>>>>>> origin
                 NavItem(
                     label = "Schedule",
                     component = getComponentInstanceOf(componentJson),
@@ -180,7 +193,11 @@ class SduiComponentFactory(
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.HotelOffers -> {
+=======
+            SduiConstants.ComponentType.Amadeus.HotelOffers -> {
+>>>>>>> origin
                 NavItem(
                     label = "Offers",
                     component = getComponentInstanceOf(componentJson),
@@ -188,7 +205,11 @@ class SduiComponentFactory(
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.Travel -> {
+=======
+            SduiConstants.ComponentType.Amadeus.Travel -> {
+>>>>>>> origin
                 NavItem(
                     label = "Travel",
                     component = getComponentInstanceOf(componentJson),
@@ -196,7 +217,11 @@ class SduiComponentFactory(
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.Profile -> {
+=======
+            SduiConstants.ComponentType.Amadeus.Profile -> {
+>>>>>>> origin
                 NavItem(
                     label = "Profile",
                     component = getComponentInstanceOf(componentJson),
@@ -207,7 +232,7 @@ class SduiComponentFactory(
             else -> {
                 println("Missing NavItem factory for $childComponentType")
                 NavItem(
-                    label = "Missing Factory",
+                    label = "Missing_Factory",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.Close
                 )
@@ -215,7 +240,7 @@ class SduiComponentFactory(
         }
     }
 
-    fun getComponentInstanceOf(
+    override fun getComponentInstanceOf(
         componentJson: JsonObject
     ): Component {
 
@@ -312,35 +337,59 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.HomeScreen -> {
-                StateComponent<AHomeScreenViewModel>(
-                    viewModelFactory = AHomeViewModelFactory(),
-                    content = AHomeScreen
+            SduiConstants.ComponentType.Amadeus.HomeScreen -> {
+
+                val database : Database = get()
+                val timeProvider : ITimeProvider = get()
+
+                TopBarComponent<AmadeusHomeCoordinatorViewModel>(
+                    viewModelFactory = AmadeusHomeCoordinatorViewModelFactory(
+                        TopBarComponentDefaults.createTopBarStatePresenter(),
+                        database,
+                        timeProvider
+                    ),
+                    content = TopBarComponentDefaults.TopBarComponentView
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.ScheduleScreen -> {
+=======
+            SduiConstants.ComponentType.Amadeus.ScheduleScreen -> {
+>>>>>>> origin
                 StateComponent<ScheduleViewModel>(
                     viewModelFactory = ScheduleViewModelFactory(),
                     content = ScheduleComponentView
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.HotelOffers -> {
+=======
+            SduiConstants.ComponentType.Amadeus.HotelOffers -> {
+>>>>>>> origin
                 StateComponent<OffersViewModel>(
                     viewModelFactory = OffersViewModelFactory(),
                     content = OffersComponentView
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.Travel -> {
+=======
+            SduiConstants.ComponentType.Amadeus.Travel -> {
+>>>>>>> origin
                 StateComponent<TravelViewModel>(
                     viewModelFactory = TravelViewModelFactory(),
                     content = TravelComponentView
                 )
             }
 
+<<<<<<< HEAD
             SduiConstants.ComponentType.Profile -> {
+=======
+            SduiConstants.ComponentType.Amadeus.Profile -> {
+>>>>>>> origin
                 StateComponent<ProfileViewModel>(
                     viewModelFactory = ProfileViewModelFactory(),
                     content = ProfileComponentView

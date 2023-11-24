@@ -10,6 +10,9 @@ import com.macaosoftware.component.IosComponentRender
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.platform.DefaultAppLifecycleDispatcher
 import com.macaosoftware.platform.IosBridge
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import platform.UIKit.UIViewController
 
 fun buildDemoViewController(
@@ -28,7 +31,10 @@ fun buildDemoMacaoApplication(
     IosMacaoApplication(
         iosBridge = iosBridge,
         onBackPress = onBackPress,
-        rootComponentProvider = IosRootComponentProvider(iosBridge)
+        macaoApplicationState = MacaoApplicationState(
+            Dispatchers.IO,
+            IosRootComponentProvider(iosBridge)
+        )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Text(

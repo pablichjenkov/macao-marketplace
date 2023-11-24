@@ -2,6 +2,7 @@ package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.DesktopDriverFactory
@@ -19,7 +20,7 @@ class JvmRootComponentProvider : RootComponentProvider {
         }
         val koinRootContainer = koinApplication {
             printLogger()
-            modules(pluginsModule)
+            modules(pluginsModule, commonModule)
         }
 
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)

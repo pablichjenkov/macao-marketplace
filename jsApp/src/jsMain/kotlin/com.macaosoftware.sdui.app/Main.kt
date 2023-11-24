@@ -8,6 +8,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.platform.JsBridge
+import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skiko.wasm.onWasmReady
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -15,13 +17,18 @@ fun main() {
     onWasmReady {
         val jsBridge = JsBridge()
         val rootComponentProvider = BrowserRootComponentProvider(jsBridge)
+        val macaoApplicationState = MacaoApplicationState(
+            Dispatchers.Default,
+            rootComponentProvider
+        )
+
         CanvasBasedWindow("Macao SDUI Demo") {
             BrowserMacaoApplication(
                 jsBridge = jsBridge,
                 onBackPress = {
                     println("Back press dispatched in root node")
                 },
-                rootComponentProvider = rootComponentProvider
+                macaoApplicationState = macaoApplicationState
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
