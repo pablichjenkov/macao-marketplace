@@ -33,15 +33,15 @@ class AmadeusHomeCoordinatorViewModel(
     private var currentComponent: Component? = null
 
     override fun onAttach() {
-        println("AmadeusHomeCoordinatorViewModel -  onAttach() : ")
+        println("AmadeusHomeCoordinatorViewModel -  onAttach()")
     }
 
     override fun onDetach() {
-        println("AmadeusHomeCoordinatorViewModel -  onDetach() : ")
+        println("AmadeusHomeCoordinatorViewModel -  onDetach()")
     }
 
     override fun onStart() {
-        println("AmadeusHomeCoordinatorViewModel -  onStart() : ")
+        println("AmadeusHomeCoordinatorViewModel -  onStart()")
 
         println("${topBarComponent.instanceId()}::AmadeusHomeCoordinatorViewModel::onStart()")
         val shouldPushFirstChild: Boolean = if (currentComponent == null) {
@@ -58,7 +58,12 @@ class AmadeusHomeCoordinatorViewModel(
     }
 
     override fun onStop() {
-        println("AmadeusHomeCoordinatorViewModel -  onStop() : ")
+        println("AmadeusHomeCoordinatorViewModel -  onStop()")
+    }
+
+    override fun handleBackPressed(): Boolean {
+        println("AmadeusHomeCoordinatorViewModel -  handleBackPressed()")
+        return false
     }
 
     override fun mapComponentToStackBarItem(topComponent: Component): TopBarItem {

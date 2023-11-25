@@ -3,7 +3,7 @@ package com.macaosoftware.sdui.app
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.WindowState
 import com.macaosoftware.component.DesktopComponentRender
-import com.macaosoftware.platform.DesktopBridge
+import com.macaosoftware.plugin.DesktopBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 
 @Composable

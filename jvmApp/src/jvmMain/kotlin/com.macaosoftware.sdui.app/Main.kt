@@ -3,16 +3,13 @@ package com.macaosoftware.sdui.app
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
-import com.macaosoftware.platform.DesktopBridge
+import com.macaosoftware.plugin.DesktopBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlin.system.exitProcess
@@ -39,7 +36,7 @@ fun main() {
                 macaoApplicationState.fetchRootComponent()
             },
             onBackClick = {
-                desktopBridge.backPressDispatcher.dispatchBackPressed()
+                desktopBridge.backPressDispatcherPlugin.dispatchBackPressed()
             }
         ) {
             JvmMacaoApplication(

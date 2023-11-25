@@ -2,18 +2,16 @@
 
 amadeusApi = "0.3.4"
 componentsResources = "1.5.10"
-componentToolkit = "0.5.10"
-kamelImage = "0.8.3"
+componentToolkit = "0.5.11"
+kamelImage = "0.9.0"
 koinCore = "3.5.0"
-kotlin = "1.9.20"
-agp = "8.1.2"
-compose = "1.5.10"
+kotlin = "1.9.21"
+agp = "8.1.4"
+compose = "1.5.11"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.1"
 compose-uitooling = "1.5.4"
-libres = "1.2.1"
-precompose = "1.5.6"
-skiko = "0.7.85"
+skiko = "0.7.88"
 voyager = "1.0.0-rc10"
 composeImageLoader = "1.7.0"
 napier = "2.6.1"
@@ -45,10 +43,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "moko-mvvm" }
-precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
-precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose" }
 skiko = { module = "org.jetbrains.skiko:skiko", version.ref = "skiko" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
@@ -74,7 +69,6 @@ androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version = "1
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 android-application = { id = "com.android.application", version.ref = "agp" }
-libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 gmazzo = { id = "com.github.gmazzo.buildconfig", version.ref = "gmazzo" }
 sqldeligh = { id = "app.cash.sqldelight", version.ref = "sqldeligh" }

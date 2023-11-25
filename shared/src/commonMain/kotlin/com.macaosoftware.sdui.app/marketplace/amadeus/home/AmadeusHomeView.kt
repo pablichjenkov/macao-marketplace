@@ -40,6 +40,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.core.collectAsStateWithLifecycle
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.NearByLocationList
@@ -58,6 +59,7 @@ val AmadeusHomeView: @Composable StateComponent<AmadeusHomeViewModel>.(
         .hotelByCityCode
         .collectAsStateWithLifecycle(this)
 
+    BackPressHandler()
     AmadeusHomeScreen(hotelState) {
         viewModel.hotelCardClick(it)
     }
