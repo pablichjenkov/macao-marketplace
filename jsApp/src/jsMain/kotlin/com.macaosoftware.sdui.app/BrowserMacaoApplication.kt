@@ -8,7 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.macaosoftware.component.BrowserComponentRender
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.JsBridge
+import com.macaosoftware.plugin.JsBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

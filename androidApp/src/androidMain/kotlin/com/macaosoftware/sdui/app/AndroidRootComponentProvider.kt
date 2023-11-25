@@ -2,7 +2,6 @@ package com.macaosoftware.sdui.app
 
 import android.content.Context
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.AndroidBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
@@ -15,7 +14,6 @@ import org.koin.dsl.module
 
 class AndroidRootComponentProvider(
     private val context: Context,
-    private val androidBridge: AndroidBridge
 ) : RootComponentProvider {
 
     override suspend fun provideRootComponent(): Component {

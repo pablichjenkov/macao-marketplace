@@ -1,8 +1,8 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.AppLifecycleDispatcher
-import com.macaosoftware.platform.IosBridge
+import com.macaosoftware.plugin.AppLifecycleDispatcher
+import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory

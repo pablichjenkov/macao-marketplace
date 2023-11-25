@@ -1,8 +1,8 @@
 package com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation
 
-import com.macaosoftware.component.navbar.BottomNavigationComponent
-import com.macaosoftware.component.navbar.BottomNavigationComponentViewModelFactory
-import com.macaosoftware.component.navbar.BottomNavigationStatePresenterDefault
+import com.macaosoftware.component.bottomnavigation.BottomNavigationComponent
+import com.macaosoftware.component.bottomnavigation.BottomNavigationComponentViewModelFactory
+import com.macaosoftware.component.bottomnavigation.BottomNavigationStatePresenterDefault
 
 class BottomNavigationViewModelFactory(
     private val sduiHandler: BottomNavigationSduiHandler,

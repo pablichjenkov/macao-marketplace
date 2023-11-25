@@ -1,7 +1,7 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.platform.JsBridge
+import com.macaosoftware.plugin.JsBridge
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
