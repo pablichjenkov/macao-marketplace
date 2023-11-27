@@ -35,6 +35,8 @@ object SduiConstants {
             const val HotelOffers = "HotelOffers"
             const val Travel = "TravelScreen"
             const val Profile = "Profile"
+            const val Login = "Login"
+            const val Signup = "Signup"
         }
     }
 }

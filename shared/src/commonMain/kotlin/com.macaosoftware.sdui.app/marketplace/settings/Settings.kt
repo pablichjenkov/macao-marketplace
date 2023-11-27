@@ -37,6 +37,7 @@ import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelViewModel.Pan
 @Composable
 fun PaymentCardOptionUI() {
     var cardNumber by remember { mutableStateOf("") }
+    var cardHolderName by remember { mutableStateOf("") }
     var expirationDate by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
 
@@ -54,8 +55,7 @@ fun PaymentCardOptionUI() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            //Payment Setup
-
+            // Payment Setup
             Text(
                 text = "Payment Setup",
                 textAlign = TextAlign.Center,
@@ -69,6 +69,13 @@ fun PaymentCardOptionUI() {
                 onValueChange = { cardNumber = it },
                 label = { Text("Card Number") },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            )
+
+            // Card Holder Name
+            OutlinedTextField(
+                value = cardHolderName,
+                onValueChange = { cardHolderName = it },
+                label = { Text("Card Holder Name") }
             )
 
             // Expiration Date
@@ -94,7 +101,7 @@ fun PaymentCardOptionUI() {
             Button(
                 onClick = {
                     // Add logic to save credit card details
-                    // You can use settingsViewModel to handle saving
+                    // You can use panelSettingViewModel to handle saving
                 },
                 modifier = Modifier
                     .wrapContentWidth()
@@ -106,6 +113,7 @@ fun PaymentCardOptionUI() {
         }
     }
 }
+
 
 
 val PanelSettingComponentView: @Composable StateComponent<PanelSettingViewModel>.(
