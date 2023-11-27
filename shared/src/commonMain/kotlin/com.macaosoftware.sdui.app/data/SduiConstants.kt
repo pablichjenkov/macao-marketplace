@@ -37,6 +37,7 @@ object SduiConstants {
             const val Profile = "Profile"
             const val Login = "Login"
             const val Signup = "Signup"
+            const val Forget = "Forget"
         }
     }
 }

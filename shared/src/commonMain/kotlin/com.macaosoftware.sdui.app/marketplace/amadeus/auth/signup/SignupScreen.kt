@@ -1,11 +1,13 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -23,8 +25,11 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
-class SignUpScreen : Screen {
+class SignUpScreen() : Screen {
+    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         var username by remember { mutableStateOf("") }
@@ -43,6 +48,15 @@ class SignUpScreen : Screen {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+
+                Image(
+                    painter = painterResource("logo.png"),
+                    contentDescription = null,
+                    modifier = Modifier.size(250.dp)
+                )
+
+
                 // Username TextField
                 OutlinedTextField(
                     value = username,
