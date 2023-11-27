@@ -1,5 +1,6 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +50,8 @@ import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.SlidersH
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 val AmadeusHomeView: @Composable StateComponent<AmadeusHomeViewModel>.(
     modifier: Modifier,
@@ -65,6 +68,7 @@ val AmadeusHomeView: @Composable StateComponent<AmadeusHomeViewModel>.(
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun AmadeusHomeScreen(
     hotelState: HotelState,
@@ -78,6 +82,12 @@ private fun AmadeusHomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //Logo
+        Image(
+            painter = painterResource("logo.png"),
+            contentDescription = null,
+            modifier = Modifier.size(150.dp)
+        )
         TextField(
             value = searchText,
             onValueChange = { searchText = it },
