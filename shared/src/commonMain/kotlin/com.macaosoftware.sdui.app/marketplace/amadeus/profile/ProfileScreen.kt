@@ -3,24 +3,21 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.profile
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ConnectWithoutContact
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.InstallMobile
@@ -42,11 +39,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
 import io.kamel.core.Resource
@@ -56,6 +55,8 @@ import io.kamel.image.asyncPainterResource
 class ProfileScreen() : Screen {
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.current
+        val uriHandler = LocalUriHandler.current
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             // Row containing both the image and the details
@@ -89,7 +90,9 @@ class ProfileScreen() : Screen {
                                 contentAlignment = Alignment.TopStart,
                             ) {
                                 IconButton(
-                                    onClick = {},
+                                    onClick = {
+                                        navigator?.pop()
+                                    },
                                     enabled = true,
                                     modifier = Modifier.clip(
                                         shape = RoundedCornerShape(6.dp)
@@ -130,7 +133,9 @@ class ProfileScreen() : Screen {
                                 contentAlignment = Alignment.TopStart,
                             ) {
                                 IconButton(
-                                    onClick = {},
+                                    onClick = {
+                                        // navigator?.push(SettingsComponentView())
+                                    },
                                     enabled = true,
                                     modifier = Modifier.clip(
                                         shape = RoundedCornerShape(6.dp)
@@ -169,7 +174,8 @@ class ProfileScreen() : Screen {
                                 contentScale = ContentScale.Crop
                             )
 
-                            OutlinedButton(onClick = {},
+                            OutlinedButton(
+                                onClick = {},
                                 modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
                                 enabled = true,
                                 shape = ButtonDefaults.outlinedShape,
@@ -178,8 +184,11 @@ class ProfileScreen() : Screen {
                                     containerColor = Color.White,
                                     contentColor = MaterialTheme.colorScheme.primary
                                 ),
-                                border = BorderStroke(2.dp, color = MaterialTheme.colorScheme.primary)
-                                ){
+                                border = BorderStroke(
+                                    2.dp,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            ) {
                                 Text(text = "Edit Profile")
                             }
 
@@ -226,33 +235,46 @@ class ProfileScreen() : Screen {
                         // Add more items as needed
                         Text(
                             text = "Location: City, Country",
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
+
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
                             text = "Email: john.doe@example.com",
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.clickable {
+                                uriHandler.openUri("john.doe@example.com")
+                            }
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
                             text = "Phone: +1 (555) 123-4567",
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.clickable {
+                                uriHandler.openUri("+1 (555) 123-4567")
+                            }
                         )
 
                         // Social links
-                            Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Start,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            SocialLink(icon = Icons.Default.Facebook, link = "https://www.facebook.com/")
+                            SocialLink(
+                                icon = Icons.Default.Facebook,
+                                link = "https://www.facebook.com/"
+                            )
                             SocialLink(icon = Icons.Default.Email, link = "https://email.com/")
-                            SocialLink(icon = Icons.Default.InstallMobile, link = "https://www.instagram.com/")
+                            SocialLink(
+                                icon = Icons.Default.InstallMobile,
+                                link = "https://www.instagram.com/"
+                            )
                         }
 
                     }

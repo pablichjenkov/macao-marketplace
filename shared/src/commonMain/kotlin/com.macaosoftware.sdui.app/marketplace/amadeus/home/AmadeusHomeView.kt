@@ -118,7 +118,8 @@ private fun AmadeusHomeScreen(
             },
             trailingIcon = {
                 IconButton(
-                    onClick = {},
+                    onClick = {
+                    },
                     modifier = Modifier
                         .width(28.dp)
                         .height(28.dp)

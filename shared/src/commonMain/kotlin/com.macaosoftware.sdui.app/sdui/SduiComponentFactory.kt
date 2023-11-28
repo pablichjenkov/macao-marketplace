@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Login
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -36,6 +37,9 @@ import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
@@ -207,6 +211,14 @@ class SduiComponentFactory(
                 )
             }
 
+            SduiConstants.ComponentType.Amadeus.Login -> {
+                NavItem(
+                    label = "Login",
+                    component = getComponentInstanceOf(componentJson),
+                    icon = Icons.Filled.Login
+                )
+            }
+
             else -> {
                 println("Missing NavItem factory for $childComponentType")
                 NavItem(
@@ -355,6 +367,13 @@ class SduiComponentFactory(
                 StateComponent<ProfileViewModel>(
                     viewModelFactory = ProfileViewModelFactory(),
                     content = ProfileComponentView
+                )
+            }
+
+            SduiConstants.ComponentType.Amadeus.Login -> {
+                StateComponent<LoginViewModel>(
+                    viewModelFactory = LoginViewModelFactory(),
+                    content = LoginComponentView
                 )
             }
 
