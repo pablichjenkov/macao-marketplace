@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -43,138 +44,77 @@ class ScheduleScreen() : Screen {
     @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
-        Column(modifier = Modifier.fillMaxSize()) {//windowInsetsPadding(WindowInsets.safeDrawing)
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Custom Top App Bar
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp, top = 2.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+//                CustomLogo(
+//                    res = "logo.png",
+//                    modifier = Modifier,
+//                    size = 140.dp
+//                )
 
-
-            // Row containing both the image and the details
-            Row(modifier = Modifier.fillMaxSize()) {
-
-                // Left side with image
-                Box(modifier = Modifier.weight(0.45f)) {
-
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        //Custom Top App Bar
-                        Row(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(start = 4.dp, end = 4.dp, top = 2.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            // You the Json To replace the Logo....
-                            CustomLogo(
-                                res = "logo.png",
-                                modifier = Modifier,
-                                size = 140.dp
-                            )
-
-                            Box(
-                                modifier = Modifier
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color(0xFFEDEDED),
-                                        shape = RoundedCornerShape(size = 8.dp)
-                                    )
-                                    .width(40.dp)
-                                    .height(40.dp)
-                                    .background(
-                                        color = Color(0xFFFFFFFF),
-                                        shape = RoundedCornerShape(size = 8.dp)
-                                    )
-                                    .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
-                                contentAlignment = Alignment.TopStart,
-                            ) {
-                                IconButton(
-                                    onClick = {},
-                                    enabled = true,
-                                    modifier = Modifier.clip(
-                                        shape = RoundedCornerShape(6.dp)
-                                    ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.KeyboardArrowLeft,
-                                        contentDescription = null
-                                    )
-                                }
-                            }
-
-                            Text(
-                                text = "Schedule",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    lineHeight = 24.sp,
-                                    fontWeight = FontWeight(700),
-                                    color = Color(0xFF101010),
-                                )
-                            )
-
-                            //Setting
-                            Box(
-                                modifier = Modifier
-                                    .border(
-                                        width = 1.dp,
-                                        color = Color(0xFFEDEDED),
-                                        shape = RoundedCornerShape(size = 8.dp)
-                                    )
-                                    .width(40.dp)
-                                    .height(40.dp)
-                                    .background(
-                                        color = Color(0xFFFFFFFF),
-                                        shape = RoundedCornerShape(size = 8.dp)
-                                    )
-                                    .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 8.dp),
-                                contentAlignment = Alignment.TopStart,
-                            ) {
-                                IconButton(
-                                    onClick = {},
-                                    enabled = true,
-                                    modifier = Modifier.clip(
-                                        shape = RoundedCornerShape(6.dp)
-                                    ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Settings,
-                                        contentDescription = null
-                                    )
-                                }
-                            }
-                        }
-
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(8.dp),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            //Date Content
-                            val dateState = rememberDateRangePickerState()
-                            DateRangePicker(
-                                state = dateState
-                            )
-                        }
-                    }
-                }
-
-                // Divider between left and right sides
-                Divider(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(2.dp), // Adjust the width of the divider as needed
-                    thickness = 2.dp,
-                    color = Color.LightGray
+                Text(
+                    text = "Logo Template",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
                 )
 
-                // Right side with details
-                Box(modifier = Modifier.weight(0.55f)) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.Top,
-                        horizontalAlignment = Alignment.Start
+                // Navigation and Settings Icons
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    IconButton(
+                        onClick = {},
+                        enabled = true,
+                        modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
                     ) {
-                        MySchedules()
+                        Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+                    }
+
+                    IconButton(
+                        onClick = {},
+                        enabled = true,
+                        modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
+                    ) {
+                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
                     }
                 }
             }
 
-        }
+            // Date Content
+            val dateState = rememberDateRangePickerState()
+            DateRangePicker(
+                state = dateState,
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
+            )
 
+            // Divider between left and right sides
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp), // Adjust the height of the divider as needed
+                thickness = 2.dp,
+                color = Color.LightGray
+            )
+
+            // Right side with details
+            Box(modifier = Modifier.weight(0.55f)) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    MySchedules()
+                }
+            }
+        }
     }
 }

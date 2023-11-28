@@ -1,6 +1,5 @@
 package com.macaosoftware.sdui.app.marketplace.settings.legal
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,135 +7,142 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.HomeScreen
+import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PRIVACY
+import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.TERMS
+import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.WELCOME
+import com.macaosoftware.sdui.app.marketplace.settings.SettingScreen
 
 
-@Composable
-fun LegalScreen(
-    modifier: Modifier = Modifier,
-    legalViewModel: LegalViewModel,
-    onSkip: () -> Unit,
-    onNext: () -> Unit
-) {
-    // Create a list of legal content
-    val legalContent = listOf(
-        "Terms and Conditions\n\nBy using this application, you agree to abide by the terms and conditions outlined in this agreement. Failure to comply may result in the termination of your account.",
-        "Privacy Policy\n\nYour privacy is important to us. This policy outlines how we collect, use, and share your personal information. By using the app, you consent to our privacy practices.",
-        "Thank you for using our app!"
-    )
+class LegalScreen : Screen {
+    @Composable
+    override fun Content() {
+        // Create a list of legal content
+        val legalContent = listOf(
+            TERMS,
+            PRIVACY,
+            WELCOME
+        )
 
-    // Create a ViewPager-like state
-    var currentPage by remember { mutableStateOf(0) }
+        // Create a ViewPager-like state
+        var currentPage by remember { mutableStateOf(0) }
+        val navigator = LocalNavigator.current
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
         ) {
-            // Legal content
-            LazyColumn(
+            Column(
                 modifier = Modifier
-                    .weight(1f)
+                    .fillMaxSize()
             ) {
-                items(legalContent.size) { index ->
-                    LegalPage(
-                        title = "Page ${index + 1}",
-                        content = legalContent[index],
-                        isCurrentPage = index == currentPage
+                // Legal content
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
+                    items(legalContent.size) { index ->
+                        LegalPage(
+                            title = if (index == 0) "Terms & Conditions" else if (index == 1) "Privacy Policy" else "Welcome",
+                            content = legalContent[index],
+                            isCurrentPage = index == currentPage
+                        )
+                    }
+                }
+
+                // Dot indicator
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    for (index in legalContent.indices) {
+                        DotIndicator(selected = index == currentPage)
+                    }
+                }
+
+                // Navigation buttons
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    NavigationButton(
+                        text = "Previous",
+                        onClick = { if (currentPage > 0) currentPage-- }
                     )
-                }
-            }
 
-            // Dot indicator
-            TabRow(
-                selectedTabIndex = currentPage,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                containerColor = Color.Transparent
-            ) {
-                legalContent.forEachIndexed { index, _ ->
-                    Tab(
-                        selected = index == currentPage,
-                        onClick = { currentPage = index }
+                    NavigationButton(
+                        text = "Skip",
+                        onClick = { currentPage = legalContent.size - 1 }
                     )
-                }
-            }
 
-            // Navigation buttons
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = {
-                        if (currentPage > 0) {
-                            currentPage--
+                    NavigationButton(
+                        text = if (currentPage < legalContent.size - 1) "Next" else "Finish",
+                        onClick = {
+                            if (currentPage < legalContent.size - 1) currentPage++ else navigator!!.push(SettingScreen())
+
                         }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                ) {
-                    Text(text = "Previous")
-                }
-
-                Button(
-                    onClick = { onSkip() },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp)
-                ) {
-                    Text(text = "Skip")
-                }
-
-                Button(
-                    onClick = {
-                        if (currentPage < legalContent.size - 1) {
-                            currentPage++
-                        } else {
-                            onNext()
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp)
-                ) {
-                    Text(text = if (currentPage < legalContent.size - 1) "Next" else "Finish")
+                    )
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DotIndicator(selected: Boolean) {
+    Box(
+        modifier = Modifier
+            .size(10.dp)
+            .background(
+                color = if (selected) Color.Gray else Color.LightGray,
+                shape = CircleShape
+            )
+            .padding(4.dp)
+    )
+}
+
+@Composable
+fun NavigationButton(text: String, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .wrapContentWidth()
+            .padding(end = 8.dp)
+    ) {
+        Text(text = text)
     }
 }
 
@@ -147,32 +153,42 @@ fun LegalPage(
     isCurrentPage: Boolean
 ) {
     if (isCurrentPage) {
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(600.dp)
                 .padding(16.dp)
+                .verticalScroll(state = rememberScrollState())
         ) {
-            // Legal content
-            Text(
-                text = content,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp),
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Title
+                Text(
+                    text = title,
+                    modifier = Modifier
+                        .padding(8.dp),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+                // Legal content
+                Text(
+                    text = content,
+                    modifier = Modifier
+                        .fillMaxSize(), // Remove weight here
+                    // .padding(16.dp),
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
 
-            // Title
-            Text(
-                text = title,
-                modifier = Modifier
-                    .padding(8.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+
+            }
         }
     }
 }
+
 
 
 

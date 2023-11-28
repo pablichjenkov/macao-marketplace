@@ -35,6 +35,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.InfoCard
@@ -60,172 +62,174 @@ val HotelDetailsView: @Composable StateComponent<HotelDetailsViewModel>.(
     HotelDetailsScreen(
         viewModel.hotelListing,
         viewModel.imageUrl
-    ) {
-        viewModel.onBackClicked()
-    }
+    )
 }
 
-@Composable
-private fun HotelDetailsScreen(
-    hotelListing: HotelListing,
-    imageUrl: String,
-    onBackPressed: () -> Unit
-) {
+class HotelDetailsScreen(
+   val  hotelListing: HotelListing,
+    val imageUrl: String,
+): Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.current
+        val image: Resource<Painter> = asyncPainterResource(data = imageUrl)
+        Column(
+            modifier = Modifier.fillMaxSize()//Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+                .verticalScroll(state = rememberScrollState())
+        ) {
 
-    val image: Resource<Painter> = asyncPainterResource(data = imageUrl)
-    Column(
-        modifier = Modifier.fillMaxSize()//Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
-            .verticalScroll(state = rememberScrollState())
-    ) {
+            // Row containing both the image and the details
+            Row(modifier = Modifier.fillMaxSize()) {
 
-        // Row containing both the image and the details
-        Row(modifier = Modifier.fillMaxSize()) {
+                // Left side with image
+                Box(modifier = Modifier.weight(0.45f)) {
+                    // Image
+                    KamelImage(
+                        resource = image,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
 
-            // Left side with image
-            Box(modifier = Modifier.weight(0.45f)) {
-                // Image
-                KamelImage(
-                    resource = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    // Back Icon
+                    IconButton(onClick = {
+                        navigator!!.pop()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "ArrowBack",
+                            tint = Color.White
+                        )
+                    }
+                }
+
+                // Divider between left and right sides
+                Divider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(2.dp), // Adjust the width of the divider as needed
+                    thickness = 2.dp,
+                    color = Color.Blue
                 )
 
-                // Back Icon
-                IconButton(onClick = onBackPressed) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "ArrowBack",
-                        tint = Color.White
-                    )
-                }
-            }
-
-            // Divider between left and right sides
-            Divider(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(2.dp), // Adjust the width of the divider as needed
-                thickness = 2.dp,
-                color = Color.Blue
-            )
-
-            // Right side with details
-            Box(modifier = Modifier.weight(0.55f)) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(12.dp),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    // Data.name text
-                    Text(
-                        text = hotelListing.name.toString(),
-                        style = TextStyle(
-                            fontSize = 22.sp,
-                            lineHeight = 28.sp, // Increased line height for better readability
-                            fontWeight = FontWeight(700),
-                        ),
-                        maxLines = 1,
-                        modifier = Modifier.padding(16.dp)
-                    )
-
-                    // Display address with icon
-                    hotelListing.address?.let { address ->
-                        Row(
-                            modifier = Modifier.padding(4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(FontAwesomeIcons.Solid.AddressCard, contentDescription = null, modifier = Modifier.size(20.dp))
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = address.toString(), style = MaterialTheme.typography.bodyLarge)
-                        }
-                    }
-
-                    // Display other details with icons as needed
-                    hotelListing.geoCode?.let { geoCode ->
-                        Row(
-                            modifier = Modifier.padding(4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(FontAwesomeIcons.Solid.SearchLocation, contentDescription = null, modifier = Modifier.size(20.dp))
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "Latitude: ${geoCode.latitude}, Longitude: ${geoCode.longitude}",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                // Right side with details
+                Box(modifier = Modifier.weight(0.55f)) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.Start
                     ) {
-                        // Wifi
-                        InfoCard(icon = FontAwesomeIcons.Solid.Wifi, label = "Free Wifi")
+                        // Data.name text
+                        Text(
+                            text = hotelListing.name.toString(),
+                            style = TextStyle(
+                                fontSize = 22.sp,
+                                lineHeight = 28.sp, // Increased line height for better readability
+                                fontWeight = FontWeight(700),
+                            ),
+                            maxLines = 1,
+                            modifier = Modifier.padding(16.dp)
+                        )
 
-                        // Breakfast
-                        InfoCard(icon = FontAwesomeIcons.Solid.Coffee, label = "Free Breakfast")
-
-                        // Rating
-                        InfoCard(icon = FontAwesomeIcons.Solid.Star, label = "5.0", tint = Color(0XFFFFD33C))
-                    }
-
-                    PriceField(
-                        price = "20.99 / Night", // Added "/ Night" to the price
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        currency = "$"
-                    )
-
-                    Text(
-                        text = "Description",
-                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = "Aston Hotel, Alice Springs NT 0870, Australia is a modern hotel. elegant 5 star hotel overlooking the sea. perfect for a romantic, charming Read More. . .",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = "Preview",
-                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
-                    )
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        repeat(4) {
-                            KamelImage(
-                                resource = image,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(98.dp)
-                                    .height(82.dp)
-                                    .clip(shape = RoundedCornerShape(16.dp)),
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
+                        // Display address with icon
+                        hotelListing.address?.let { address ->
+                            Row(
+                                modifier = Modifier.padding(4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(FontAwesomeIcons.Solid.AddressCard, contentDescription = null, modifier = Modifier.size(20.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = address.toString(), style = MaterialTheme.typography.bodyLarge)
+                            }
                         }
-                    }
 
-                    TextButton(
-                        onClick = {},
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = true,
-                        shape = MaterialTheme.shapes.medium,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0XFF4C4DDC),
-                            contentColor = Color.White,
-                        ),
-                    ) {
-                        Text(text = "Book Now")
+                        // Display other details with icons as needed
+                        hotelListing.geoCode?.let { geoCode ->
+                            Row(
+                                modifier = Modifier.padding(4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(FontAwesomeIcons.Solid.SearchLocation, contentDescription = null, modifier = Modifier.size(20.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Latitude: ${geoCode.latitude}, Longitude: ${geoCode.longitude}",
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            // Wifi
+                            InfoCard(icon = FontAwesomeIcons.Solid.Wifi, label = "Free Wifi")
+
+                            // Breakfast
+                            InfoCard(icon = FontAwesomeIcons.Solid.Coffee, label = "Free Breakfast")
+
+                            // Rating
+                            InfoCard(icon = FontAwesomeIcons.Solid.Star, label = "5.0", tint = Color(0XFFFFD33C))
+                        }
+
+                        PriceField(
+                            price = "20.99 / Night", // Added "/ Night" to the price
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            currency = "$"
+                        )
+
+                        Text(
+                            text = "Description",
+                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Aston Hotel, Alice Springs NT 0870, Australia is a modern hotel. elegant 5 star hotel overlooking the sea. perfect for a romantic, charming Read More. . .",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Preview",
+                            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            repeat(4) {
+                                KamelImage(
+                                    resource = image,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .width(98.dp)
+                                        .height(82.dp)
+                                        .clip(shape = RoundedCornerShape(16.dp)),
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                            }
+                        }
+
+                        TextButton(
+                            onClick = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            enabled = true,
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0XFF4C4DDC),
+                                contentColor = Color.White,
+                            ),
+                        ) {
+                            Text(text = "Book Now")
+                        }
+                        // Add other details as needed
                     }
-                    // Add other details as needed
                 }
             }
         }
     }
+
 }

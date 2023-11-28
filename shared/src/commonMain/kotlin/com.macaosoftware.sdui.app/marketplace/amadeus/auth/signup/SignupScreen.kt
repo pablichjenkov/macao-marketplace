@@ -19,9 +19,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
@@ -50,12 +52,19 @@ class SignUpScreen() : Screen {
             ) {
 
 
-                Image(
-                    painter = painterResource("logo.png"),
-                    contentDescription = null,
-                    modifier = Modifier.size(250.dp)
-                )
+//                Image(
+//                    painter = painterResource("logo.png"),
+//                    contentDescription = null,
+//                    modifier = Modifier.size(250.dp)
+//                )
 
+                Text(
+                    text = "Logo Template",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
+                )
 
                 // Username TextField
                 OutlinedTextField(

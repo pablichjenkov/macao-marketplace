@@ -211,7 +211,7 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Amadeus.Login -> {
+            SduiConstants.ComponentType.Amadeus.Auth.Login -> {
                 NavItem(
                     label = "Login",
                     component = getComponentInstanceOf(componentJson),
@@ -370,7 +370,7 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Amadeus.Login -> {
+            SduiConstants.ComponentType.Amadeus.Auth.Login -> {
                 StateComponent<LoginViewModel>(
                     viewModelFactory = LoginViewModelFactory(),
                     content = LoginComponentView

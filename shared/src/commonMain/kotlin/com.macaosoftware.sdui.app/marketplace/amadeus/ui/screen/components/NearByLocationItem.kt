@@ -2,6 +2,8 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,7 +36,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,20 +45,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.sdui.app.marketplace.amadeus.detail.HotelDetailsScreen
+import com.macaosoftware.sdui.app.marketplace.amadeus.detail.SeeScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
 import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Heart
-import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
 fun NearByLocationList(
     hotelListings: List<HotelListing>,
-    onItemClick: (HotelListing) -> Unit
 ) {
+    val navigator = LocalNavigator.current
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 12.dp, end = 12.dp, top = 25.dp),
@@ -79,10 +83,15 @@ fun NearByLocationList(
                 lineHeight = 21.sp,
                 fontWeight = FontWeight(500),
                 color = Color(0xFF4C4DDC),
-            )
+            ),
+            modifier = Modifier .hoverable(interactionSource = MutableInteractionSource(),enabled = true)
+                .pointerHoverIcon(icon = PointerIcon.Hand).clickable {
+                navigator!!.push(SeeScreen(hotelListings))
+            }
         )
     }
-    LazyRow(state = rememberLazyListState(),
+    LazyRow(
+        state = rememberLazyListState(),
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
@@ -90,7 +99,7 @@ fun NearByLocationList(
         verticalAlignment = Alignment.Top
     ) {
         items(hotelListings) { hotelDetails ->
-            NearByLocationItem(hotelDetails, onItemClick)
+            NearByLocationItem(hotelDetails)
         }
     }
 }
@@ -98,21 +107,21 @@ fun NearByLocationList(
 @Composable
 fun NearByLocationItem(
     hotelListing: HotelListing,
-    onClick: (HotelListing) -> Unit
 ) {
     var isLiked by remember { mutableStateOf(true) }
+    val navigator = LocalNavigator.current
 
     Card(
         modifier = Modifier
-            .width(367.dp)
-            .height(313.dp)
-            .clickable { onClick(hotelListing) },
-        shape = RoundedCornerShape(12.dp),
+            .width(250.dp)  // Adjust the width as needed
+            .height(200.dp) // Adjust the height as needed
+            .clickable { navigator!!.push(HotelDetailsScreen(hotelListing, IMAGE)) },
+        shape = RoundedCornerShape(8.dp), // Adjust the corner radius as needed
         colors = CardDefaults
             .cardColors(
                 containerColor = MaterialTheme.colorScheme.surface
             ),
-        elevation = CardDefaults.cardElevation(4.dp),
+        elevation = CardDefaults.cardElevation(2.dp), // Adjust the elevation as needed
         border = null
     ) {
         Column(
@@ -122,8 +131,10 @@ fun NearByLocationItem(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(209.dp)
-                    .clickable { onClick(hotelListing) }
+                    .height(120.dp) // Adjust the height as needed
+                    .clickable { navigator!!.push(HotelDetailsScreen(hotelListing, IMAGE)) }
+                    .hoverable(interactionSource = MutableInteractionSource(), enabled = true)
+                    .pointerHoverIcon(icon = PointerIcon.Hand)
             ) {
                 KamelImage(
                     resource = asyncPainterResource(data = IMAGE),
@@ -135,9 +146,9 @@ fun NearByLocationItem(
 
                 Box(
                     modifier = Modifier
-                        .size(55.dp)
+                        .size(30.dp) // Adjust the size as needed
                         .align(Alignment.TopEnd)
-                        .padding(12.dp)
+                        .padding(4.dp) // Adjust the padding as needed
                         .clickable {
                             isLiked = !isLiked
                         }
@@ -145,7 +156,7 @@ fun NearByLocationItem(
                             color = Color(0xFFFFFFFF),
                             shape = CircleShape
                         )
-                        .padding(6.dp)
+                        .padding(2.dp) // Adjust the padding as needed
                 ) {
                     Icon(
                         imageVector = if (isLiked) FontAwesomeIcons.Solid.Heart else Icons.Default.FavoriteBorder,
@@ -158,15 +169,14 @@ fun NearByLocationItem(
             // Hotel Details
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(4.dp) // Adjust the padding as needed
                     .fillMaxWidth()
             ) {
-
                 // Hotel Title
                 Text(
                     text = hotelListing.name.toString(),
                     style = TextStyle(
-                        fontSize = 18.sp,
+                        fontSize = 12.sp, // Adjust the font size as needed
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF101010),
                     ),
@@ -174,43 +184,43 @@ fun NearByLocationItem(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp)) // Adjust the spacing as needed
 
                 // Location
                 Text(
                     text = hotelListing.address.toString(),
                     style = TextStyle(
-                        fontSize = 14.sp,
+                        fontSize = 10.sp, // Adjust the font size as needed
                         color = Color(0xFF878787),
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp)) // Adjust the spacing as needed
 
                 // Rating
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(imageVector = Icons.Filled.Star, contentDescription = null)
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = Modifier.width(1.dp)) // Adjust the spacing as needed
                     Text(
                         text = "5.0",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 8.sp, // Adjust the font size as needed
                             color = Color(0xFF101010),
                         )
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(2.dp)) // Adjust the spacing as needed
 
                 // Rate per night
                 Text(
                     text = "$200,7 /night",
                     style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 10.sp, // Adjust the font size as needed
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF4C4DDC),
                     )
