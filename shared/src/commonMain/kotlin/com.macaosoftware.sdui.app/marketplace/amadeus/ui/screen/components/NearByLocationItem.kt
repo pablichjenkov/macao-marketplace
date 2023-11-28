@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -35,6 +38,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -97,7 +101,6 @@ fun NearByLocationItem(
     onClick: (HotelListing) -> Unit
 ) {
     var isLiked by remember { mutableStateOf(true) }
-    //val navigator = LocalNavigator.current
 
     Card(
         modifier = Modifier
@@ -113,115 +116,107 @@ fun NearByLocationItem(
         border = null
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
         ) {
-
-            /*Place Holder Image For Now
-            * Will use the original Image With This
-            * */
-            val image: Resource<Painter> = asyncPainterResource(data = IMAGE)
+            // Image with heart icon at the top end
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(209.dp)
+                    .clickable { onClick(hotelListing) }
             ) {
                 KamelImage(
-                    resource = image,
+                    resource = asyncPainterResource(data = IMAGE),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(209.dp),
+                        .fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
 
-                // Box with heart icon at the top end
                 Box(
                     modifier = Modifier
+                        .size(55.dp)
                         .align(Alignment.TopEnd)
-                        .width(52.dp)
-                        .height(52.dp)
                         .padding(12.dp)
                         .clickable {
                             isLiked = !isLiked
                         }
                         .background(
                             color = Color(0xFFFFFFFF),
-                            shape = RoundedCornerShape(size = 100.dp)
+                            shape = CircleShape
                         )
-                        .padding(start = 6.dp, top = 6.dp, end = 6.dp, bottom = 6.dp)
+                        .padding(6.dp)
                 ) {
                     Icon(
-                        // modifier = Modifier.align(alignment = Alignment.TopEnd),
                         imageVector = if (isLiked) FontAwesomeIcons.Solid.Heart else Icons.Default.FavoriteBorder,
                         contentDescription = null,
                         tint = if (isLiked) Color.Red else Color.Black
                     )
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+
+            // Hotel Details
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
 
-                    //Hotel Title
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            modifier = Modifier.weight(0.65f),
-                            text = hotelListing.name.toString(),
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                lineHeight = 21.sp,
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFF101010),
-                            ),
-                            maxLines = 1,
+                // Hotel Title
+                Text(
+                    text = hotelListing.name.toString(),
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF101010),
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Location
+                Text(
+                    text = hotelListing.address.toString(),
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color(0xFF878787),
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Rating
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(imageVector = Icons.Filled.Star, contentDescription = null)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "5.0",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            color = Color(0xFF101010),
                         )
-                        Spacer(modifier = Modifier.width(50.dp))
-                        Icon(imageVector = Icons.Filled.Star, contentDescription = null)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "5.0",
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                lineHeight = 18.sp,
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFF101010),
-                            )
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    //Location
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = hotelListing.address.toString(),
-                            style = TextStyle(
-                                fontSize = 12.sp,
-                                lineHeight = 18.sp,
-                                fontWeight = FontWeight(500),
-                                color = Color(0xFF878787),
-                            )
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    //Rate
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            text = "$200,7 /night",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                lineHeight = 21.sp,
-                                fontWeight = FontWeight(700),
-                                color = Color(0xFF4C4DDC),
-                            )
-                        )
-                    }
-
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Rate per night
+                Text(
+                    text = "$200,7 /night",
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF4C4DDC),
+                    )
+                )
             }
         }
     }
 }
+
