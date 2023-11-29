@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.FrameWindowScope
 
@@ -49,6 +51,7 @@ fun FrameWindowScope.WindowWithCustomTopDecoration(
                         Box(
                             modifier = Modifier
                                 .padding(top = 14.dp, end = 8.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
                                 .size(12.dp)
                                 .clip(CircleShape)
                                 .background(Color.Red)
@@ -57,6 +60,7 @@ fun FrameWindowScope.WindowWithCustomTopDecoration(
                         Box(
                             modifier = Modifier
                                 .padding(top = 14.dp, end = 8.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
                                 .size(12.dp)
                                 .clip(CircleShape)
                                 .background(Color.Yellow)
@@ -65,6 +69,7 @@ fun FrameWindowScope.WindowWithCustomTopDecoration(
                         Box(
                             modifier = Modifier
                                 .padding(top = 14.dp)
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
                                 .size(12.dp)
                                 .clip(CircleShape)
                                 .background(Color.Green)
