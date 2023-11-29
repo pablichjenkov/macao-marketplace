@@ -64,7 +64,7 @@ class DarkMode() : Screen {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     IconButton(onClick = {
                         navigator!!.pop()

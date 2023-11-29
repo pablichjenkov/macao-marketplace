@@ -48,7 +48,7 @@ class NotificationsMode : Screen {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Start
                     ) {
                         IconButton(onClick = {
                             navigator!!.pop()
@@ -62,7 +62,6 @@ class NotificationsMode : Screen {
                             text = "Notification Settings",
                             style = MaterialTheme.typography.headlineSmall,
                             color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(bottom = 16.dp)
                         )
                     }
                 }

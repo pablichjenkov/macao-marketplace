@@ -42,11 +42,11 @@ fun main() {
     singleWindowApplication(
         title = "Macao SDUI Demo",
         state = windowState,
-        undecorated = true
+        undecorated = true,
     ) {
         WindowWithCustomTopDecoration(
             onMinimizeClick = { windowState.isMinimized = true },
-            onMaximizeClick = { windowState.isMinimized = false },
+            onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
             onCloseClick = { exitProcess(0) },
             onRefreshClick = {
                 macaoApplicationState.fetchRootComponent()

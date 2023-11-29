@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AppsOutage
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Notifications
@@ -40,12 +41,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.sdui.app.marketplace.settings.about.AboutMode
+import com.macaosoftware.sdui.app.marketplace.settings.accessibility.AccessibilityMode
 import com.macaosoftware.sdui.app.marketplace.settings.account.AccountMode
 import com.macaosoftware.sdui.app.marketplace.settings.language.LanguageMode
 import com.macaosoftware.sdui.app.marketplace.settings.legal.LegalScreen
 import com.macaosoftware.sdui.app.marketplace.settings.legal.SettingItem
 import com.macaosoftware.sdui.app.marketplace.settings.notifications.NotificationsMode
+import com.macaosoftware.sdui.app.marketplace.settings.privacy.PrivacyMode
 import com.macaosoftware.sdui.app.marketplace.settings.security.SecurityMode
+import com.macaosoftware.sdui.app.marketplace.settings.sync.SyncMode
 import com.macaosoftware.sdui.app.marketplace.settings.theme.DarkMode
 
 class SettingScreen() : Screen {
@@ -84,6 +89,16 @@ class SettingScreen() : Screen {
                                 tint = Color.White
                             )
                         }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navigator!!.pop()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = null
+                            )
+                        }
                     }
                 )
             },
@@ -91,7 +106,7 @@ class SettingScreen() : Screen {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(it.calculateTopPadding())
+                        .padding(top = it.calculateTopPadding())
                 ) {
                     SettingItem(
                         title = "Notifications",
@@ -140,7 +155,9 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Privacy Settings",
                         description = "Customize privacy preferences.",
-                        onClick = { privacySettings = !privacySettings },
+                        onClick = {
+                            navigator!!.push(PrivacyMode())
+                        },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.PrivacyTip
                     )
@@ -164,7 +181,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Accessibility Settings",
                         description = "Adjust accessibility features.",
-                        onClick = { accessibilitySettings = !accessibilitySettings },
+                        onClick = { navigator!!.push(AccessibilityMode()) },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Accessibility
                     )
@@ -172,7 +189,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Sync Settings",
                         description = "Manage synchronization options.",
-                        onClick = { syncSettings = !syncSettings },
+                        onClick = { navigator!!.push(SyncMode()) },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Sync
                     )
@@ -180,44 +197,14 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "About the App",
                         description = "Get information about the app.",
-                        onClick = { aboutTheApp = !aboutTheApp },
+                        onClick = { navigator!!.push(AboutMode()) },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.AppsOutage
                     )
                 }
-
-                // Additional Setting Fragments
-                if (accountSettings) {
-                    // Add your Account Settings composable here
-                }
-
-                if (languagePreferences) {
-                    // Add your Language Preferences composable here
-                }
-
-                if (privacySettings) {
-                    // Add your Privacy Settings composable here
-                }
-
-                if (securitySettings) {
-                    // Add your Security Settings composable here
-                }
-
-                if (notificationPreferences) {
-                    // Add your Notification Preferences composable here
-                }
-
-                if (accessibilitySettings) {
-                    // Add your Accessibility Settings composable here
-                }
-
-                if (syncSettings) {
-                    // Add your Sync Settings composable here
-                }
-
-                if (aboutTheApp) {
+                if (info) {
                     AlertDialog(
-                        onDismissRequest = { aboutTheApp = false },
+                        onDismissRequest = { info = false },
                         confirmButton = {},
                         modifier = Modifier.fillMaxWidth(),
                         dismissButton = null,
@@ -261,7 +248,11 @@ class SettingScreen() : Screen {
                             }
                         },
                         shape = MaterialTheme.shapes.medium,
-                        properties = DialogProperties()
+                        properties = DialogProperties(
+                            dismissOnBackPress = true,
+                            dismissOnClickOutside = true,
+                            usePlatformDefaultWidth = true
+                        )
                     )
                 }
             }
