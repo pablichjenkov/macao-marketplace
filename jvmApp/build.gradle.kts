@@ -3,6 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -22,6 +23,10 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
+            //Firebase
+            implementation("dev.gitlive:firebase-firestore:1.10.4") // This line
+            implementation("dev.gitlive:firebase-common:1.10.4")// This line
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.1") // This line
 
             // Third Party
             implementation(libs.amadeus.api)
