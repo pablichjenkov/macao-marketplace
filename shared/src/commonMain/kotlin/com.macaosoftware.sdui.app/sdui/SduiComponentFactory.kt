@@ -40,6 +40,9 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFa
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVoyager
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
@@ -211,7 +214,7 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Amadeus.Login -> {
+            SduiConstants.ComponentType.Amadeus.Auth.Login -> {
                 NavItem(
                     label = "Login",
                     component = getComponentInstanceOf(componentJson),
@@ -329,17 +332,32 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.Amadeus.HomeScreen -> {
 
+                val useAmadeusWithVoyager = true // Should come from the json
+
                 val database : Database = get()
                 val timeProvider : ITimeProvider = get()
 
-                TopBarComponent<AmadeusHomeCoordinatorViewModel>(
-                    viewModelFactory = AmadeusHomeCoordinatorViewModelFactory(
-                        TopBarComponentDefaults.createTopBarStatePresenter(),
-                        database,
-                        timeProvider
-                    ),
-                    content = TopBarComponentDefaults.TopBarComponentView
-                )
+                if (useAmadeusWithVoyager) {
+                    StateComponent<AmadeusHomeViewModel>(
+                        viewModelFactory = AmadeusHomeViewModelFactory(
+                            database,
+                            timeProvider,
+                            onHotelClick = { hotelListing ->
+                                // no-op
+                            }
+                        ),
+                        content = AmadeusHomeViewWithVoyager
+                    )
+                } else {
+                    TopBarComponent<AmadeusHomeCoordinatorViewModel>(
+                        viewModelFactory = AmadeusHomeCoordinatorViewModelFactory(
+                            TopBarComponentDefaults.createTopBarStatePresenter(),
+                            database,
+                            timeProvider
+                        ),
+                        content = TopBarComponentDefaults.TopBarComponentView
+                    )
+                }
             }
 
             SduiConstants.ComponentType.Amadeus.ScheduleScreen -> {
@@ -370,7 +388,7 @@ class SduiComponentFactory(
                 )
             }
 
-            SduiConstants.ComponentType.Amadeus.Login -> {
+            SduiConstants.ComponentType.Amadeus.Auth.Login -> {
                 StateComponent<LoginViewModel>(
                     viewModelFactory = LoginViewModelFactory(),
                     content = LoginComponentView

@@ -18,9 +18,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Address
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
 import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.GeoCode
+import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.CustomBottomSheet
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
@@ -115,9 +124,14 @@ fun MySchedules() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyScheduleItem(data: Data) {
     //val navigator = LocalNavigator.current
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+    val shape = ShapeDefaults.Medium
+    var visibility by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
             .shadow(
@@ -128,6 +142,7 @@ fun MyScheduleItem(data: Data) {
             .width(357.dp)
             .height(108.dp)
             .clickable {
+                visibility = !visibility
                 // navigator?.push(DetailScreen(data, Util.IMAGE))
             }
             .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 12.dp))
@@ -248,6 +263,17 @@ fun MyScheduleItem(data: Data) {
                         fontWeight = FontWeight(500),
                         color = Color(0xFF878787),
                     )
+                )
+            }
+
+            if (visibility) {
+                CustomBottomSheet(
+                    onRequestDismiss = { visibility = false },
+                    sheetState = sheetState,
+                    scope = scope,
+                    modifier = Modifier.fillMaxWidth(),
+                    containerColor = Color.White,
+                    contentColor = Color.LightGray
                 )
             }
         }
