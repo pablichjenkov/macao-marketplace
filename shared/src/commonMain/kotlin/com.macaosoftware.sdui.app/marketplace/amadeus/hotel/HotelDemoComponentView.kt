@@ -1,5 +1,6 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.hotel
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,11 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -22,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 val HotelDemoComponentView: @Composable StateComponent<HotelDemoViewModel>.(
     modifier: Modifier,
@@ -33,15 +38,22 @@ val HotelDemoComponentView: @Composable StateComponent<HotelDemoViewModel>.(
     HotelDemoView(modifier, viewModel)
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HotelDemoView(
     modifier: Modifier,
     hotelDemoViewModel: HotelDemoViewModel
 ) {
     Column(
-        modifier.fillMaxSize()
+        modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource("logo.png"),
+            contentDescription = null,
+            modifier = Modifier.size(140.dp)
+        )
         Spacer(Modifier.fillMaxWidth().height(24.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),

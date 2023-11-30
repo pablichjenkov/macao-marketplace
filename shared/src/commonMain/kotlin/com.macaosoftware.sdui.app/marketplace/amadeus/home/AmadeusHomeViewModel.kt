@@ -40,6 +40,8 @@ class AmadeusHomeViewModel(
         timeProvider
     )
 
+    var backPressListener: () -> Boolean = { false }
+
     override fun onAttach() {
         println("AmadeusHomeViewModel -  onAttach() : ")
     }
@@ -60,6 +62,10 @@ class AmadeusHomeViewModel(
 
     override fun onStop() {
         println("AmadeusHomeViewModel -  onStop() : ")
+    }
+
+    override fun handleBackPressed(): Boolean {
+        return backPressListener()
     }
 
     private fun checkSavedAccessTokenAndSearchHotelsByCity() {
