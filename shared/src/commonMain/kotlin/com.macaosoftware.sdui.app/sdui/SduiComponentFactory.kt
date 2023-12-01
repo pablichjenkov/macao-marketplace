@@ -74,6 +74,7 @@ import com.macaosoftware.sdui.app.marketplace.settings.PanelSettingComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
+import com.macaosoftware.sdui.app.plugin.AuthPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
@@ -389,8 +390,10 @@ class SduiComponentFactory(
             }
 
             SduiConstants.ComponentType.Amadeus.Auth.Login -> {
+
+                val authPlugin : AuthPlugin = get()
                 StateComponent<LoginViewModel>(
-                    viewModelFactory = LoginViewModelFactory(),
+                    viewModelFactory = LoginViewModelFactory(authPlugin),
                     content = LoginComponentView
                 )
             }

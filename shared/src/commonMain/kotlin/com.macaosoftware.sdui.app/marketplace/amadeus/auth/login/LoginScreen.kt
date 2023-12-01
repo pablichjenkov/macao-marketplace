@@ -29,7 +29,9 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-class LoginScreen : Screen {
+class LoginScreen(
+    private val loginViewModel: LoginViewModel
+) : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
@@ -108,6 +110,7 @@ class LoginScreen : Screen {
                             // Set error flag to display error message
                             isError = true
                         }
+                        loginViewModel.login()
                     },
                     modifier = Modifier
                         .padding(8.dp)

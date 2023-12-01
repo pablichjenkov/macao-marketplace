@@ -28,7 +28,9 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-class SignUpScreen() : Screen {
+class SignUpScreen(
+
+) : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
@@ -154,7 +156,9 @@ class SignUpScreen() : Screen {
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator!!.push(LoginScreen())
+                            /*navigator!!.push(
+                                LoginScreen()
+                            )*/
                         }
                 )
             }

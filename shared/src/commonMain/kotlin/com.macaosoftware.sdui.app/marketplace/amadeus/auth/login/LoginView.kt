@@ -9,5 +9,7 @@ val LoginComponentView: @Composable StateComponent<LoginViewModel>.(
     modifier: Modifier,
     loginViewModel: LoginViewModel
 ) -> Unit = { modifier: Modifier, loginViewModel: LoginViewModel ->
-    Navigator(LoginScreen())
+    Navigator(
+        LoginScreen(loginViewModel)
+    )
 }

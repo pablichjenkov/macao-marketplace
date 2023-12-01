@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform).apply(true)
     alias(libs.plugins.android.application).apply(true)
     alias(libs.plugins.compose).apply(true)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -18,6 +19,10 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
+
+            // Firebase
+            implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
+            implementation("com.google.firebase:firebase-auth-ktx")
 
             // Third Party
             implementation(libs.amadeus.api)
