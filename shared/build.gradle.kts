@@ -57,11 +57,12 @@ kotlin {
             implementation(libs.components.resources)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation("dev.gitlive:firebase-auth:1.10.4")
+            implementation("dev.gitlive:firebase-database:1.10.4")
 
             // Third Party
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
-
             // ktor
             implementation(libs.ktor.core)
             implementation(libs.io.ktor.ktor.client.serialization)

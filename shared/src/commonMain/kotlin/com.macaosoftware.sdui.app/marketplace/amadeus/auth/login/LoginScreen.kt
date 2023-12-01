@@ -25,18 +25,22 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.plugin.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-class LoginScreen : Screen {
+class LoginScreen(private val viewModel: AuthViewModel) : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
-        var username by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
+        val auth = Firebase.auth
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -57,12 +61,12 @@ class LoginScreen : Screen {
 
                 // Username TextField
                 OutlinedTextField(
-                    value = username,
+                    value = email,
                     onValueChange = {
-                        username = it
+                        email = it
                         isError = false
                     },
-                    label = { Text("Username") },
+                    label = { Text("Email") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -99,11 +103,9 @@ class LoginScreen : Screen {
                 // Login Button
                 Button(
                     onClick = {
-                        // Perform login logic, e.g., validate credentials
-                        if (isValidCredentials(username, password)) {
-                            // Navigate to the next screen or perform necessary actions
-                            // For now, let's just print a success message
-                            println("Login successful!")
+                        if (isValidCredentials(email, password)) {
+                            viewModel.login(email, password)
+                            println("Login Successfull $email $password")
                         } else {
                             // Set error flag to display error message
                             isError = true
@@ -123,7 +125,7 @@ class LoginScreen : Screen {
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator?.push(SignUpScreen())
+                            navigator?.push(SignUpScreen(viewModel))
                         }
                 )
 

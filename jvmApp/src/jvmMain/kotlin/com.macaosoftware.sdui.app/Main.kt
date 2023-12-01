@@ -23,21 +23,21 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.plugin.DesktopBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
 import kotlin.system.exitProcess
 
 fun main() {
-
     val desktopBridge = DesktopBridge()
     val windowState = WindowState(size = DpSize(800.dp, 600.dp))
     val macaoApplicationState = MacaoApplicationState(
         Dispatchers.IO,
         JvmRootComponentProvider()
     )
-
-
 
     singleWindowApplication(
         title = "Macao SDUI Demo",

@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.sqldeligh).apply(false)
     alias(libs.plugins.dokka).apply(false)
     alias(libs.plugins.realm).apply(false)
+    alias(libs.plugins.gms).apply(false)
 }
 
 allprojects {

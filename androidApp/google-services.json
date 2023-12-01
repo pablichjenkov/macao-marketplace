@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "114610040941",
+    "project_id": "macao-sdui-app-30",
+    "storage_bucket": "macao-sdui-app-30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114610040941:android:ef779713e9731e3a004f64",
+        "android_client_info": {
+          "package_name": "com.macaosoftware.sdui.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtmIobL-OE1p40pRn7JLYQ8EEPfi7AUCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

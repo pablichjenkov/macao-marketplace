@@ -6,7 +6,7 @@ componentToolkit = "0.5.11"
 kamelImage = "0.9.0"
 koinCore = "3.5.0"
 kotlin = "1.9.21"
-agp = "8.1.4"
+agp = "8.2.0"
 compose = "1.5.11"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.1"
@@ -23,10 +23,15 @@ composeIcons = "1.1.0"
 kotlinx-serialization = "1.6.1"
 kotlinx-datetime = "0.4.1"
 multiplatformSettings = "1.1.1"
-gmazzo = "4.0.4"
+gmazzo = "4.1.1"
 sqldeligh = "2.0.0"
 dokka = "1.9.10"
 realm = "1.12.0"
+firebase-auth = "22.3.0"
+firebase-database = "20.3.0"
+firebase-firestore = "24.9.1"
+firebase-storage = "20.3.0"
+gms="4.4.0"
 
 [libraries]
 
@@ -63,6 +68,10 @@ com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "gs
 io-ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
 io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version = "1.0.0-alpha01" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebase-auth" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebase-database" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebase-firestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebase-storage" }
 
 [plugins]
 
@@ -74,3 +83,4 @@ gmazzo = { id = "com.github.gmazzo.buildconfig", version.ref = "gmazzo" }
 sqldeligh = { id = "app.cash.sqldelight", version.ref = "sqldeligh" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 realm = { id = "io.realm.kotlin", version.ref = "realm" }
+gms = { id = "com.google.gms.google-services", version.ref = "gms" }

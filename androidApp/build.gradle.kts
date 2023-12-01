@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform).apply(true)
     alias(libs.plugins.android.application).apply(true)
     alias(libs.plugins.compose).apply(true)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -51,4 +52,10 @@ android {
             }
         }
     }
+}
+dependencies {
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 }

@@ -25,10 +25,11 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.plugin.AuthViewModel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-class SignUpScreen() : Screen {
+class SignUpScreen(private val viewModel: AuthViewModel) : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
@@ -38,6 +39,9 @@ class SignUpScreen() : Screen {
         var confirmPassword by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
+
+
+
 
         Box(
             modifier = Modifier
@@ -134,7 +138,11 @@ class SignUpScreen() : Screen {
                         if (isValidInput(username, email, password, confirmPassword)) {
                             // Navigate to the next screen or perform necessary actions
                             // For now, let's just print a success message
-                            println("Sign up successful!")
+                            // signUpWithEmailPassword(auth, email, password)
+                            viewModel.signUp(email, password).apply {
+                                navigator!!.push(LoginScreen(viewModel))
+                            }
+                            println("Sign up successful! ${viewModel.signUp(email, password)}")
                         } else {
                             // Set error flag to display error message
                             isError = true
@@ -154,11 +162,12 @@ class SignUpScreen() : Screen {
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator!!.push(LoginScreen())
+                            navigator!!.push(LoginScreen(viewModel))
                         }
                 )
             }
         }
+
     }
 
     private fun isValidInput(
