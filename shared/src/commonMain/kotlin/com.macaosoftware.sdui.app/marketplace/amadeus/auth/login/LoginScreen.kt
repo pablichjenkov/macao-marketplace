@@ -24,12 +24,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-class LoginScreen : Screen {
+class LoginScreen(
+    private val authViewModel: AuthViewModel
+) : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
@@ -108,6 +111,7 @@ class LoginScreen : Screen {
                             // Set error flag to display error message
                             isError = true
                         }
+                        authViewModel.login()
                     },
                     modifier = Modifier
                         .padding(8.dp)
@@ -123,7 +127,7 @@ class LoginScreen : Screen {
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator?.push(SignUpScreen())
+                            navigator?.push(SignUpScreen(authViewModel))
                         }
                 )
 

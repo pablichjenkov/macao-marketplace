@@ -14,12 +14,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material.icons.sharp.List
+import com.macaosoftware.component.bottomnavigation.BottomNavigationComponent
+import com.macaosoftware.component.bottomnavigation.BottomNavigationComponentDefaults
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem
 import com.macaosoftware.component.drawer.DrawerComponent
 import com.macaosoftware.component.drawer.DrawerComponentDefaults
-import com.macaosoftware.component.bottomnavigation.BottomNavigationComponent
-import com.macaosoftware.component.bottomnavigation.BottomNavigationComponentDefaults
 import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.topbar.TopBarComponent
@@ -29,20 +29,17 @@ import com.macaosoftware.sdui.app.data.SduiConstants
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
-import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
-import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
-import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginComponentView
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVoyager
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
@@ -74,6 +71,10 @@ import com.macaosoftware.sdui.app.marketplace.settings.PanelSettingComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
+import com.macaosoftware.sdui.app.plugin.AuthPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
@@ -334,8 +335,8 @@ class SduiComponentFactory(
 
                 val useAmadeusWithVoyager = true // Should come from the json
 
-                val database : Database = get()
-                val timeProvider : ITimeProvider = get()
+                val database: Database = get()
+                val timeProvider: ITimeProvider = get()
 
                 if (useAmadeusWithVoyager) {
                     StateComponent<AmadeusHomeViewModel>(
@@ -389,9 +390,11 @@ class SduiComponentFactory(
             }
 
             SduiConstants.ComponentType.Amadeus.Auth.Login -> {
-                StateComponent<LoginViewModel>(
-                    viewModelFactory = LoginViewModelFactory(),
-                    content = LoginComponentView
+
+                val authPlugin: AuthPlugin = get()
+                StateComponent<AuthViewModel>(
+                    viewModelFactory = AuthViewModelFactory(authPlugin),
+                    content = AuthComponentView
                 )
             }
 

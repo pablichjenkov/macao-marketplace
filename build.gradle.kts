@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.sqldeligh).apply(false)
     alias(libs.plugins.dokka).apply(false)
     alias(libs.plugins.realm).apply(false)
+    id("com.google.gms.google-services").version("4.4.0").apply(false)
 }
 
 allprojects {

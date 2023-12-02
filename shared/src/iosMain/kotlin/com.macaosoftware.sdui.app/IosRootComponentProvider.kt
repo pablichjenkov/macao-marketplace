@@ -1,8 +1,8 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.plugin.AppLifecycleDispatcher
 import com.macaosoftware.plugin.IosBridge
+import com.macaosoftware.plugin.PlatformLifecyclePlugin
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
@@ -22,7 +22,7 @@ class IosRootComponentProvider(
         val database = createDatabase(IosDriverFactory())
         val pluginsModule = module {
             single<Database> { database }
-            single<AppLifecycleDispatcher> { iosBridge.appLifecycleDispatcher }
+            single<PlatformLifecyclePlugin> { iosBridge.platformLifecyclePlugin }
         }
         val koinRootContainer = koinApplication {
             printLogger()

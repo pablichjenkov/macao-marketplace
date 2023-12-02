@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.macaosoftware.component.IosComponentRender
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.plugin.DefaultAppLifecycleDispatcher
+import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
@@ -48,6 +48,6 @@ fun buildDemoMacaoApplication(
 // Todo: Replace with swift implementation
 fun createPlatformBridge(): IosBridge {
     return IosBridge(
-        appLifecycleDispatcher = DefaultAppLifecycleDispatcher()
+        platformLifecyclePlugin = DefaultPlatformLifecyclePlugin()
     )
 }
