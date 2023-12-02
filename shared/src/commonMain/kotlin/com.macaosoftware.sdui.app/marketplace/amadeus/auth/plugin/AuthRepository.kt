@@ -6,7 +6,6 @@ import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
 
 class AuthRepository {
-
     private val auth: FirebaseAuth = Firebase.auth
 
     suspend fun signUpWithEmailAndPassword(email: String, password: String): FirebaseUser? {

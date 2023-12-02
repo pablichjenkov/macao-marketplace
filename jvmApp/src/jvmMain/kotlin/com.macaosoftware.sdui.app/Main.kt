@@ -23,133 +23,130 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.plugin.DesktopBridge
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
+import javax.swing.SwingUtilities
 import kotlin.system.exitProcess
 
 fun main() {
-    val desktopBridge = DesktopBridge()
-    val windowState = WindowState(size = DpSize(800.dp, 600.dp))
-    val macaoApplicationState = MacaoApplicationState(
-        Dispatchers.IO,
-        JvmRootComponentProvider()
-    )
-
-    singleWindowApplication(
-        title = "Macao SDUI Demo",
-        state = windowState,
-        undecorated = true,
-    ) {
-        WindowWithCustomTopDecoration(
-            onMinimizeClick = { windowState.isMinimized = true },
-            onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
-            onCloseClick = { exitProcess(0) },
-            onRefreshClick = {
-                macaoApplicationState.fetchRootComponent()
-            },
-            onBackClick = {
-                desktopBridge.backPressDispatcherPlugin.dispatchBackPressed()
-            }
+        val desktopBridge = DesktopBridge()
+        val windowState = WindowState(size = DpSize(800.dp, 600.dp))
+        val macaoApplicationState = MacaoApplicationState(
+            Dispatchers.IO,
+            JvmRootComponentProvider()
+        )
+        singleWindowApplication(
+            title = "Macao SDUI Demo",
+            state = windowState,
+            undecorated = true,
         ) {
-            val notification = rememberNotification(
-                title = "Macao Sdui App",
-                message = "Welcome toMacao Sdui App developed by Pablo Valdes & Muhammad Khubaib Imtiaz",
-                type = Notification.Type.Info
-            )
-
-            val refreshIcon = rememberVectorPainter(image = Icons.Default.Refresh)
-            val exitIcon = rememberVectorPainter(image = Icons.Default.ExitToApp)
-            val lightThemeIcon = rememberVectorPainter(image = Icons.Default.LightMode)
-            val darkThemeIcon = rememberVectorPainter(image = Icons.Default.DarkMode)
-
-            MenuBar {
-                Menu(text = "File", mnemonic = 'F', enabled = true) {
-                    Item(
-                        text = "Refresh",
-                        mnemonic = 'R',
-                        enabled = true,
-                        icon = refreshIcon,
-                        shortcut = KeyShortcut(
-                            key = Key.R,
-                            ctrl = true,
-                            meta = true,
-                            alt = false,
-                            shift = false
-                        )
-                    ) {
-                        showNotification(notification.title, notification.message)
-                    }
-
-                    Item(
-                        text = "Exit",
-                        mnemonic = 'E',
-                        enabled = true,
-                        icon = exitIcon,
-                        shortcut = KeyShortcut(
-                            key = Key.Escape,
-                            ctrl = true,
-                            meta = true,
-                            alt = false,
-                            shift = false
-                        )
-                    ) {
-                        exitProcess(0)
-                    }
+            WindowWithCustomTopDecoration(
+                onMinimizeClick = { windowState.isMinimized = true },
+                onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
+                onCloseClick = { exitProcess(0) },
+                onRefreshClick = {
+                    macaoApplicationState.fetchRootComponent()
+                },
+                onBackClick = {
+                    desktopBridge.backPressDispatcherPlugin.dispatchBackPressed()
                 }
-
-                Menu(text = "Setting", mnemonic = 'S', enabled = true) {
-                    Item(
-                        text = "Light Theme",
-                        mnemonic = 'L',
-                        enabled = true,
-                        icon = lightThemeIcon,
-                        shortcut = KeyShortcut(
-                            key = Key.R,
-                            ctrl = true,
-                            meta = true,
-                            alt = false,
-                            shift = false
-                        )
-                    ) {
-                        showNotification(notification.title, notification.message)
-                    }
-
-                    Item(
-                        text = "Dark Theme",
-                        mnemonic = 'D',
-                        enabled = true,
-                        icon = darkThemeIcon,
-                        shortcut = KeyShortcut(
-                            key = Key.Escape,
-                            ctrl = true,
-                            meta = true,
-                            alt = false,
-                            shift = false
-                        )
-                    ) {
-
-                    }
-                }
-            }
-            JvmMacaoApplication(
-                windowState = windowState,
-                desktopBridge = desktopBridge,
-                onBackPress = { exitProcess(0) },
-                macaoApplicationState = macaoApplicationState
             ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Example of JVM Splash Screen"
-                    )
+                val notification = rememberNotification(
+                    title = "Macao Sdui App",
+                    message = "Welcome toMacao Sdui App developed by Pablo Valdes & Muhammad Khubaib Imtiaz",
+                    type = Notification.Type.Info
+                )
+
+                val refreshIcon = rememberVectorPainter(image = Icons.Default.Refresh)
+                val exitIcon = rememberVectorPainter(image = Icons.Default.ExitToApp)
+                val lightThemeIcon = rememberVectorPainter(image = Icons.Default.LightMode)
+                val darkThemeIcon = rememberVectorPainter(image = Icons.Default.DarkMode)
+
+                MenuBar {
+                    Menu(text = "File", mnemonic = 'F', enabled = true) {
+                        Item(
+                            text = "Refresh",
+                            mnemonic = 'R',
+                            enabled = true,
+                            icon = refreshIcon,
+                            shortcut = KeyShortcut(
+                                key = Key.R,
+                                ctrl = true,
+                                meta = true,
+                                alt = false,
+                                shift = false
+                            )
+                        ) {
+                            showNotification(notification.title, notification.message)
+                        }
+
+                        Item(
+                            text = "Exit",
+                            mnemonic = 'E',
+                            enabled = true,
+                            icon = exitIcon,
+                            shortcut = KeyShortcut(
+                                key = Key.Escape,
+                                ctrl = true,
+                                meta = true,
+                                alt = false,
+                                shift = false
+                            )
+                        ) {
+                            exitProcess(0)
+                        }
+                    }
+
+                    Menu(text = "Setting", mnemonic = 'S', enabled = true) {
+                        Item(
+                            text = "Light Theme",
+                            mnemonic = 'L',
+                            enabled = true,
+                            icon = lightThemeIcon,
+                            shortcut = KeyShortcut(
+                                key = Key.R,
+                                ctrl = true,
+                                meta = true,
+                                alt = false,
+                                shift = false
+                            )
+                        ) {
+                            showNotification(notification.title, notification.message)
+                        }
+
+                        Item(
+                            text = "Dark Theme",
+                            mnemonic = 'D',
+                            enabled = true,
+                            icon = darkThemeIcon,
+                            shortcut = KeyShortcut(
+                                key = Key.Escape,
+                                ctrl = true,
+                                meta = true,
+                                alt = false,
+                                shift = false
+                            )
+                        ) {
+
+                        }
+                    }
+                }
+                JvmMacaoApplication(
+                    windowState = windowState,
+                    desktopBridge = desktopBridge,
+                    onBackPress = { exitProcess(0) },
+                    macaoApplicationState = macaoApplicationState
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Text(
+                            modifier = Modifier.align(Alignment.Center),
+                            text = "Example of JVM Splash Screen"
+                        )
+                    }
                 }
             }
         }
-    }
 }
 
 fun showNotification(title: String, message: String) {

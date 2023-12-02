@@ -52,7 +52,8 @@ kotlin {
             //Voygar
             implementation(libs.voyager.navigator)
 
-            implementation(libs.kotlinx.coroutines.core)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC")
+           // implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.components.resources)
             implementation(libs.kotlinx.datetime)

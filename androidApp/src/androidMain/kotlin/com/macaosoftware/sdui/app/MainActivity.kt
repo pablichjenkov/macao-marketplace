@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.initialize
 import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 
@@ -23,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Firebase.initialize(this)
         setContent {
             AndroidMacaoApplication(
                 onBackPress = { finish() },

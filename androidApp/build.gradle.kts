@@ -19,6 +19,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:30.0.1"))
 
             // Third Party
             implementation(libs.amadeus.api)
@@ -54,8 +55,7 @@ android {
     }
 }
 dependencies {
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.storage)
+    implementation("com.google.firebase:firebase-common-ktx:20.4.2")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-database:20.3.0")
 }

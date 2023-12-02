@@ -26,6 +26,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.plugin.AuthViewModel
+import dev.gitlive.firebase.FirebaseApp
+import dev.gitlive.firebase.auth.FirebaseAuth
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -39,9 +41,6 @@ class SignUpScreen(private val viewModel: AuthViewModel) : Screen {
         var confirmPassword by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
-
-
-
 
         Box(
             modifier = Modifier
@@ -136,9 +135,6 @@ class SignUpScreen(private val viewModel: AuthViewModel) : Screen {
                     onClick = {
                         // Perform sign-up logic, e.g., validate input
                         if (isValidInput(username, email, password, confirmPassword)) {
-                            // Navigate to the next screen or perform necessary actions
-                            // For now, let's just print a success message
-                            // signUpWithEmailPassword(auth, email, password)
                             viewModel.signUp(email, password).apply {
                                 navigator!!.push(LoginScreen(viewModel))
                             }

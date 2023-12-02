@@ -22,7 +22,9 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
-
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3")
+            implementation("dev.gitlive:firebase-auth:1.10.4")
+            implementation("dev.gitlive:firebase-database:1.10.4")
             // Third Party
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
