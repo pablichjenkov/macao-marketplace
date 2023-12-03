@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.multiplatform)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.gmazzo)
@@ -8,6 +9,12 @@ plugins {
 version = "1.0.0"
 
 kotlin {
+
+    // ANDROID
+    androidTarget {
+        publishLibraryVariants("release")
+    }
+
     // IOS
     listOf(
         iosArm64(),
@@ -73,6 +80,12 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.koin.test)
         }
+        androidMain.dependencies {
+            // Firebase
+            implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
+            implementation("com.google.firebase:firebase-auth-ktx")
+
+        }
     }
 
 }
@@ -101,4 +114,28 @@ buildConfig {
         "AMADEUS_API_SECRET", amadeusApiSecret
     )
 
+}
+
+android {
+    namespace = "com.macaosoftware.sdui.app"
+    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    sourceSets {
+        named("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml") //res.srcDirs("src/androidMain/res", "src/commonMain/resources")
+            resources.srcDir("src/commonMain/resources")
+        }
+    }
+    defaultConfig {
+        minSdk = (findProperty("android.minSdk") as String).toInt()
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.4"
+    }
 }

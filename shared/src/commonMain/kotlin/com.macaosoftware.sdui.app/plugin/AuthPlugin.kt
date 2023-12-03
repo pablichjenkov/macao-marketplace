@@ -1,12 +1,32 @@
 package com.macaosoftware.sdui.app.plugin
 
+import com.macaosoftware.plugin.MacaoPlugin
 import com.macaosoftware.sdui.app.util.MacaoError
 import com.macaosoftware.sdui.app.util.MacaoResult
 
-interface AuthPlugin : MacaoUiPlugin {
+interface AuthPlugin : MacaoPlugin {
     fun initialize()
     fun signup(signupRequest: SignupRequest)
     fun login(loginRequest: LoginRequest)
+}
+
+/**
+ * An empty implementation for those platforms that don't have Firebase.
+ * */
+class AuthPluginEmpty : AuthPlugin {
+
+    override fun initialize() {
+        println(" AuthPluginEmpty::initialize() has been called")
+    }
+
+    override fun signup(signupRequest: SignupRequest) {
+        println(" AuthPluginEmpty::signup() has been called")
+    }
+
+    override fun login(loginRequest: LoginRequest) {
+        println(" AuthPluginEmpty::login() has been called")
+    }
+
 }
 
 data class SignupRequest(

@@ -6,11 +6,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.macaosoftware.sdui.app.elseIfNull
 import com.macaosoftware.sdui.app.ifNotNull
-import com.macaosoftware.sdui.app.sdui.MacaoComponentFactory
 import com.macaosoftware.sdui.app.util.MacaoResult
 import java.util.concurrent.Executors
 
-class FirebaseAuthPlugin : AuthPlugin {
+class FirebaseAuthPluginAndroid : AuthPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
     private val executorService = Executors.newFixedThreadPool(2)
@@ -76,10 +75,6 @@ class FirebaseAuthPlugin : AuthPlugin {
                     )
                 }
             }
-    }
-
-    override fun provideMacaoComponentFactory(): MacaoComponentFactory {
-        TODO("Not yet implemented")
     }
 
     private fun FirebaseUser.toMacaoUser(): MacaoUser {
