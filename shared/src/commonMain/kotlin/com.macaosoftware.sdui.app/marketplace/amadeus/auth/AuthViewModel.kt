@@ -26,12 +26,12 @@ class AuthViewModel(
 
     }
 
-    fun login() {
-        authPlugin.login(
+    suspend fun login() {
+       /* authPlugin.login(
             LoginRequest("pablo@gmail.com", "pass123") {
                 println("Login Result: $it")
             }
-        )
+        )*/
     }
 
 }

@@ -17,7 +17,7 @@ class FirebaseAuthPluginAndroid : AuthPlugin {
     override fun initialize() {
     }
 
-    override fun signup(signupRequest: SignupRequest) {
+    override suspend fun signup(signupRequest: SignupRequest) {
 
         Firebase.auth.createUserWithEmailAndPassword(signupRequest.email, signupRequest.password)
             .addOnCompleteListener(executorService) { task ->
@@ -46,7 +46,7 @@ class FirebaseAuthPluginAndroid : AuthPlugin {
             }
     }
 
-    override fun login(loginRequest: LoginRequest) {
+    override suspend fun login(loginRequest: LoginRequest) {
 
         Firebase.auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
             .addOnCompleteListener(executorService) { task ->

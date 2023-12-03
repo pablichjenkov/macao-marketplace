@@ -75,6 +75,7 @@ kotlin {
             implementation(libs.io.ktor.client.content.negotiation)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
+            api("dev.gitlive:firebase-auth:1.10.4")
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

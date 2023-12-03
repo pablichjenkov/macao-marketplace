@@ -1,24 +1,31 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,14 +33,19 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModel
+import com.macaosoftware.sdui.app.plugin.AuthPluginEmpty
+import com.macaosoftware.sdui.app.plugin.MacaoUser
+import com.macaosoftware.sdui.app.plugin.SignupRequest
+import com.macaosoftware.sdui.app.util.MacaoResult
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 class SignUpScreen(
     private val authViewModel: AuthViewModel
 ) : Screen {
-    @OptIn(ExperimentalResourceApi::class)
+    @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         var username by remember { mutableStateOf("") }
@@ -41,7 +53,12 @@ class SignUpScreen(
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
+        var showMessage by remember { mutableStateOf(false) }
+        var messageText by remember { mutableStateOf("") }
         val navigator = LocalNavigator.current
+        var loadingState by remember { mutableStateOf(false) }
+        val keyboardController = LocalSoftwareKeyboardController.current
+        val coroutineScope = rememberCoroutineScope()
 
         Box(
             modifier = Modifier
@@ -134,13 +151,32 @@ class SignUpScreen(
                 // Sign Up Button
                 Button(
                     onClick = {
-                        // Perform sign-up logic, e.g., validate input
                         if (isValidInput(username, email, password, confirmPassword)) {
-                            // Navigate to the next screen or perform necessary actions
-                            // For now, let's just print a success message
-                            println("Sign up successful!")
+                            coroutineScope.launch {
+                                loadingState = true
+                                keyboardController?.hide()
+                                try {
+                                    val signupRequest = SignupRequest(
+                                        email = email,
+                                        password = password,
+                                        onResult = { result ->
+                                            handleSignupResult(result)
+                                        }
+                                    )
+                                    AuthPluginEmpty().signup(signupRequest)
+                                    delay(2000)
+                                    loadingState = false
+                                    showMessage = true
+                                    messageText = "Sign up successful!"
+                                    println("Signup Successful ${AuthPluginEmpty().signup(signupRequest)}")
+                                } catch (e: Exception) {
+                                    loadingState = false
+                                    showMessage = true
+                                    messageText = "Sign up failed: ${e.message}"
+                                    println("Signup Failed....}")
+                                }
+                            }
                         } else {
-                            // Set error flag to display error message
                             isError = true
                         }
                     },
@@ -148,8 +184,25 @@ class SignUpScreen(
                         .padding(8.dp)
                         .fillMaxWidth()
                 ) {
-                    Text("Sign Up")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            if (showMessage) messageText else "Sign Up", // Show message or "Sign Up" text
+                            modifier = Modifier.weight(1f), // Center the text
+                            textAlign = TextAlign.Center // Center the text horizontally
+                        )
+                        AnimatedVisibility(visible = loadingState) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(24.dp),
+                                color = Color.White
+                            )
+                        }
+                    }
                 }
+
 
 
                 Text(
@@ -159,10 +212,24 @@ class SignUpScreen(
                         .padding(8.dp)
                         .clickable {
                             navigator!!.push(
-                               LoginScreen(authViewModel)
-                           )
+                                LoginScreen(authViewModel)
+                            )
                         }
                 )
+            }
+        }
+    }
+
+    private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
+        when (result) {
+            is MacaoResult.Success -> {
+                // Handle successful signup
+                println("Sign up successful!")
+            }
+
+            is MacaoResult.Error -> {
+                // Handle signup failure
+                println("Sign up failed: ${result.error}")
             }
         }
     }
