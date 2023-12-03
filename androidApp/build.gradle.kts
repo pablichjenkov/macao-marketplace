@@ -20,10 +20,6 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
 
-            // Firebase
-            implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
-            implementation("com.google.firebase:firebase-auth-ktx")
-
             // Third Party
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
