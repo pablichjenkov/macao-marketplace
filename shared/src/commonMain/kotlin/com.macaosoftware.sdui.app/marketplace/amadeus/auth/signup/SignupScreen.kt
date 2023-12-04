@@ -51,6 +51,7 @@ class SignUpScreen(
     override fun Content() {
         var username by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
+        var phone by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
@@ -69,13 +70,6 @@ class SignUpScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-
-                Image(
-                    painter = painterResource("logo.png"),
-                    contentDescription = null,
-                    modifier = Modifier.size(250.dp)
-                )
 
 
                 // Username TextField
@@ -100,6 +94,20 @@ class SignUpScreen(
                         isError = false
                     },
                     label = { Text("Email") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    isError = isError
+                )
+
+                // Phone TextField
+                OutlinedTextField(
+                    value = phone,
+                    onValueChange = {
+                        phone = it
+                        isError = false
+                    },
+                    label = { Text("Phone No") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -160,13 +168,14 @@ class SignUpScreen(
                                         email = email,
                                         password = password,
                                         username = username,
+                                        phoneNo = phone,
                                         onResult = { result ->
                                             handleSignupResult(result)
                                         }
                                     )
                                     // Use the AuthViewModel to perform signup
-                                    authViewModel.signup(signupRequest.email, signupRequest.password, signupRequest.username)
-                                    val user = User(signupRequest.email, signupRequest.password,signupRequest.username)
+                                    authViewModel.signup(signupRequest.email, signupRequest.password, signupRequest.username, signupRequest.phoneNo)
+                                    val user = User(signupRequest.email, signupRequest.password,signupRequest.username,signupRequest.phoneNo)
                                     authViewModel.storeData(user)
                                     delay(2000)
                                     loadingState = false

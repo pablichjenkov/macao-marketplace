@@ -9,7 +9,7 @@ import com.macaosoftware.sdui.app.plugin.SignupRequest
 import com.macaosoftware.sdui.app.plugin.User
 import com.macaosoftware.sdui.app.util.MacaoResult
 import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.database.database
 import kotlinx.uuid.UUID
@@ -44,9 +44,9 @@ class AuthViewModel(
         )
     }
 
-    suspend fun signup(email: String, password: String, username: String) {
+    suspend fun signup(email: String, password: String, username: String, phoneNo: String) {
         authPlugin.signup(
-            SignupRequest(email, password, username) { result ->
+            SignupRequest(email, password, username, phoneNo) { result ->
                 handleSignupResult(result)
             }
         )
@@ -72,22 +72,29 @@ class AuthViewModel(
                 val macaoUser = result.value
                 println("Signup Successful: $macaoUser ")
             } else if (result is MacaoResult.Error) {
-                // Signup failed, handle the error
                 val signupError = result.error
                 println("Signup Failed: $signupError")
             }
         } else {
-            // Handle the case where result is null
             println("Signup result is null")
         }
     }
 
     suspend fun storeData(user: User) {
+        val firebaseUser = Firebase.auth.currentUser?.uid
         val uuid = UUID()
         val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
 
-        database.reference().child("Users").child("$uuid").setValue(user)
+        database.reference().child("Users").child("$firebaseUser").setValue(user)
         println("Data Store Successfully: $user ")
 
     }
+
+    suspend fun updateData(currentUser: FirebaseUser, updatedUser: User) {
+        val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
+        val userRef = database.reference().child("Users").child(currentUser.uid)
+        userRef.setValue(updatedUser)
+        println("Data Updated Successfully: $updatedUser ")
+    }
+
 }

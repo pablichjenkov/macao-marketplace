@@ -70,15 +70,6 @@ class LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                //Logo
-
-                Image(
-                    painter = painterResource("logo.png"),
-                    contentDescription = null,
-                    modifier = Modifier.size(250.dp)
-                )
-
                 // Username TextField
                 OutlinedTextField(
                     value = emai,
@@ -153,7 +144,7 @@ class LoginScreen(
                                     loadingState = false
                                     showMessage = true
                                     messageText = "Login successful!"
-                                    navigator?.push(ProfileScreen())
+                                    navigator?.push(ProfileScreen(authViewModel))
                                 } catch (e: Exception) {
                                     loadingState = false
                                     showMessage = true

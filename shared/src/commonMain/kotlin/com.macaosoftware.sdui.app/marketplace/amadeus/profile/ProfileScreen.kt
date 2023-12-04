@@ -18,12 +18,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WifiTetheringErrorRounded
 import androidx.compose.material3.AlertDialog
@@ -31,10 +29,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,6 +39,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,22 +54,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
+import com.macaosoftware.sdui.app.plugin.User
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
+import dev.gitlive.firebase.database.database
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class ProfileScreen() : Screen {
-    @OptIn(ExperimentalMaterial3Api::class)
+class ProfileScreen(
+    private val authViewModel: AuthViewModel? = null
+) : Screen {
     @Composable
     override fun Content() {
+        val firebaseUser = Firebase.auth
+        val firebaseDatabase =
+            Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
+        val data = firebaseDatabase.reference().child("Users")
+            .child(firebaseUser.currentUser!!.uid)
+
+        val coroutineScope = rememberCoroutineScope()
+        val currentUser = firebaseUser.currentUser
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
         var editProfile by remember { mutableStateOf(false) }
-        var username by remember { mutableStateOf("John Doe") }
-        var email by remember { mutableStateOf("john.doe@example.com") }
-        var phone by remember { mutableStateOf("+1 (555) 123-4567") }
+        var username by remember { mutableStateOf("${currentUser?.displayName} ") }
+        var email by remember { mutableStateOf("${currentUser?.email}") }
+        var phone by remember { mutableStateOf("${currentUser?.phoneNumber}") }
+        var pass by remember { mutableStateOf("") }
+
+
+
 
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
@@ -191,6 +208,7 @@ class ProfileScreen() : Screen {
                                 contentScale = ContentScale.Crop
                             )
 
+                            //Edit Profile
                             OutlinedButton(
                                 onClick = {
                                     editProfile = !editProfile
@@ -209,6 +227,36 @@ class ProfileScreen() : Screen {
                                 )
                             ) {
                                 Text(text = "Edit Profile")
+                            }
+
+
+                            //Logout
+                            OutlinedButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        if (currentUser != null) {
+                                            firebaseUser.signOut()
+                                            delay(100)
+                                            navigator?.popAll()
+                                        } else {
+                                            firebaseUser.fetchSignInMethodsForEmail(email)
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
+                                enabled = true,
+                                shape = ButtonDefaults.outlinedShape,
+                                elevation = ButtonDefaults.buttonElevation(3.dp),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    containerColor = Color.White,
+                                    contentColor = MaterialTheme.colorScheme.primary
+                                ),
+                                border = BorderStroke(
+                                    2.dp,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            ) {
+                                Text(text = "Logout")
                             }
 
                         }
@@ -236,7 +284,7 @@ class ProfileScreen() : Screen {
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "John Doe",
+                            text = username,
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -261,7 +309,7 @@ class ProfileScreen() : Screen {
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Email: john.doe@example.com",
+                            text = "Email: $email",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
                                 uriHandler.openUri("john.doe@example.com")
@@ -319,13 +367,24 @@ class ProfileScreen() : Screen {
                                         onValueChange = { phone = it },
                                         label = { Text("Phone") }
                                     )
+                                    OutlinedTextField(
+                                        value = pass,
+                                        onValueChange = { pass = it },
+                                        label = { Text("Password") }
+                                    )
                                 }
                             },
                             confirmButton = {
                                 Button(
                                     onClick = {
                                         // Save changes
+                                        coroutineScope.launch {
+                                            val updatedUser = User(email, pass, username, phone)
+                                            authViewModel?.updateData(currentUser!!, updatedUser)
+                                        }
+
                                         editProfile = false
+
                                     },
                                     content = { Text("Save") },
                                     colors = ButtonDefaults.buttonColors(

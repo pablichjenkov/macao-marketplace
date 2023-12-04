@@ -61,13 +61,15 @@ class AuthPluginEmpty : AuthPlugin {
 data class User(
     val email: String,
     val password: String,
-    val username: String
+    val username: String,
+    val phoneNo: String,
 )
 
 data class SignupRequest(
     val email: String,
     val password: String,
     val username: String,
+    val phoneNo: String,
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 
