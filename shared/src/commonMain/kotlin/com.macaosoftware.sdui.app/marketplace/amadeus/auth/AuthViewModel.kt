@@ -12,6 +12,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.database.database
+import dev.gitlive.firebase.options
 import kotlinx.uuid.UUID
 
 class AuthViewModel(
@@ -82,12 +83,9 @@ class AuthViewModel(
 
     suspend fun storeData(user: User) {
         val firebaseUser = Firebase.auth.currentUser?.uid
-        val uuid = UUID()
         val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
-
         database.reference().child("Users").child("$firebaseUser").setValue(user)
         println("Data Store Successfully: $user ")
-
     }
 
     suspend fun updateData(currentUser: FirebaseUser, updatedUser: User) {
@@ -96,5 +94,9 @@ class AuthViewModel(
         userRef.setValue(updatedUser)
         println("Data Updated Successfully: $updatedUser ")
     }
-
+    suspend fun resetPassword(email: String) {
+        val firebase = Firebase.auth
+        firebase.sendPasswordResetEmail(email)
+        println("Reset Email Sent")
+    }
 }

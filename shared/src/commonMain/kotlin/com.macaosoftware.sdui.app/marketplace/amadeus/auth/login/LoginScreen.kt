@@ -1,7 +1,6 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth.login
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
@@ -44,7 +42,6 @@ import com.macaosoftware.sdui.app.util.MacaoResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
 class LoginScreen(
     private val authViewModel: AuthViewModel,
@@ -124,13 +121,14 @@ class LoginScreen(
                                         password = password,
                                         onResult = { result ->
                                             handleLoginResult(result)
-                                            when(result){
-                                                is MacaoResult.Success ->{
+                                            when (result) {
+                                                is MacaoResult.Success -> {
                                                     loadingState = false
                                                     showMessage = true
                                                     messageText = "Login successful!"
                                                 }
-                                                is MacaoResult.Error ->{
+
+                                                is MacaoResult.Error -> {
                                                     loadingState = false
                                                     showMessage = true
                                                     messageText = "Error While Login..."
@@ -199,7 +197,7 @@ class LoginScreen(
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator?.push(ForgetScreen())
+                            navigator?.push(ForgetScreen(authViewModel))
                         }
                 )
             }

@@ -4,6 +4,7 @@ import com.macaosoftware.plugin.MacaoPlugin
 import com.macaosoftware.sdui.app.util.MacaoError
 import com.macaosoftware.sdui.app.util.MacaoResult
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.app
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.database.database
 import dev.gitlive.firebase.initialize
@@ -43,16 +44,55 @@ class AuthPluginEmpty : AuthPlugin {
             )
         }
     }
-
-
     override suspend fun login(loginRequest: LoginRequest) {
         try {
-            firebaseAuth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
+            if (isValidEmail(loginRequest.email) && isValidPassword(loginRequest.password)) {
+                val userExists = userExistsInDatabase(loginRequest.email, loginRequest.password)
+
+                if (userExists) {
+                  // firebaseAuth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
+                    println("AuthPluginEmpty::login() has been called")
+                    loginRequest.onResult(MacaoResult.Success(MacaoUser(loginRequest.email)))
+                } else {
+                    loginRequest.onResult(
+                        MacaoResult.Error(
+                            LoginError(
+                                errorDescription = "Invalid email or password"
+                            )
+                        )
+                    )
+                }
+            } else {
+                loginRequest.onResult(
+                    MacaoResult.Error(
+                        LoginError(
+                            errorDescription = "Invalid email or password format"
+                        )
+                    )
+                )
+            }
         } catch (e: Exception) {
             e.printStackTrace()
+            loginRequest.onResult(
+                MacaoResult.Error(
+                    LoginError(
+                        errorDescription = "Login Failed: ${e.message}"
+                    )
+                )
+            )
         }
+    }
+    private fun userExistsInDatabase(email: String, password: String): Boolean {
+        return firebaseAuth.currentUser!!.equals(email) && firebaseAuth.currentUser!!.isEmailVerified
+    }
+    private fun isValidEmail(email: String): Boolean {
+        val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
+        return email.trim().matches(emailRegex)
+    }
 
-        println(" AuthPluginEmpty::login() has been called")
+    private fun isValidPassword(password: String): Boolean {
+        // Implement password validation logic if needed
+        return password.length >= 8
     }
 
 }
