@@ -5,7 +5,10 @@ import com.macaosoftware.sdui.app.util.MacaoError
 import com.macaosoftware.sdui.app.util.MacaoResult
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
+import dev.gitlive.firebase.database.database
 import dev.gitlive.firebase.initialize
+import kotlinx.serialization.Serializable
+import kotlinx.uuid.UUID
 
 interface AuthPlugin : MacaoPlugin {
     fun initialize()
@@ -18,6 +21,7 @@ interface AuthPlugin : MacaoPlugin {
  * */
 class AuthPluginEmpty : AuthPlugin {
     private val firebaseAuth = Firebase.auth
+    private val firebaseDatabase = Firebase.database
 
     override fun initialize() {
         Firebase.initialize()
@@ -25,9 +29,24 @@ class AuthPluginEmpty : AuthPlugin {
     }
 
     override suspend fun signup(signupRequest: SignupRequest) {
-        firebaseAuth.createUserWithEmailAndPassword(signupRequest.email, signupRequest.password)
-        println(" AuthPluginEmpty::signup() has been called")
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(signupRequest.email, signupRequest.password)
+            println("AuthPluginEmpty::signup() has been called")
+            signupRequest.onResult(MacaoResult.Success(MacaoUser(signupRequest.email)))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            signupRequest.onResult(
+                MacaoResult.Error(
+                    SignupError(
+                        errorDescription = "Signup Failed: ${e.message}"
+                    )
+                )
+            )
+        }
     }
+
+
+
 
     override suspend fun login(loginRequest: LoginRequest) {
         try {
@@ -40,10 +59,16 @@ class AuthPluginEmpty : AuthPlugin {
     }
 
 }
-
+@Serializable
+data class User(
+    val email: String,
+    val password: String,
+    val username: String
+)
 data class SignupRequest(
     val email: String,
     val password: String,
+    val username: String,
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 

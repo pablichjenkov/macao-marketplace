@@ -33,10 +33,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
-import com.macaosoftware.sdui.app.plugin.AuthPluginEmpty
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeScreenWithVoyager
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVoyager
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
+import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
 import com.macaosoftware.sdui.app.plugin.LoginRequest
 import com.macaosoftware.sdui.app.plugin.MacaoUser
 import com.macaosoftware.sdui.app.util.MacaoResult
@@ -46,18 +52,18 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 class LoginScreen(
-    private val authViewModel: AuthViewModel
+    private val authViewModel: AuthViewModel,
 ) : Screen {
     @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
-        var username by remember { mutableStateOf("") }
+        var emai by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
         var showMessage by remember { mutableStateOf(false) }
         var messageText by remember { mutableStateOf("") }
-        val navigator = LocalNavigator.current
         var loadingState by remember { mutableStateOf(false) }
+        val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val coroutineScope = rememberCoroutineScope()
         Box(
@@ -80,9 +86,9 @@ class LoginScreen(
 
                 // Username TextField
                 OutlinedTextField(
-                    value = username,
+                    value = emai,
                     onValueChange = {
-                        username = it
+                        emai = it
                         isError = false
                     },
                     label = { Text("Email") },
@@ -122,27 +128,27 @@ class LoginScreen(
                 // Login Button
                 Button(
                     onClick = {
-                        if (isValidCredentials(username, password)) {
+                        if (isValidCredentials(emai, password)) {
                             coroutineScope.launch {
                                 loadingState = true
                                 keyboardController?.hide()
                                 try {
                                     val loginRequest = LoginRequest(
-                                        email = username,
+                                        email = emai,
                                         password = password,
                                         onResult = { result ->
                                             handleLoginResult(result)
                                         }
                                     )
-                                    AuthPluginEmpty().login(loginRequest)
+                                    authViewModel.login(loginRequest.email, loginRequest.password)
                                     delay(2000)
                                     loadingState = false
                                     showMessage = true
-                                    messageText = "Login successful!" // or "Login denied" based on your logic
+                                    messageText = "Login successful!"
                                 } catch (e: Exception) {
                                     loadingState = false
                                     showMessage = true
-                                    messageText = "Login failed: ${e.message}" // Handle exception message
+                                    messageText = "Login failed: ${e.message}"
                                 }
                             }
                         } else {
@@ -203,18 +209,19 @@ class LoginScreen(
     private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
         when (result) {
             is MacaoResult.Success -> {
-                // Handle successful login
+                //Navigate to Home Screen and popAll.
+                //navigator?.push(AmadeusHomeScreenWithVoyager(viewModel))
                 println("Login successful!")
             }
 
             is MacaoResult.Error -> {
-                // Handle login failure
                 println("Login failed: ${result.error}")
             }
         }
     }
 
     private fun isValidCredentials(username: String, password: String): Boolean {
+        println("Validating credentials - username: $username, password: $password")
         return username.isNotEmpty() && password.isNotEmpty()
     }
 }

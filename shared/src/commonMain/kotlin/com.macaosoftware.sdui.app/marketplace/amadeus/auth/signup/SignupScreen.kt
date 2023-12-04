@@ -31,11 +31,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
-import com.macaosoftware.sdui.app.plugin.AuthPluginEmpty
 import com.macaosoftware.sdui.app.plugin.MacaoUser
 import com.macaosoftware.sdui.app.plugin.SignupRequest
+import com.macaosoftware.sdui.app.plugin.User
 import com.macaosoftware.sdui.app.util.MacaoResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,7 +44,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 class SignUpScreen(
-    private val authViewModel: AuthViewModel
+    private val authViewModel: AuthViewModel,
 ) : Screen {
     @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
     @Composable
@@ -55,11 +56,10 @@ class SignUpScreen(
         var isError by remember { mutableStateOf(false) }
         var showMessage by remember { mutableStateOf(false) }
         var messageText by remember { mutableStateOf("") }
-        val navigator = LocalNavigator.current
         var loadingState by remember { mutableStateOf(false) }
+        val navigator  = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val coroutineScope = rememberCoroutineScope()
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -159,16 +159,22 @@ class SignUpScreen(
                                     val signupRequest = SignupRequest(
                                         email = email,
                                         password = password,
+                                        username = username,
                                         onResult = { result ->
                                             handleSignupResult(result)
                                         }
                                     )
-                                    AuthPluginEmpty().signup(signupRequest)
+                                    // Use the AuthViewModel to perform signup
+                                    authViewModel.signup(signupRequest.email, signupRequest.password, signupRequest.username)
+                                    val user = User(signupRequest.email, signupRequest.password,signupRequest.username)
+                                    authViewModel.storeData(user)
                                     delay(2000)
                                     loadingState = false
                                     showMessage = true
                                     messageText = "Sign up successful!"
-                                    println("Signup Successful ${AuthPluginEmpty().signup(signupRequest)}")
+                                    delay(200)
+                                    navigator?.push(LoginScreen(authViewModel))
+                                    println("Signup Successful")
                                 } catch (e: Exception) {
                                     loadingState = false
                                     showMessage = true
@@ -223,7 +229,6 @@ class SignUpScreen(
     private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
         when (result) {
             is MacaoResult.Success -> {
-                // Handle successful signup
                 println("Sign up successful!")
             }
 

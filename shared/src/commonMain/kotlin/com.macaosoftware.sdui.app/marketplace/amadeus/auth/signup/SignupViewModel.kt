@@ -4,7 +4,6 @@ import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 
 class SignupViewModel(
-
     private val loginComponent: StateComponent<SignupViewModel>
 ): ComponentViewModel() {
     override fun onAttach() {
