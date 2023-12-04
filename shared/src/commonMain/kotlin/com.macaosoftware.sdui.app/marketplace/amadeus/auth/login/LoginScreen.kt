@@ -34,15 +34,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeScreenWithVoyager
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVoyager
-import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
-import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileScreen
 import com.macaosoftware.sdui.app.plugin.LoginRequest
 import com.macaosoftware.sdui.app.plugin.MacaoUser
 import com.macaosoftware.sdui.app.util.MacaoResult
@@ -138,6 +133,19 @@ class LoginScreen(
                                         password = password,
                                         onResult = { result ->
                                             handleLoginResult(result)
+                                            when(result){
+                                                is MacaoResult.Success ->{
+                                                    loadingState = false
+                                                    showMessage = true
+                                                    messageText = "Login successful!"
+                                                }
+                                                is MacaoResult.Error ->{
+                                                    loadingState = false
+                                                    showMessage = true
+                                                    messageText = "Error While Login..."
+                                                }
+                                            }
+
                                         }
                                     )
                                     authViewModel.login(loginRequest.email, loginRequest.password)
@@ -145,6 +153,7 @@ class LoginScreen(
                                     loadingState = false
                                     showMessage = true
                                     messageText = "Login successful!"
+                                    navigator?.push(ProfileScreen())
                                 } catch (e: Exception) {
                                     loadingState = false
                                     showMessage = true
@@ -209,8 +218,7 @@ class LoginScreen(
     private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
         when (result) {
             is MacaoResult.Success -> {
-                //Navigate to Home Screen and popAll.
-                //navigator?.push(AmadeusHomeScreenWithVoyager(viewModel))
+
                 println("Login successful!")
             }
 

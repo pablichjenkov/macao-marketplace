@@ -18,21 +18,32 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WifiTetheringErrorRounded
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,10 +64,16 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 class ProfileScreen() : Screen {
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
+        var editProfile by remember { mutableStateOf(false) }
+        var username by remember { mutableStateOf("John Doe") }
+        var email by remember { mutableStateOf("john.doe@example.com") }
+        var phone by remember { mutableStateOf("+1 (555) 123-4567") }
+
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             // Row containing both the image and the details
@@ -91,7 +108,7 @@ class ProfileScreen() : Screen {
                             ) {
                                 IconButton(
                                     onClick = {
-                                        navigator?.pop()
+                                        navigator?.popAll()
                                     },
                                     enabled = true,
                                     modifier = Modifier.clip(
@@ -175,7 +192,9 @@ class ProfileScreen() : Screen {
                             )
 
                             OutlinedButton(
-                                onClick = {},
+                                onClick = {
+                                    editProfile = !editProfile
+                                },
                                 modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
                                 enabled = true,
                                 shape = ButtonDefaults.outlinedShape,
@@ -237,7 +256,7 @@ class ProfileScreen() : Screen {
                             text = "Location: City, Country",
                             style = MaterialTheme.typography.bodyLarge,
 
-                        )
+                            )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -277,6 +296,55 @@ class ProfileScreen() : Screen {
                             )
                         }
 
+                    }
+                    // Edit Profile AlertDialog
+                    if (editProfile) {
+                        AlertDialog(
+                            onDismissRequest = { editProfile = false },
+                            title = { Text("Edit Profile") },
+                            text = {
+                                Column {
+                                    OutlinedTextField(
+                                        value = username,
+                                        onValueChange = { username = it },
+                                        label = { Text("Username") }
+                                    )
+                                    OutlinedTextField(
+                                        value = email,
+                                        onValueChange = { email = it },
+                                        label = { Text("Email") }
+                                    )
+                                    OutlinedTextField(
+                                        value = phone,
+                                        onValueChange = { phone = it },
+                                        label = { Text("Phone") }
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        // Save changes
+                                        editProfile = false
+                                    },
+                                    content = { Text("Save") },
+                                    colors = ButtonDefaults.buttonColors(
+                                        contentColor = MaterialTheme.colorScheme.primary,
+                                        containerColor = MaterialTheme.colorScheme.surface
+                                    )
+                                )
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = { editProfile = false },
+                                    content = { Text("Cancel") },
+                                    colors = ButtonDefaults.buttonColors(
+                                        contentColor = MaterialTheme.colorScheme.error,
+                                        containerColor = MaterialTheme.colorScheme.surface
+                                    )
+                                )
+                            }
+                        )
                     }
                 }
             }

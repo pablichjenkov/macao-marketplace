@@ -8,12 +8,11 @@ import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.database.database
 import dev.gitlive.firebase.initialize
 import kotlinx.serialization.Serializable
-import kotlinx.uuid.UUID
 
 interface AuthPlugin : MacaoPlugin {
     fun initialize()
     suspend fun signup(signupRequest: SignupRequest)
-   suspend fun login(loginRequest: LoginRequest)
+    suspend fun login(loginRequest: LoginRequest)
 }
 
 /**
@@ -46,8 +45,6 @@ class AuthPluginEmpty : AuthPlugin {
     }
 
 
-
-
     override suspend fun login(loginRequest: LoginRequest) {
         try {
             firebaseAuth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
@@ -59,12 +56,14 @@ class AuthPluginEmpty : AuthPlugin {
     }
 
 }
+
 @Serializable
 data class User(
     val email: String,
     val password: String,
     val username: String
 )
+
 data class SignupRequest(
     val email: String,
     val password: String,

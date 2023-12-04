@@ -9,6 +9,8 @@ import com.macaosoftware.sdui.app.plugin.SignupRequest
 import com.macaosoftware.sdui.app.plugin.User
 import com.macaosoftware.sdui.app.util.MacaoResult
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.database.database
 import kotlinx.uuid.UUID
 
