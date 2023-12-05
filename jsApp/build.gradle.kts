@@ -23,6 +23,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(project(":shared"))
+            implementation(project(":macao-sdk-mirror"))
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.core.js)
             implementation(libs.kotlinx.serialization.json)
@@ -31,9 +32,11 @@ kotlin {
             implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
             implementation(npm("sql.js", "1.8.0"))
 
-            // Third Party
+            // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+            // todo: Move this to shared
+            implementation(project(":auth-firebase-gitlive"))
         }
     }
 }

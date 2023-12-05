@@ -2,11 +2,11 @@ package com.macaosoftware.sdui.app
 
 import android.content.Context
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.sdui.app.data.SduiRemoteService
+import com.macaosoftware.plugin.AuthPlugin
+import com.macaosoftware.plugin.RootComponentProvider
 import com.macaosoftware.sdui.app.di.commonModule
-import com.macaosoftware.sdui.app.plugin.AuthPlugin
-import com.macaosoftware.sdui.app.plugin.FirebaseAuthPluginAndroid
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
+import com.macaosoftware.sdui.data.SduiRemoteService
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.AndroidDriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
@@ -23,7 +23,12 @@ class AndroidRootComponentProvider(
         val database = createDatabase(AndroidDriverFactory(context))
         val pluginsModule = module {
             single<Database> { database }
-            single<AuthPlugin> { FirebaseAuthPluginAndroid() }
+            /*single<AuthPlugin> {
+                com.macaosoftware.plugin.auth.FirebaseAuthPluginAndroid()
+            }*/
+            single<AuthPlugin> {
+                com.macaosoftware.plugin.auth.AuthPluginGitLive()
+            }
         }
         val koinRootContainer = koinApplication {
             printLogger()

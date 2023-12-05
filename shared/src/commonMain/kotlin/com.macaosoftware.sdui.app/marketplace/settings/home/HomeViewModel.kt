@@ -2,8 +2,8 @@ package com.macaosoftware.sdui.app.marketplace.settings.home
 
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.viewmodel.ComponentViewModel
-import com.macaosoftware.sdui.app.data.ApiCredentials
-import com.macaosoftware.sdui.app.data.TestData
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.ApiCredentials
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.TestData
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.CallResult
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider

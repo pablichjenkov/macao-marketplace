@@ -6,8 +6,8 @@ import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.CallResult
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
-import com.macaosoftware.sdui.app.data.ApiCredentials
-import com.macaosoftware.sdui.app.data.TestData
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.ApiCredentials
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.TestData
 import com.pablichj.incubator.amadeus.endpoint.accesstoken.AccessTokenDaoDelight
 import com.pablichj.incubator.amadeus.endpoint.accesstoken.GetAccessTokenRequest
 import com.pablichj.incubator.amadeus.endpoint.accesstoken.GetAccessTokenUseCase

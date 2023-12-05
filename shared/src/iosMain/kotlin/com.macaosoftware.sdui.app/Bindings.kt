@@ -10,7 +10,7 @@ import com.macaosoftware.component.IosComponentRender
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
 import com.macaosoftware.plugin.IosBridge
-import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import platform.UIKit.UIViewController

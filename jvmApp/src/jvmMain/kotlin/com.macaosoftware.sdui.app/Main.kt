@@ -21,7 +21,7 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.plugin.DesktopBridge
-import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import java.awt.SystemTray
 import java.awt.Toolkit
@@ -36,8 +36,6 @@ fun main() {
         Dispatchers.IO,
         JvmRootComponentProvider()
     )
-
-
 
     singleWindowApplication(
         title = "Macao SDUI Demo",

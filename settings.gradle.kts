@@ -33,6 +33,12 @@ include(":shared")
 include(":androidApp")
 include(":jsApp")
 include(":jvmApp")
+include(":macao-sdk-mirror")
+
+// Auth Plugin implementations
+include(":auth-firebase-macao")
+include(":auth-firebase-gitlive")
 
 //include(":component")
 //project(":component").projectDir = File("../component/component")
+

@@ -2,7 +2,7 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.auth.login
 
 import com.macaosoftware.component.viewmodel.ComponentViewModelFactory
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.sdui.app.plugin.AuthPlugin
+import com.macaosoftware.plugin.AuthPlugin
 
 class LoginViewModelFactory(
     private val authPlugin: AuthPlugin

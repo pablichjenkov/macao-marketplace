@@ -3,7 +3,7 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.home
 import FormParam
 import QueryParam
 import com.macaosoftware.component.viewmodel.ComponentViewModel
-import com.macaosoftware.sdui.app.data.ApiCredentials
+import com.macaosoftware.sdui.app.marketplace.amadeus.data.ApiCredentials
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.CallResult
 import com.pablichj.incubator.amadeus.common.ITimeProvider
