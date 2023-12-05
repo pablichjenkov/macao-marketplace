@@ -1,18 +1,11 @@
 package com.macaosoftware.sdui.app
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import com.macaosoftware.component.BrowserComponentRender
-import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.JsBridge
-import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.macaosoftware.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.elseIfNull
+import com.macaosoftware.plugin.ifNotNull
 
 @Composable
 fun BrowserMacaoApplication(

@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.WindowState
 import com.macaosoftware.component.DesktopComponentRender
 import com.macaosoftware.plugin.DesktopBridge
-import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.elseIfNull
+import com.macaosoftware.plugin.ifNotNull
 
 @Composable
 fun JvmMacaoApplication(

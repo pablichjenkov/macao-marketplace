@@ -17,6 +17,7 @@ kotlin {
 
     // IOS
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -40,8 +41,8 @@ kotlin {
         commonMain.dependencies {
             val ktorVersion = "2.3.6"
             implementation(compose.runtime)
-            implementation(compose.foundation)
             implementation(compose.ui)
+            implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
@@ -56,7 +57,7 @@ kotlin {
             //Kamel
             implementation(libs.kamel.image)
 
-            //Voygar
+            //Voyager
             implementation(libs.voyager.navigator)
 
             implementation(libs.kotlinx.coroutines.core)
@@ -65,26 +66,25 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
 
-            // Third Party
-            implementation(libs.amadeus.api)
-            implementation(libs.component.toolkit)
-
             // ktor
             implementation(libs.ktor.core)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.io.ktor.client.content.negotiation)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
+
+            // Macao Libs
+            implementation(libs.amadeus.api)
+            implementation(libs.component.toolkit)
+            implementation(project(":macao-sdk-mirror"))
+
+            // Pay attention here, we decide to include one or the other
+            // implementation(project(":auth-firebase-macao"))
+            implementation(project(":auth-firebase-gitlive"))
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.koin.test)
-        }
-        androidMain.dependencies {
-            // Firebase
-            implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
-            implementation("com.google.firebase:firebase-auth-ktx")
-
         }
     }
 

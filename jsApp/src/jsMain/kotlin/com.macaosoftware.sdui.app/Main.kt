@@ -8,7 +8,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.plugin.JsBridge
-import com.macaosoftware.sdui.app.plugin.MacaoApplicationState
+import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skiko.wasm.onWasmReady
 

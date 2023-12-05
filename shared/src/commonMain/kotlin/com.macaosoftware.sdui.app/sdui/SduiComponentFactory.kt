@@ -25,7 +25,8 @@ import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.topbar.TopBarComponent
 import com.macaosoftware.component.topbar.TopBarComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.sdui.app.data.SduiConstants
+import com.macaosoftware.plugin.AuthPlugin
+import com.macaosoftware.sdui.MacaoComponentFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
@@ -55,7 +56,6 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFact
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.error.ComponentMissingImplementation
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBar
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarFactory
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarViewModel
@@ -74,7 +74,8 @@ import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
-import com.macaosoftware.sdui.app.plugin.AuthPlugin
+import com.macaosoftware.sdui.data.SduiConstants
+import com.macaosoftware.sdui.error.ComponentMissingImplementation
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
@@ -392,6 +393,7 @@ class SduiComponentFactory(
             SduiConstants.ComponentType.Amadeus.Auth.Login -> {
 
                 val authPlugin: AuthPlugin = get()
+
                 StateComponent<AuthViewModel>(
                     viewModelFactory = AuthViewModelFactory(authPlugin),
                     content = AuthComponentView

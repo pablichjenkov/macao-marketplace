@@ -10,6 +10,7 @@ kotlin {
     sourceSets {
         jvmMain.dependencies {
             implementation(project(":shared"))
+            implementation(project(":macao-sdk-mirror"))
             implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(compose.foundation)
@@ -23,9 +24,11 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.core)
 
-            // Third Party
+            // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+            // todo: Move this to shared
+            implementation(project(":auth-firebase-gitlive"))
         }
     }
 }
