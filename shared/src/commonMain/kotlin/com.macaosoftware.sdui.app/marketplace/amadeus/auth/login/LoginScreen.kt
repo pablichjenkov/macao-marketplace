@@ -48,7 +48,7 @@ import org.jetbrains.compose.resources.painterResource
 class LoginScreen(
     private val authViewModel: AuthViewModel,
 ) : Screen {
-    @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         var emai by remember { mutableStateOf("") }
@@ -200,6 +200,17 @@ class LoginScreen(
                         .padding(8.dp)
                         .clickable {
                             navigator?.push(ForgetScreen(authViewModel))
+                        }
+                )
+
+                // Text for forgot password
+                Text(
+                    text = "Login With Link",
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            navigator?.push(LoginWithEmailLinkScreen(authViewModel))
                         }
                 )
             }

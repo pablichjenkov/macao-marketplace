@@ -9,6 +9,8 @@ interface AuthPlugin : MacaoPlugin {
     fun initialize()
     suspend fun  signup(signupRequest: SignupRequest)
     suspend fun login(loginRequest: LoginRequest)
+    suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink)
+    suspend fun sendEmailLink(loginRequest: LoginRequestForLink)
 }
 
 /**
@@ -26,6 +28,14 @@ class AuthPluginEmpty : AuthPlugin {
 
     override suspend fun login(loginRequest: LoginRequest) {
         println(" AuthPluginEmpty::login() has been called")
+    }
+
+    override suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
+        TODO("Not yet implemented")
     }
 
 }
@@ -48,6 +58,17 @@ data class SignupRequest(
 data class LoginRequest(
     val email: String,
     val password: String,
+    val onResult: (MacaoResult<MacaoUser>) -> Unit
+)
+
+data class LoginRequestForLink(
+    val email: String,
+    val onResult: (MacaoResult<MacaoUser>) -> Unit
+)
+
+data class LoginRequestForEmailWithLink(
+    val email: String,
+    val link: String,
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 

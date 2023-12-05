@@ -4,6 +4,8 @@ import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.LoginRequest
+import com.macaosoftware.plugin.LoginRequestForEmailWithLink
+import com.macaosoftware.plugin.LoginRequestForLink
 import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.plugin.User
@@ -33,6 +35,24 @@ class AuthViewModel(
 
     override fun onStop() {
 
+    }
+
+    suspend fun loginWithEmailAndLink(email: String, link: String) {
+        authPlugin.loginEmailAndLink(
+            LoginRequestForEmailWithLink(
+                email, link
+            ) { result ->
+                handleLoginResult(result)
+            }
+        )
+    }
+
+    suspend fun sendEmailLink(email: String) {
+        authPlugin.sendEmailLink(
+            LoginRequestForLink(email) { result ->
+                handleLoginResult(result)
+            }
+        )
     }
 
     suspend fun login(email: String, password: String) {
@@ -92,6 +112,7 @@ class AuthViewModel(
         userRef.setValue(updatedUser)
         println("Data Updated Successfully: $updatedUser ")
     }
+
     suspend fun resetPassword(email: String) {
         val firebase = Firebase.auth
         firebase.sendPasswordResetEmail(email)

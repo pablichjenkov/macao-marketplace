@@ -81,7 +81,6 @@ class ProfileScreen(
         val firebaseDatabase =
             Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
         val data = firebaseDatabase.reference().child("Users")
-            .child(firebaseUser.currentUser!!.uid)
         LaunchedEffect(Unit){
             val userData = data.valueEvents.collect { data ->
                 usersData = data.value()
