@@ -2,12 +2,13 @@ package com.macaosoftware.plugin
 
 import com.macaosoftware.plugin.util.MacaoError
 import com.macaosoftware.plugin.util.MacaoResult
+import kotlinx.serialization.Serializable
 
 
 interface AuthPlugin : MacaoPlugin {
     fun initialize()
-    fun signup(signupRequest: SignupRequest)
-    fun login(loginRequest: LoginRequest)
+    suspend fun  signup(signupRequest: SignupRequest)
+    suspend fun login(loginRequest: LoginRequest)
 }
 
 /**
@@ -19,19 +20,28 @@ class AuthPluginEmpty : AuthPlugin {
         println(" AuthPluginEmpty::initialize() has been called")
     }
 
-    override fun signup(signupRequest: SignupRequest) {
+    override suspend fun signup(signupRequest: SignupRequest) {
         println(" AuthPluginEmpty::signup() has been called")
     }
 
-    override fun login(loginRequest: LoginRequest) {
+    override suspend fun login(loginRequest: LoginRequest) {
         println(" AuthPluginEmpty::login() has been called")
     }
 
 }
+@Serializable
+data class User(
+    val email: String,
+    val password: String,
+    val username: String,
+    val phoneNo: String,
+)
 
 data class SignupRequest(
     val email: String,
     val password: String,
+    val username: String,
+    val phoneNo: String,
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 

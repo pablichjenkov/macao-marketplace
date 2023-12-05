@@ -4,6 +4,14 @@ import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.LoginRequest
+import com.macaosoftware.plugin.MacaoUser
+import com.macaosoftware.plugin.SignupRequest
+import com.macaosoftware.plugin.User
+import com.macaosoftware.plugin.util.MacaoResult
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.FirebaseUser
+import dev.gitlive.firebase.auth.auth
+import dev.gitlive.firebase.database.database
 
 class AuthViewModel(
     private val authComponent: StateComponent<AuthViewModel>,
@@ -11,7 +19,8 @@ class AuthViewModel(
 ) : ComponentViewModel() {
 
     override fun onAttach() {
-
+        //Initialize
+        //authPlugin.initialize()
     }
 
     override fun onDetach() {
@@ -26,12 +35,66 @@ class AuthViewModel(
 
     }
 
-    fun login() {
+    suspend fun login(email: String, password: String) {
         authPlugin.login(
-            LoginRequest("pablo@gmail.com", "pass123") {
-                println("Login Result: $it")
+            LoginRequest(email, password) { result ->
+                handleLoginResult(result)
             }
         )
     }
 
+    suspend fun signup(email: String, password: String, username: String, phoneNo: String) {
+        authPlugin.signup(
+            SignupRequest(email, password, username, phoneNo) { result ->
+                handleSignupResult(result)
+            }
+        )
+    }
+
+    private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
+        if (result != null) {
+            if (result is MacaoResult.Success) {
+                val macaoUser = result.value
+                println("Login Successful: $macaoUser")
+            } else if (result is MacaoResult.Error) {
+                val loginError = result.error
+                println("Login Failed: $loginError")
+            }
+        } else {
+            println("Login result is null")
+        }
+    }
+
+    private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
+        if (result != null) {
+            if (result is MacaoResult.Success) {
+                val macaoUser = result.value
+                println("Signup Successful: $macaoUser ")
+            } else if (result is MacaoResult.Error) {
+                val signupError = result.error
+                println("Signup Failed: $signupError")
+            }
+        } else {
+            println("Signup result is null")
+        }
+    }
+
+    suspend fun storeData(user: User) {
+        val firebaseUser = Firebase.auth.currentUser?.uid
+        val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
+        database.reference().child("Users").child("$firebaseUser").setValue(user)
+        println("Data Store Successfully: $user ")
+    }
+
+    suspend fun updateData(currentUser: FirebaseUser, updatedUser: User) {
+        val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
+        val userRef = database.reference().child("Users").child(currentUser.uid)
+        userRef.setValue(updatedUser)
+        println("Data Updated Successfully: $updatedUser ")
+    }
+    suspend fun resetPassword(email: String) {
+        val firebase = Firebase.auth
+        firebase.sendPasswordResetEmail(email)
+        println("Reset Email Sent")
+    }
 }

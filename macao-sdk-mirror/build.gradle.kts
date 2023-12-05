@@ -42,7 +42,8 @@ kotlin {
             implementation(libs.io.ktor.client.content.negotiation)
             implementation(libs.io.ktor.ktor.client.serialization)
             implementation(libs.ktor.client.logging)
-
+            api("dev.gitlive:firebase-auth:1.10.4")
+            api("dev.gitlive:firebase-database:1.10.4")
             // Macao Libs
             implementation(libs.component.toolkit)
         }

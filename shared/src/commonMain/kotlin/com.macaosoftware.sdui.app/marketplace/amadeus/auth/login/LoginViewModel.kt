@@ -26,7 +26,7 @@ class LoginViewModel(
         println("LoginViewModel -  onStop() : ")
     }
 
-    fun login() {
+   suspend fun login() {
         authPlugin.login(
             LoginRequest("am.pablo.vc@gmail.com", "123") {
                 println("Pablo: Result = $it")
