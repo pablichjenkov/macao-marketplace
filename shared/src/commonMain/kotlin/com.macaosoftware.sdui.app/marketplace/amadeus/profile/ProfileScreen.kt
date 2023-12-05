@@ -75,8 +75,8 @@ class ProfileScreen(
     @Composable
     override fun Content() {
         var usersData by remember { mutableStateOf<User?>(null) }
+        var user by remember { mutableStateOf<User?>(null) }
         val context = rememberCoroutineScope()
-
         val firebaseUser = Firebase.auth
         val firebaseDatabase =
             Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
@@ -86,6 +86,9 @@ class ProfileScreen(
             val userData = data.valueEvents.collect { data ->
                 usersData = data.value()
             }
+            val users = data.child(firebaseUser.currentUser!!.uid).valueEvents.collect{latestData ->
+                user = latestData.value as User?
+            }
         }
 
 
@@ -94,7 +97,7 @@ class ProfileScreen(
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
         var editProfile by remember { mutableStateOf(false) }
-        var username by remember { mutableStateOf("${usersData!!.username} ") }
+        var username by remember { mutableStateOf("${usersData?.username + user?.username} ") }
         var email by remember { mutableStateOf("${currentUser?.email}") }
         var phone by remember { mutableStateOf("${currentUser?.phoneNumber}") }
         var pass by remember { mutableStateOf("") }
