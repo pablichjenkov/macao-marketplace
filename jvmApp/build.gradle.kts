@@ -9,8 +9,6 @@ kotlin {
     jvm()
     sourceSets {
         jvmMain.dependencies {
-            implementation(project(":shared"))
-            implementation(project(":macao-sdk-mirror"))
             implementation(compose.desktop.common)
             implementation(compose.desktop.currentOs)
             implementation(compose.foundation)
@@ -25,10 +23,10 @@ kotlin {
             implementation(libs.koin.core)
 
             // Macao Libs
+            implementation(project(":shared"))
+            implementation(project(":macao-sdk-mirror"))
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
-            // todo: Move this to shared
-            implementation(project(":auth-firebase-gitlive"))
         }
     }
 }

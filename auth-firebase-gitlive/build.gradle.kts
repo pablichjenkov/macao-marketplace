@@ -31,13 +31,21 @@ kotlin {
             implementation(project(":macao-sdk-mirror"))
             implementation(libs.component.toolkit)
 
-            // Firebase GitLive Here
+            // Firebase GitLive
+            api("dev.gitlive:firebase-auth:1.10.4")
+            api("dev.gitlive:firebase-database:1.10.4")
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
-            // Firebase GitLive Here
+            implementation(libs.kotlinx.coroutines.android)
+        }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+        jsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core.js)
         }
     }
 }

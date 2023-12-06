@@ -23,12 +23,12 @@ class AndroidRootComponentProvider(
         val database = createDatabase(AndroidDriverFactory(context))
         val pluginsModule = module {
             single<Database> { database }
-            /*single<AuthPlugin> {
-                com.macaosoftware.plugin.auth.FirebaseAuthPluginAndroid()
-            }*/
             single<AuthPlugin> {
-                com.macaosoftware.plugin.auth.AuthPluginGitLive()
+                com.macaosoftware.plugin.auth.FirebaseAuthPlugin()
             }
+            /*single<AuthPlugin> { // Not working good
+                com.macaosoftware.plugin.auth.AuthPluginGitLive()
+            }*/
         }
         val koinRootContainer = koinApplication {
             printLogger()
