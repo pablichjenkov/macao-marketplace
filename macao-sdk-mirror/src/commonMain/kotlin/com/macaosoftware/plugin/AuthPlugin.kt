@@ -17,7 +17,6 @@ interface AuthPlugin : MacaoPlugin {
  * An empty implementation for those platforms that don't have Firebase.
  * */
 class AuthPluginEmpty : AuthPlugin {
-
     override suspend fun initialize(): Boolean {
         println(" AuthPluginEmpty::initialize() has been called")
         return true

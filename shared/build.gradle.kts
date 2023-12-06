@@ -87,6 +87,10 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            //Firebase Anddroid
+            implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+            implementation("com.google.firebase:firebase-auth")
+            implementation("com.google.firebase:firebase-database")
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)

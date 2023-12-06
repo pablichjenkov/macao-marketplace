@@ -1,5 +1,6 @@
 package com.macaosoftware.sdui.app
 
+import AuthPluginAndroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
+import android.content.Intent
+import android.net.Uri
+import com.google.firebase.Firebase
 
 class MainActivity : ComponentActivity() {
 

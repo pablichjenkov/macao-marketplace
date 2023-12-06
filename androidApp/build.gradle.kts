@@ -24,6 +24,12 @@ kotlin {
             // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+
+            //Firebase Anddroid
+            implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+            implementation("com.google.firebase:firebase-auth")
+            implementation("com.google.firebase:firebase-database")
+
         }
     }
 }
@@ -53,4 +59,8 @@ android {
             }
         }
     }
+}
+// This Lines to add firebase-common
+dependencies {
+    implementation("com.google.firebase:firebase-common-ktx:20.3.3")
 }
