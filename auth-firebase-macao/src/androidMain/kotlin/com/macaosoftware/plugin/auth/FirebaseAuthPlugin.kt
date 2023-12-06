@@ -108,7 +108,7 @@ class FirebaseAuthPlugin : AuthPlugin {
         TODO("Not yet implemented")
     }
 
-    override suspend fun fetchUserData(userId: String): MacaoResult<UserData> {
+    override suspend fun fetchUserData(): MacaoResult<UserData> {
         TODO("Not yet implemented")
     }
 

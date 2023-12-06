@@ -94,9 +94,9 @@ class AuthViewModel(
             }
         }
     }
-    fun fetchUserDataAndHandleResult(userId: String) {
+    fun fetchUserDataAndHandleResult() {
         viewModelScope.launch {
-            val userDataResult = plugin.fetchUserData(userId)
+            val userDataResult = plugin.fetchUserData()
 
             when (userDataResult) {
                 is MacaoResult.Success -> {

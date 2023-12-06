@@ -87,9 +87,7 @@ class ProfileScreen(
         var loading by remember { mutableStateOf(true) }
 
         LaunchedEffect(true) {
-            // Assuming you have access to the user ID, replace "your_user_id_here" with the actual user ID
-            val userId = "Z2obdUfP1BMedL5Jbv38rwNolJy1"
-            val userDataResult = authViewModel!!.plugin.fetchUserData(userId)
+            val userDataResult = authViewModel!!.plugin.fetchUserData()
 
             when (userDataResult) {
                 is MacaoResult.Success -> {

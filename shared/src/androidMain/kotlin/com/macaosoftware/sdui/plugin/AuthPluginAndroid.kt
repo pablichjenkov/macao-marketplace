@@ -41,7 +41,7 @@ class AuthPluginAndroid : AuthPlugin {
         // Initialization logic (if needed)
         return true
     }
-    override suspend fun fetchUserData(userId: String): MacaoResult<com.macaosoftware.plugin.UserData> {
+    override suspend fun fetchUserData(): MacaoResult<com.macaosoftware.plugin.UserData> {
         return try {
             val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
             val userReference = usersReference.child(firebaseAuth.currentUser!!.uid)
