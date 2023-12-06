@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose)
-    alias(libs.plugins.kotlinx.serialization)
+    // alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -27,6 +27,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
+
             // Macao Libs
             implementation(project(":macao-sdk-mirror"))
             implementation(libs.component.toolkit)
@@ -35,10 +37,18 @@ kotlin {
             // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+
             // Firebase
             implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
             implementation("com.google.firebase:firebase-auth-ktx")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+        }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+        jsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core.js)
         }
     }
 }
@@ -54,4 +64,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-

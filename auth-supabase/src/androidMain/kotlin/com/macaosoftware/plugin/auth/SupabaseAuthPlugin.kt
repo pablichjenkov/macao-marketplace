@@ -1,8 +1,5 @@
 package com.macaosoftware.plugin.auth
 
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.LoginError
 import com.macaosoftware.plugin.LoginRequest
@@ -12,11 +9,10 @@ import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupError
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.plugin.util.MacaoResult
-import kotlinx.coroutines.tasks.await
 
-class FirebaseAuthPlugin : AuthPlugin {
+class SupabaseAuthPlugin : AuthPlugin {
 
-    private val TAG = "FirebaseAuthPlugin"
+    private val TAG = "SupabaseAuthPlugin"
 
     override suspend fun initialize(): Boolean {
         return true
@@ -25,7 +21,7 @@ class FirebaseAuthPlugin : AuthPlugin {
     override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
 
         return try {
-            val taskResult = Firebase
+            val taskResult = Supabase
                 .auth
                 .createUserWithEmailAndPassword(signupRequest.email, signupRequest.password)
                 .await()
@@ -43,11 +39,12 @@ class FirebaseAuthPlugin : AuthPlugin {
     override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
 
         return try {
-            val taskResult = Firebase
+            val taskResult = Supabase
                 .auth
                 .signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
                 .await()
-            taskResult.user?.let {
+
+            return taskResult.user?.let {
                 MacaoResult.Success(it.toMacaoUser())
             } ?: run {
                 MacaoResult.Error(LoginError(errorDescription = "signInWithEmailAndPassword:success but unexpected use null"))
@@ -66,7 +63,7 @@ class FirebaseAuthPlugin : AuthPlugin {
         // TODO("Not yet implemented")
     }
 
-    private fun FirebaseUser.toMacaoUser(): MacaoUser {
+    private fun SupabaseUser.toMacaoUser(): MacaoUser {
         return MacaoUser(this.email ?: "no_email")
     }
 }

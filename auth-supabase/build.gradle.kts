@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose)
-    alias(libs.plugins.kotlinx.serialization)
+    // alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "AuthFirebaseGitLive"
+            baseName = "AuthSupabase"
             isStatic = true
         }
     }
@@ -32,16 +32,15 @@ kotlin {
             // Macao Libs
             implementation(project(":macao-sdk-mirror"))
             implementation(libs.component.toolkit)
-
-            // Firebase GitLive
-            api("dev.gitlive:firebase-auth:1.10.4")
-            api("dev.gitlive:firebase-database:1.10.4")
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+
+            // Supabase
+            // ...
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
@@ -53,7 +52,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.macaosoftware.plugin.auth.firebase_gitlive"
+    namespace = "com.macaosoftware.plugin.auth.supabase"
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()

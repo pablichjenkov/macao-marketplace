@@ -129,7 +129,8 @@ android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     sourceSets {
         named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml") //res.srcDirs("src/androidMain/res", "src/commonMain/resources")
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            res.srcDirs("src/androidMain/res")
             resources.srcDir("src/commonMain/resources")
         }
     }
