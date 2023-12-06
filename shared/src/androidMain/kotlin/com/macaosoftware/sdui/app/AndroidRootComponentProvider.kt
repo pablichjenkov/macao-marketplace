@@ -1,6 +1,5 @@
 package com.macaosoftware.sdui.app
 
-import AuthPluginAndroid
 import android.content.Context
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.AuthPlugin

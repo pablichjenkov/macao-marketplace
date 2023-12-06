@@ -9,8 +9,10 @@ import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.LoginRequestForEmailWithLink
 import com.macaosoftware.plugin.LoginRequestForLink
 import com.macaosoftware.plugin.MacaoUser
+import com.macaosoftware.plugin.ProviderData
 import com.macaosoftware.plugin.SignupError
 import com.macaosoftware.plugin.SignupRequest
+import com.macaosoftware.plugin.UserData
 import com.macaosoftware.plugin.util.MacaoResult
 import kotlinx.coroutines.tasks.await
 
@@ -65,6 +67,49 @@ class FirebaseAuthPlugin : AuthPlugin {
 
     override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
         // TODO("Not yet implemented")
+    }
+
+    override suspend fun checkCurrentUser(): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserProfile(): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getProviderData(): MacaoResult<ProviderData> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateProfile(
+        displayName: String,
+        photoUrl: String
+    ): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendEmailVerification(): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendPasswordReset(): MacaoResult<MacaoUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteUser(): MacaoResult<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun fetchUserData(userId: String): MacaoResult<UserData> {
+        TODO("Not yet implemented")
     }
 
     private fun FirebaseUser.toMacaoUser(): MacaoUser {

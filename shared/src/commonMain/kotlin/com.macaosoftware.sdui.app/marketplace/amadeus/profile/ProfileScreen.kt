@@ -37,7 +37,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,7 +55,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.plugin.ProviderData
 import com.macaosoftware.plugin.User
+import com.macaosoftware.plugin.UserData
+import com.macaosoftware.plugin.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
@@ -71,34 +73,36 @@ class ProfileScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        var usersData by remember { mutableStateOf<User?>(null) }
-        var user by remember { mutableStateOf<User?>(null) }
-        val context = rememberCoroutineScope()
-        /*val firebaseUser = Firebase.auth
-        val firebaseDatabase =
-            Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
-        val data = firebaseDatabase.reference().child("Users")
-        LaunchedEffect(Unit){
-            val userData = data.valueEvents.collect { data ->
-                usersData = data.value()
-            }
-            val users = data.child(firebaseUser.currentUser!!.uid).valueEvents.collect{latestData ->
-                user = latestData.value as User?
-            }
-        }*/
-
-
+        var usersData by remember { mutableStateOf<UserData?>(null) }
         val coroutineScope = rememberCoroutineScope()
-        val currentUser = User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
+        val currentUser =
+            User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
         var editProfile by remember { mutableStateOf(false) }
-        var username by remember { mutableStateOf("${usersData?.username + user?.username} ") }
+        var username by remember { mutableStateOf("${usersData?.displayName + usersData?.email} ") }
         var email by remember { mutableStateOf("${currentUser?.email}") }
         var phone by remember { mutableStateOf("${currentUser?.phoneNo}") }
         var pass by remember { mutableStateOf("") }
+        var loading by remember { mutableStateOf(true) }
 
+        LaunchedEffect(true) {
+            // Assuming you have access to the user ID, replace "your_user_id_here" with the actual user ID
+            val userId = "Z2obdUfP1BMedL5Jbv38rwNolJy1"
+            val userDataResult = authViewModel!!.plugin.fetchUserData(userId)
 
+            when (userDataResult) {
+                is MacaoResult.Success -> {
+                    usersData = userDataResult.value
+                    println("User Data: $usersData")
+                }
+                is MacaoResult.Error -> {
+                    val error = userDataResult.error
+                    // Handle error
+                    println("Error: ${error}")
+                }
+            }
+        }
 
 
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
@@ -294,7 +298,7 @@ class ProfileScreen(
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = username,
+                            text = "${usersData?.displayName}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -302,7 +306,7 @@ class ProfileScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Software Developer",
+                            text = "Software Developer ${usersData?.uid.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.Gray
                         )
@@ -311,7 +315,7 @@ class ProfileScreen(
 
                         // Add more items as needed
                         Text(
-                            text = "Location: City, Country",
+                            text = "Location: ${usersData?.country.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
 
                             )
@@ -319,7 +323,7 @@ class ProfileScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Email: $email",
+                            text = "Email: ${usersData?.email.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
                                 uriHandler.openUri("john.doe@example.com")
@@ -329,7 +333,7 @@ class ProfileScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Phone: +1 (555) 123-4567",
+                            text = "Phone: +${usersData?.photoUrl}",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
                                 uriHandler.openUri("+1 (555) 123-4567")

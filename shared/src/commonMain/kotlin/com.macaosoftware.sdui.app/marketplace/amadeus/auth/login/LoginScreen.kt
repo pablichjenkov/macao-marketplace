@@ -32,9 +32,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.util.MacaoResult
+import com.macaosoftware.sdui.app.OSVersion
+import com.macaosoftware.sdui.app.Plugin
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
@@ -44,7 +47,7 @@ import kotlinx.coroutines.launch
 class LoginScreen(
     private val authViewModel: AuthViewModel,
 ) : Screen {
-    
+
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
@@ -66,6 +69,7 @@ class LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(text = "Welcome to ${OSVersion()}")
                 // Username TextField
                 OutlinedTextField(
                     value = emai,
@@ -119,17 +123,14 @@ class LoginScreen(
                                     email = emai,
                                     password = password
                                 )
-                                authViewModel.login(loginRequest.email, loginRequest.password)
-
-                                navigator?.push(ProfileScreen(authViewModel))
+                                val loginResult = authViewModel.login(loginRequest.email, loginRequest.password)
+                                handleLoginResult(loginResult, navigator)
                             }
                         } else {
                             isError = true
                         }
                     },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
+                    modifier = Modifier.padding(8.dp).fillMaxWidth()
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -189,18 +190,21 @@ class LoginScreen(
         }
     }
 
-    private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
+    private fun handleLoginResult(result: MacaoResult<MacaoUser>, navigator: Navigator?) {
         when (result) {
             is MacaoResult.Success -> {
-
                 println("Login successful!")
-            }
 
+                // Navigate to the Profile screen
+                navigator?.push(ProfileScreen(authViewModel))
+            }
             is MacaoResult.Error -> {
                 println("Login failed: ${result.error}")
+                // Handle error cases if needed
             }
         }
     }
+
 
     private fun isValidCredentials(username: String, password: String): Boolean {
         println("Validating credentials - username: $username, password: $password")

@@ -10,6 +10,7 @@ import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.plugin.User
 import com.macaosoftware.plugin.util.MacaoResult
+import com.macaosoftware.sdui.app.Plugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ class AuthViewModel(
     private val authPlugin: AuthPlugin
 ) : ComponentViewModel() {
 
+    val plugin = Plugin()
     val viewModelScope = CoroutineScope(Dispatchers.Default)
 
     override fun onAttach() {
@@ -60,9 +62,8 @@ class AuthViewModel(
         )
     }
 
-    fun login(email: String, password: String) = viewModelScope.launch {
-        val result = authPlugin.login(LoginRequest(email, password))
-        handleLoginResult(result)
+    suspend fun login(email: String, password: String): MacaoResult<MacaoUser> {
+        return authPlugin.login(LoginRequest(email, password))
     }
 
     fun signup(
@@ -71,7 +72,7 @@ class AuthViewModel(
         username: String,
         phoneNo: String
     ) = viewModelScope.launch {
-        val result = authPlugin.signup(SignupRequest(email, password, username, phoneNo) )
+      val result =  plugin.signup(SignupRequest(email, password, username, phoneNo))
         handleSignupResult(result)
     }
 
@@ -90,6 +91,24 @@ class AuthViewModel(
                 /*loadingState = false
                 showMessage = true
                 messageText = "Error While Login..."*/
+            }
+        }
+    }
+    fun fetchUserDataAndHandleResult(userId: String) {
+        viewModelScope.launch {
+            val userDataResult = plugin.fetchUserData(userId)
+
+            when (userDataResult) {
+                is MacaoResult.Success -> {
+                    val userData = userDataResult.value
+                    // Handle user data
+                    println("User Data: $userData")
+                }
+                is MacaoResult.Error -> {
+                    val error = userDataResult.error
+                    // Handle error
+                    println("Error: $error")
+                }
             }
         }
     }
