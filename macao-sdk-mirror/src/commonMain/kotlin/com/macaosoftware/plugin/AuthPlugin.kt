@@ -3,7 +3,6 @@ package com.macaosoftware.plugin
 import com.macaosoftware.plugin.util.MacaoError
 import com.macaosoftware.plugin.util.MacaoResult
 import kotlinx.serialization.Serializable
-import kotlin.jvm.JvmOverloads
 
 
 interface AuthPlugin : MacaoPlugin {
@@ -15,13 +14,17 @@ interface AuthPlugin : MacaoPlugin {
     suspend fun checkCurrentUser(): MacaoResult<MacaoUser>
     suspend fun getUserProfile(): MacaoResult<MacaoUser>
     suspend fun getProviderData(): MacaoResult<ProviderData>
-    suspend fun updateProfile(displayName: String,photoUrl: String): MacaoResult<MacaoUser>
+    suspend fun updateProfile(displayName: String, photoUrl: String): MacaoResult<MacaoUser>
+    suspend fun updateFullProfile(displayName: String?, country: String?, photoUrl: String?, phoneNo: String?, facebookLink: String?, linkedIn: String?, github: String?): MacaoResult<UserData>
+
     suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser>
     suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser>
     suspend fun sendEmailVerification(): MacaoResult<MacaoUser>
     suspend fun sendPasswordReset(): MacaoResult<MacaoUser>
     suspend fun deleteUser(): MacaoResult<Unit>
     suspend fun fetchUserData(): MacaoResult<UserData>
+    suspend fun checkAndFetchUserData(): MacaoResult<UserData>
+    suspend fun logoutUser(): MacaoResult<Unit>
 }
 
 /**
@@ -74,6 +77,19 @@ class AuthPluginEmpty : AuthPlugin {
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateFullProfile(
+        displayName: String?,
+        country: String?,
+        photoUrl: String?,
+        phoneNo: String?,
+        facebookLink: String?,
+        linkedIn: String?,
+        github: String?
+    ): MacaoResult<UserData> {
+        TODO("Not yet implemented")
+    }
+
+
     override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
         TODO("Not yet implemented")
     }
@@ -98,6 +114,14 @@ class AuthPluginEmpty : AuthPlugin {
         TODO("Not yet implemented")
     }
 
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun logoutUser(): MacaoResult<Unit> {
+        TODO("Not yet implemented")
+    }
+
 
 }
 
@@ -117,6 +141,7 @@ data class User(
     val username: String,
     val phoneNo: String,
 )
+
 @Serializable
 data class UserData(
     val uid: String? = "",
@@ -124,10 +149,14 @@ data class UserData(
     val displayName: String? = "",
     val password: String? = "",
     val photoUrl: String? = "",
-    val country: String? = ""
+    val country: String? = "",
+    val phoneNo: String? ="",
+    val  facebookLink: String? ="",
+    val linkedIn: String?= "",
+    val github: String?= ""
 ) {
     // Empty primary constructor required by Firebase
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "","","","","")
 }
 
 

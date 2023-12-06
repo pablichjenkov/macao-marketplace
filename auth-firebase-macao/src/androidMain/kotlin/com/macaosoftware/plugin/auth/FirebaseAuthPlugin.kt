@@ -88,6 +88,18 @@ class FirebaseAuthPlugin : AuthPlugin {
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateFullProfile(
+        displayName: String?,
+        country: String?,
+        photoUrl: String?,
+        phoneNo: String?,
+        facebookLink: String?,
+        linkedIn: String?,
+        github: String?
+    ): MacaoResult<UserData> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
         TODO("Not yet implemented")
     }
@@ -109,6 +121,14 @@ class FirebaseAuthPlugin : AuthPlugin {
     }
 
     override suspend fun fetchUserData(): MacaoResult<UserData> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun logoutUser(): MacaoResult<Unit> {
         TODO("Not yet implemented")
     }
 

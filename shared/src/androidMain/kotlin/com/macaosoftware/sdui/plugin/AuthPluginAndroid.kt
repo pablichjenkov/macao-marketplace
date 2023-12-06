@@ -2,8 +2,6 @@ package com.macaosoftware.sdui.plugin
 
 import android.content.ContentValues.TAG
 import android.net.Uri
-import android.os.Build
-import android.service.autofill.UserData
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -23,12 +21,9 @@ import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.ProviderData
 import com.macaosoftware.plugin.SignupError
 import com.macaosoftware.plugin.SignupRequest
+import com.macaosoftware.plugin.UserData
 import com.macaosoftware.plugin.util.MacaoResult
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 class AuthPluginAndroid : AuthPlugin {
 
@@ -41,6 +36,7 @@ class AuthPluginAndroid : AuthPlugin {
         // Initialization logic (if needed)
         return true
     }
+
     override suspend fun fetchUserData(): MacaoResult<com.macaosoftware.plugin.UserData> {
         return try {
             val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
@@ -74,6 +70,33 @@ class AuthPluginAndroid : AuthPlugin {
             MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
         }
     }
+
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+        // Check if user is signed in (non-null)
+        val currentUser = firebaseAuth.currentUser
+        return if (currentUser != null) {
+            // User is already signed in, fetch user data
+            try {
+                fetchUserData()
+            } catch (e: Exception) {
+                // Handle exceptions if any
+                MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
+            }
+        } else {
+            // User is not signed in, return a placeholder or handle accordingly
+            MacaoResult.Error(LoginError(errorDescription = "User is not signed in"))
+        }
+    }
+
+    data class MacaoError(val errorMessage: String)
+
+// ...
+
+    override suspend fun logoutUser(): MacaoResult<Unit> {
+        return MacaoResult.Success(firebaseAuth.signOut())
+    }
+
+
 
     override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
         return try {
@@ -262,6 +285,59 @@ class AuthPluginAndroid : AuthPlugin {
         }
     }
 
+    override suspend fun updateFullProfile(
+        displayName: String?,
+        country: String?,
+        photoUrl: String?,
+        phoneNo: String?,
+        facebookLink: String?,
+        linkedIn: String?,
+        github: String?
+    ): MacaoResult<com.macaosoftware.plugin.UserData> {
+        try {
+            val userData = UserData(
+                displayName = displayName,
+                country = country,
+                photoUrl = photoUrl,
+                phoneNo = phoneNo,
+                facebookLink = facebookLink,
+                linkedIn = linkedIn,
+                github = github
+            )
+
+            // Reference to the specific user node
+            val userReference =
+                database.reference.child("Users").child(firebaseAuth.currentUser!!.uid)
+
+            // Update data in the database
+            userReference.updateChildren(userData.toMap())
+                .addOnSuccessListener {
+                    println("Data Updated Successfully")
+                }
+                .addOnFailureListener { e ->
+                    println("Data Updation Failure: ${e.message}")
+                }
+
+            return MacaoResult.Success(userData)
+
+        } catch (e: Exception) {
+            return MacaoResult.Error(LoginError(errorDescription = "Error updating user data: ${e.message}"))
+        }
+    }
+
+    fun UserData.toMap(): Map<String, Any?> {
+        return mapOf(
+            "displayName" to displayName,
+            "country" to country,
+            "photoUrl" to photoUrl,
+            "phoneNo" to phoneNo,
+            "facebookLink" to facebookLink,
+            "linkedIn" to linkedIn,
+            "github" to github
+        )
+    }
+
+
     override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
         return try {
             val user = firebaseAuth.currentUser
@@ -341,6 +417,7 @@ class AuthPluginAndroid : AuthPlugin {
             MacaoResult.Error(LoginError(errorDescription = "Error deleting user account: ${e.message}"))
         }
     }
+
     private fun isValidEmail(email: String): Boolean {
         val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
         return email.trim().matches(emailRegex)

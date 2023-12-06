@@ -17,6 +17,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,6 +61,19 @@ class LoginScreen(
         val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val coroutineScope = rememberCoroutineScope()
+
+        LaunchedEffect(true) {
+            val userDataResult = authViewModel.plugin.checkAndFetchUserData()
+            when (userDataResult) {
+                is MacaoResult.Success -> {
+                    navigator?.push(ProfileScreen(authViewModel))
+                }
+                is MacaoResult.Error -> {
+                    println("User not logged in: ${userDataResult.error}")
+                }
+            }
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -123,7 +137,8 @@ class LoginScreen(
                                     email = emai,
                                     password = password
                                 )
-                                val loginResult = authViewModel.login(loginRequest.email, loginRequest.password)
+                                val loginResult =
+                                    authViewModel.login(loginRequest.email, loginRequest.password)
                                 handleLoginResult(loginResult, navigator)
                             }
                         } else {
@@ -198,6 +213,7 @@ class LoginScreen(
                 // Navigate to the Profile screen
                 navigator?.push(ProfileScreen(authViewModel))
             }
+
             is MacaoResult.Error -> {
                 println("Login failed: ${result.error}")
                 // Handle error cases if needed
