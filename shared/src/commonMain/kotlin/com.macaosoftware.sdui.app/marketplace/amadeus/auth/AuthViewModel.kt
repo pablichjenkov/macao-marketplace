@@ -56,19 +56,27 @@ class AuthViewModel(
     }
 
     suspend fun login(email: String, password: String) {
-        authPlugin.login(
-            LoginRequest(email, password) { result ->
-                handleLoginResult(result)
-            }
-        )
+        if (isValidEmail(email) && isValidPassword(password)) {
+            authPlugin.login(
+                LoginRequest(email, password) { result ->
+                    handleLoginResult(result)
+                }
+            )
+        } else {
+            println("Invalid email or password")
+        }
     }
 
     suspend fun signup(email: String, password: String, username: String, phoneNo: String) {
-        authPlugin.signup(
-            SignupRequest(email, password, username, phoneNo) { result ->
-                handleSignupResult(result)
-            }
-        )
+        if (isValidEmail(email) && isValidPassword(password)) {
+            authPlugin.signup(
+                SignupRequest(email, password, username, phoneNo) { result ->
+                    handleSignupResult(result)
+                }
+            )
+        } else {
+            println("Invalid email or password")
+        }
     }
 
     private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
@@ -117,5 +125,16 @@ class AuthViewModel(
         val firebase = Firebase.auth
         firebase.sendPasswordResetEmail(email)
         println("Reset Email Sent")
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        val emailRegex = Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return emailRegex.matches(email)
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        // Placeholder logic for password validation
+        // You should replace this with your actual password validation implementation
+        return password.length >= 8
     }
 }

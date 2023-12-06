@@ -159,7 +159,7 @@ class SignUpScreen(
                 // Sign Up Button
                 Button(
                     onClick = {
-                        if (isValidInput(username, email, password, confirmPassword)) {
+                        if (isValidInput(username, email, password, password, confirmPassword)) {
                             coroutineScope.launch {
                                 loadingState = true
                                 keyboardController?.hide()
@@ -173,7 +173,6 @@ class SignUpScreen(
                                             handleSignupResult(result)
                                         }
                                     )
-                                    // Use the AuthViewModel to perform signup
                                     authViewModel.signup(signupRequest.email, signupRequest.password, signupRequest.username, signupRequest.phoneNo)
                                     val user = User(signupRequest.email, signupRequest.password,signupRequest.username,signupRequest.phoneNo)
                                     authViewModel.storeData(user)
@@ -251,12 +250,18 @@ class SignUpScreen(
     private fun isValidInput(
         username: String,
         email: String,
+        phone: String,
         password: String,
         confirmPassword: String
     ): Boolean {
-        // Perform your sign-up validation logic here
-        // For simplicity, just checking if the fields are not empty and passwords match
-        return username.isNotEmpty() && email.isNotEmpty() &&
-                password.isNotEmpty() && password == confirmPassword
+        val emailRegex = Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+
+        return username.isNotEmpty() &&
+                emailRegex.matches(email) &&
+                phone.isNotEmpty() &&
+                password.length >= 8 && // Password should be 8 characters or above
+                password == confirmPassword
     }
+
+
 }
