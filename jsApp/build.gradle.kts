@@ -19,11 +19,9 @@ kotlin {
     sourceSets {
         jsMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
             implementation(compose.ui)
+            implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(project(":shared"))
-            implementation(project(":macao-sdk-mirror"))
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.core.js)
             implementation(libs.kotlinx.serialization.json)
@@ -33,10 +31,10 @@ kotlin {
             implementation(npm("sql.js", "1.8.0"))
 
             // Macao Libs
+            implementation(project(":shared"))
+            implementation(project(":macao-sdk-mirror"))
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
-            // todo: Move this to shared
-            implementation(project(":auth-firebase-gitlive"))
         }
     }
 }

@@ -39,7 +39,6 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            val ktorVersion = "2.3.6"
             implementation(compose.runtime)
             implementation(compose.ui)
             implementation(compose.foundation)
@@ -78,13 +77,22 @@ kotlin {
             implementation(libs.component.toolkit)
             implementation(project(":macao-sdk-mirror"))
 
-            // Pay attention here, we decide to include one or the other
-            // implementation(project(":auth-firebase-macao"))
-            implementation(project(":auth-firebase-gitlive"))
+            // Auth Plugins
+            // implementation(project(":auth-firebase-gitlive")) // Not working good
+            implementation(project(":auth-firebase-macao"))
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.koin.test)
+        }
+        androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+        }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
+        }
+        jsMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core.js)
         }
     }
 

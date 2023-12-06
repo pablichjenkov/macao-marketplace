@@ -24,6 +24,8 @@ import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.WifiTetheringErrorRounded
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -31,8 +33,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,17 +56,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.macaosoftware.plugin.User
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class ProfileScreen() : Screen {
+class ProfileScreen(
+    private val authViewModel: AuthViewModel? = null
+) : Screen {
     @Composable
     override fun Content() {
+        var usersData by remember { mutableStateOf<User?>(null) }
+        var user by remember { mutableStateOf<User?>(null) }
+        val context = rememberCoroutineScope()
+        /*val firebaseUser = Firebase.auth
+        val firebaseDatabase =
+            Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
+        val data = firebaseDatabase.reference().child("Users")
+        LaunchedEffect(Unit){
+            val userData = data.valueEvents.collect { data ->
+                usersData = data.value()
+            }
+            val users = data.child(firebaseUser.currentUser!!.uid).valueEvents.collect{latestData ->
+                user = latestData.value as User?
+            }
+        }*/
+
+
+        val coroutineScope = rememberCoroutineScope()
+        val currentUser = User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
+        var editProfile by remember { mutableStateOf(false) }
+        var username by remember { mutableStateOf("${usersData?.username + user?.username} ") }
+        var email by remember { mutableStateOf("${currentUser?.email}") }
+        var phone by remember { mutableStateOf("${currentUser?.phoneNo}") }
+        var pass by remember { mutableStateOf("") }
+
+
+
+
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
             // Row containing both the image and the details
@@ -91,7 +135,7 @@ class ProfileScreen() : Screen {
                             ) {
                                 IconButton(
                                     onClick = {
-                                        navigator?.pop()
+                                        navigator?.popAll()
                                     },
                                     enabled = true,
                                     modifier = Modifier.clip(
@@ -174,8 +218,11 @@ class ProfileScreen() : Screen {
                                 contentScale = ContentScale.Crop
                             )
 
+                            //Edit Profile
                             OutlinedButton(
-                                onClick = {},
+                                onClick = {
+                                    editProfile = !editProfile
+                                },
                                 modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
                                 enabled = true,
                                 shape = ButtonDefaults.outlinedShape,
@@ -190,6 +237,36 @@ class ProfileScreen() : Screen {
                                 )
                             ) {
                                 Text(text = "Edit Profile")
+                            }
+
+
+                            //Logout
+                            OutlinedButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        if (currentUser != null) {
+                                            //firebaseUser.signOut()
+                                            delay(100)
+                                            navigator?.popAll()
+                                        } else {
+                                            //firebaseUser.fetchSignInMethodsForEmail(email)
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
+                                enabled = true,
+                                shape = ButtonDefaults.outlinedShape,
+                                elevation = ButtonDefaults.buttonElevation(3.dp),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    containerColor = Color.White,
+                                    contentColor = MaterialTheme.colorScheme.primary
+                                ),
+                                border = BorderStroke(
+                                    2.dp,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            ) {
+                                Text(text = "Logout")
                             }
 
                         }
@@ -217,7 +294,7 @@ class ProfileScreen() : Screen {
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "John Doe",
+                            text = username,
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -237,12 +314,12 @@ class ProfileScreen() : Screen {
                             text = "Location: City, Country",
                             style = MaterialTheme.typography.bodyLarge,
 
-                        )
+                            )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Email: john.doe@example.com",
+                            text = "Email: $email",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
                                 uriHandler.openUri("john.doe@example.com")
@@ -277,6 +354,66 @@ class ProfileScreen() : Screen {
                             )
                         }
 
+                    }
+                    // Edit Profile AlertDialog
+                    if (editProfile) {
+                        AlertDialog(
+                            onDismissRequest = { editProfile = false },
+                            title = { Text("Edit Profile") },
+                            text = {
+                                Column {
+                                    OutlinedTextField(
+                                        value = username,
+                                        onValueChange = { username = it },
+                                        label = { Text("Username") }
+                                    )
+                                    OutlinedTextField(
+                                        value = email,
+                                        onValueChange = { email = it },
+                                        label = { Text("Email") }
+                                    )
+                                    OutlinedTextField(
+                                        value = phone,
+                                        onValueChange = { phone = it },
+                                        label = { Text("Phone") }
+                                    )
+                                    OutlinedTextField(
+                                        value = pass,
+                                        onValueChange = { pass = it },
+                                        label = { Text("Password") }
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        // Save changes
+                                        coroutineScope.launch {
+                                            val updatedUser = User(email, pass, username, phone)
+                                            authViewModel?.updateData(currentUser!!, updatedUser)
+                                        }
+
+                                        editProfile = false
+
+                                    },
+                                    content = { Text("Save") },
+                                    colors = ButtonDefaults.buttonColors(
+                                        contentColor = MaterialTheme.colorScheme.primary,
+                                        containerColor = MaterialTheme.colorScheme.surface
+                                    )
+                                )
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = { editProfile = false },
+                                    content = { Text("Cancel") },
+                                    colors = ButtonDefaults.buttonColors(
+                                        contentColor = MaterialTheme.colorScheme.error,
+                                        containerColor = MaterialTheme.colorScheme.surface
+                                    )
+                                )
+                            }
+                        )
                     }
                 }
             }

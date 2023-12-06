@@ -26,10 +26,10 @@ class IosRootComponentProvider(
         val pluginsModule = module {
             single<Database> { database }
             single<PlatformLifecyclePlugin> { iosBridge.platformLifecyclePlugin }
-            // single<AuthPlugin> { AuthPluginEmpty() }
-            single<AuthPlugin> {
+            single<AuthPlugin> { AuthPluginEmpty() }
+            /*single<AuthPlugin> { // Not working good
                 com.macaosoftware.plugin.auth.AuthPluginGitLive()
-            }
+            }*/
         }
         val koinRootContainer = koinApplication {
             printLogger()

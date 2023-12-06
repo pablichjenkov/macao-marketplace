@@ -2,12 +2,15 @@ package com.macaosoftware.plugin
 
 import com.macaosoftware.plugin.util.MacaoError
 import com.macaosoftware.plugin.util.MacaoResult
+import kotlinx.serialization.Serializable
 
 
 interface AuthPlugin : MacaoPlugin {
-    fun initialize()
-    fun signup(signupRequest: SignupRequest)
-    fun login(loginRequest: LoginRequest)
+    suspend fun initialize(): Boolean
+    suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser>
+    suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser>
+    suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink)
+    suspend fun sendEmailLink(loginRequest: LoginRequestForLink)
 }
 
 /**
@@ -15,29 +18,63 @@ interface AuthPlugin : MacaoPlugin {
  * */
 class AuthPluginEmpty : AuthPlugin {
 
-    override fun initialize() {
+    override suspend fun initialize(): Boolean {
         println(" AuthPluginEmpty::initialize() has been called")
+        return true
     }
 
-    override fun signup(signupRequest: SignupRequest) {
+    override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
         println(" AuthPluginEmpty::signup() has been called")
+        return MacaoResult.Success(
+            MacaoUser("test@gmail.com")
+        )
     }
 
-    override fun login(loginRequest: LoginRequest) {
+    override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
         println(" AuthPluginEmpty::login() has been called")
+        return MacaoResult.Success(
+            MacaoUser("test@gmail.com")
+        )
+    }
+
+    override suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink) {
+        // TODO("Not yet implemented")
+    }
+
+    override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
+        // TODO("Not yet implemented")
     }
 
 }
 
+@Serializable
+data class User(
+    val email: String,
+    val password: String,
+    val username: String,
+    val phoneNo: String,
+)
+
 data class SignupRequest(
     val email: String,
     val password: String,
-    val onResult: (MacaoResult<MacaoUser>) -> Unit
+    val username: String,
+    val phoneNo: String
 )
 
 data class LoginRequest(
     val email: String,
-    val password: String,
+    val password: String
+)
+
+data class LoginRequestForLink(
+    val email: String,
+    val onResult: (MacaoResult<MacaoUser>) -> Unit
+)
+
+data class LoginRequestForEmailWithLink(
+    val email: String,
+    val link: String,
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 

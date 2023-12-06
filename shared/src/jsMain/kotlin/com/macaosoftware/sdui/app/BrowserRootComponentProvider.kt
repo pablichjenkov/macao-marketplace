@@ -25,10 +25,10 @@ class BrowserRootComponentProvider(
         val database = createDatabase(BrowserDriverFactory())
         val pluginsModule = module {
             single<Database> { database }
-            //single<AuthPlugin> { AuthPluginEmpty() }
-            single<AuthPlugin> {
+            single<AuthPlugin> { AuthPluginEmpty() }
+            /*single<AuthPlugin> { // Not working good
                 com.macaosoftware.plugin.auth.AuthPluginGitLive()
-            }
+            }*/
             // single<AppLifecycleDispatcher> { jsBridge.appLifecycleDispatcher }
         }
         val koinRootContainer = koinApplication {
