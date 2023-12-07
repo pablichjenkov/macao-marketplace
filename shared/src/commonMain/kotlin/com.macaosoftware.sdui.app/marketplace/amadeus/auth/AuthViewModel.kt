@@ -2,6 +2,7 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.auth
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
@@ -16,19 +17,24 @@ import com.macaosoftware.plugin.UserData
 import com.macaosoftware.plugin.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authComponent: StateComponent<AuthViewModel>,
     val authPlugin: AuthPlugin
 ) : ComponentViewModel() {
+    private val _authState = MutableStateFlow<AuthState>(AuthState.Loading)
+    val authState: StateFlow<AuthState> = _authState.asStateFlow()
 
-    val viewModelScope = CoroutineScope(Dispatchers.Default)
+    private val viewModelScope = CoroutineScope(Dispatchers.Default)
     var userData = mutableStateOf<UserData?>(null)
     var loadingState by mutableStateOf(false)
     var showMessage by mutableStateOf(false)
     var messageText by mutableStateOf("")
-    var isError by mutableStateOf(false)
+    private var isError by mutableStateOf(false)
 
     override fun onAttach() {
         //Initialize
@@ -101,20 +107,22 @@ class AuthViewModel(
     }
 
     private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
-        when (result) {
-            is MacaoResult.Error -> {
-                val loginError = result.error
-                isError = true
-                showMessage = true
-                loadingState = false
-                messageText = "Login Failed: $loginError"
-            }
+        viewModelScope.launch {
+            when (result) {
+                is MacaoResult.Error -> {
+                    val loginError = result.error
+                    isError = true
+                    showMessage = true
+                    loadingState = false
+                    _authState.value = AuthState.Error("Login Failed: $loginError")
+                }
 
-            is MacaoResult.Success -> {
-                val macaoUser = result.value
-                showMessage = true
-                loadingState = false
-                messageText = "Login Successful: $macaoUser"
+                is MacaoResult.Success -> {
+                    val macaoUser = result.value
+                    showMessage = true
+                    loadingState = false
+                    _authState.value = AuthState.Success("Login Successful: $macaoUser")
+                }
             }
         }
     }
@@ -140,20 +148,22 @@ class AuthViewModel(
     }
 
     private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
-        when (result) {
-            is MacaoResult.Error -> {
-                val signupError = result.error
-                isError = true
-                showMessage = true
-                loadingState = false
-                messageText = "Signup Failed: $signupError"
-            }
+        viewModelScope.launch {
+            when (result) {
+                is MacaoResult.Error -> {
+                    val signupError = result.error
+                    isError = true
+                    showMessage = true
+                    loadingState = false
+                    _authState.value = AuthState.Error("Signup Failed: $signupError")
+                }
 
-            is MacaoResult.Success -> {
-                val macaoUser = result.value
-                showMessage = true
-                loadingState = false
-                messageText = "Signup Successful: $macaoUser"
+                is MacaoResult.Success -> {
+                    val macaoUser = result.value
+                    showMessage = true
+                    loadingState = false
+                    _authState.value = AuthState.Success("Signup Successful: $macaoUser")
+                }
             }
         }
     }
