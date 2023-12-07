@@ -10,8 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -35,12 +42,11 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 class SignUpScreen(
     private val authViewModel: AuthViewModel,
 ) : Screen {
-    @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         var username by remember { mutableStateOf("") }
@@ -52,6 +58,8 @@ class SignUpScreen(
         var showMessage by remember { mutableStateOf(false) }
         var messageText by remember { mutableStateOf("") }
         var loadingState by remember { mutableStateOf(false) }
+        var passwordVisibility by remember { mutableStateOf(false) }
+        var confirmPasswordVisibility by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
         val coroutineScope = rememberCoroutineScope()
@@ -66,7 +74,7 @@ class SignUpScreen(
             ) {
 
 
-                // Username TextField
+                // Username TextField with Clear Text Button
                 OutlinedTextField(
                     value = username,
                     onValueChange = {
@@ -74,13 +82,16 @@ class SignUpScreen(
                         isError = false
                     },
                     label = { Text("Username") },
+                    trailingIcon = {
+                        ClearTextButton(username) { username = "" }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     isError = isError
                 )
 
-                // Email TextField
+                // Email TextField with Clear Text Button
                 OutlinedTextField(
                     value = email,
                     onValueChange = {
@@ -88,13 +99,16 @@ class SignUpScreen(
                         isError = false
                     },
                     label = { Text("Email") },
+                    trailingIcon = {
+                        ClearTextButton(email) { email = "" }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     isError = isError
                 )
 
-                // Phone TextField
+                // Phone TextField with Clear Text Button
                 OutlinedTextField(
                     value = phone,
                     onValueChange = {
@@ -102,6 +116,9 @@ class SignUpScreen(
                         isError = false
                     },
                     label = { Text("Phone No") },
+                    trailingIcon = {
+                        ClearTextButton(phone) { phone = "" }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -115,8 +132,19 @@ class SignUpScreen(
                         password = it
                         isError = false
                     },
-                    label = { Text("Password") },
-                    visualTransformation = PasswordVisualTransformation(),
+                    label = { Text("Confirm Password") },
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { passwordVisibility = !passwordVisibility },
+                            content = {
+                                Icon(
+                                    imageVector = if (passwordVisibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                    },
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -131,7 +159,18 @@ class SignUpScreen(
                         isError = false
                     },
                     label = { Text("Confirm Password") },
-                    visualTransformation = PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { confirmPasswordVisibility = !confirmPasswordVisibility },
+                            content = {
+                                Icon(
+                                    imageVector = if (confirmPasswordVisibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                    },
+                    visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -157,12 +196,14 @@ class SignUpScreen(
                             coroutineScope.launch {
                                 loadingState = true
                                 keyboardController?.hide()
+
                                 val signupRequest = SignupRequest(
                                     email = email,
                                     password = password,
                                     username = username,
                                     phoneNo = phone
                                 )
+
                                 // Use the AuthViewModel to perform signup
                                 authViewModel.signup(
                                     signupRequest.email,
@@ -170,9 +211,19 @@ class SignUpScreen(
                                     signupRequest.username,
                                     signupRequest.phoneNo
                                 )
-                                navigator?.push(LoginScreen(authViewModel))
-                                println("Signup Successful")
+
+                                showMessage = true
+                                messageText = "Signup Successful"
                                 delay(1000)
+
+                                // Clear the fields after signup
+                                username = ""
+                                email = ""
+                                phone = ""
+                                password = ""
+                                confirmPassword = ""
+
+                                navigator?.push(LoginScreen(authViewModel))
                             }
                         } else {
                             isError = true
@@ -188,9 +239,9 @@ class SignUpScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            if (showMessage) messageText else "Sign Up", // Show message or "Sign Up" text
-                            modifier = Modifier.weight(1f), // Center the text
-                            textAlign = TextAlign.Center // Center the text horizontally
+                            text = if (showMessage) messageText else "Sign Up",
+                            modifier = Modifier.weight(1f),
+                            textAlign = TextAlign.Center
                         )
                         AnimatedVisibility(visible = loadingState) {
                             CircularProgressIndicator(
@@ -200,15 +251,15 @@ class SignUpScreen(
                         }
                     }
                 }
+
+                // Text for already having an account
                 Text(
                     text = "Already have an account? Login instead!",
                     color = Color.Gray,
                     modifier = Modifier
                         .padding(8.dp)
                         .clickable {
-                            navigator!!.push(
-                                LoginScreen(authViewModel)
-                            )
+                            navigator?.push(LoginScreen(authViewModel))
                         }
                 )
             }
@@ -225,6 +276,20 @@ class SignUpScreen(
         // For simplicity, just checking if the fields are not empty and passwords match
         return username.isNotEmpty() && email.isNotEmpty() &&
                 password.isNotEmpty() && password == confirmPassword
+    }
+    @Composable
+    private fun ClearTextButton(text: String, onClick: () -> Unit) {
+        if (text.isNotEmpty()) {
+            IconButton(
+                onClick = onClick,
+                content = {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
     }
 
 }

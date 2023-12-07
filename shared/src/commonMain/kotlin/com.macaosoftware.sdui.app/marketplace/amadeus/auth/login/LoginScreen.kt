@@ -12,8 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -49,7 +56,7 @@ class LoginScreen(
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
-        var emai by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
         var loadingState by remember { mutableStateOf(false) }
@@ -65,21 +72,30 @@ class LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Username TextField
+                // Email TextField
                 OutlinedTextField(
-                    value = emai,
+                    value = email,
                     onValueChange = {
-                        emai = it
+                        email = it
                         isError = false
                     },
                     label = { Text("Email") },
+                    trailingIcon = {
+                        if (email.isNotEmpty()) {
+                            IconButton(
+                                onClick = { email = "" },
+                                content = { Icon(imageVector = Icons.Default.Clear, contentDescription = null) }
+                            )
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     isError = isError
                 )
 
-                // Password TextField
+                // Password TextField with visibility toggle
+                var passwordVisibility by remember { mutableStateOf(false) }
                 OutlinedTextField(
                     value = password,
                     onValueChange = {
@@ -87,7 +103,18 @@ class LoginScreen(
                         isError = false
                     },
                     label = { Text("Password") },
-                    visualTransformation = PasswordVisualTransformation(),
+                    trailingIcon = {
+                        IconButton(
+                            onClick = { passwordVisibility = !passwordVisibility },
+                            content = {
+                                Icon(
+                                    imageVector = if (passwordVisibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+                    },
+                    visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
@@ -112,7 +139,7 @@ class LoginScreen(
                         loadingState = true
                         keyboardController?.hide()
 
-                        authViewModel.login(emai, password)
+                        authViewModel.login(email, password)
                     },
                     modifier = Modifier.padding(8.dp).fillMaxWidth()
                 ) {
@@ -122,7 +149,7 @@ class LoginScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            if (authViewModel.showMessage) authViewModel.messageText else "Login",
+                            text = if (authViewModel.showMessage) authViewModel.messageText else "Login",
                             modifier = Modifier.weight(1f, true),
                             textAlign = TextAlign.Center
                         )
@@ -160,7 +187,7 @@ class LoginScreen(
                         }
                 )
 
-                // Text for forgot password
+                // Text for login with link
                 Text(
                     text = "Login With Link",
                     color = Color.Gray,
