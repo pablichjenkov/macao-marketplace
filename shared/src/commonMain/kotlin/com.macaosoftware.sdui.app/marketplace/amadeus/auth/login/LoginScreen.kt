@@ -17,6 +17,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.util.MacaoResult
@@ -39,15 +41,15 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileScreen
-import kotlinx.coroutines.launch
 
 class LoginScreen(
     private val authViewModel: AuthViewModel,
 ) : Screen {
-    
+
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
+        // TODO: Put all these int the AuthViewModel
         var emai by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
@@ -56,7 +58,7 @@ class LoginScreen(
         var loadingState by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
-        val coroutineScope = rememberCoroutineScope()
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -110,26 +112,16 @@ class LoginScreen(
                 // Login Button
                 Button(
                     onClick = {
-                        if (isValidCredentials(emai, password)) {
-                            coroutineScope.launch {
-                                loadingState = true
-                                keyboardController?.hide()
+                        loadingState = true
+                        keyboardController?.hide()
 
-                                val loginRequest = LoginRequest(
-                                    email = emai,
-                                    password = password
-                                )
-                                authViewModel.login(loginRequest.email, loginRequest.password)
-
-                                navigator?.push(ProfileScreen(authViewModel))
-                            }
-                        } else {
-                            isError = true
-                        }
+                        val loginRequest = LoginRequest(
+                            email = emai,
+                            password = password
+                        )
+                        authViewModel.login(loginRequest.email, loginRequest.password)
                     },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
+                    modifier = Modifier.padding(8.dp).fillMaxWidth()
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -189,18 +181,22 @@ class LoginScreen(
         }
     }
 
-    private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
+    private fun handleLoginResult(result: MacaoResult<MacaoUser>, navigator: Navigator?) {
         when (result) {
             is MacaoResult.Success -> {
-
                 println("Login successful!")
+
+                // Navigate to the Profile screen
+                navigator?.push(ProfileScreen(authViewModel))
             }
 
             is MacaoResult.Error -> {
                 println("Login failed: ${result.error}")
+                // Handle error cases if needed
             }
         }
     }
+
 
     private fun isValidCredentials(username: String, password: String): Boolean {
         println("Validating credentials - username: $username, password: $password")

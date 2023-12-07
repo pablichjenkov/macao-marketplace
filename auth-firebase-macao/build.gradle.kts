@@ -38,6 +38,7 @@ kotlin {
             // Firebase
             implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom
             implementation("com.google.firebase:firebase-auth-ktx")
+            implementation("com.google.firebase:firebase-database-ktx")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
         }
     }

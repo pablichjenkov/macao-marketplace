@@ -33,6 +33,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
@@ -163,10 +164,15 @@ class SignUpScreen(
                                     phoneNo = phone
                                 )
                                 // Use the AuthViewModel to perform signup
-                                authViewModel.signup(signupRequest.email, signupRequest.password, signupRequest.username, signupRequest.phoneNo)
-
+                                authViewModel.signup(
+                                    signupRequest.email,
+                                    signupRequest.password,
+                                    signupRequest.username,
+                                    signupRequest.phoneNo
+                                )
                                 navigator?.push(LoginScreen(authViewModel))
                                 println("Signup Successful")
+                                delay(1000)
                             }
                         } else {
                             isError = true
