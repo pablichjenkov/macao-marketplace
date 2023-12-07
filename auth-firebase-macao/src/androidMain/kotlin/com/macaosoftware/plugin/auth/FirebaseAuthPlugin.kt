@@ -1,14 +1,21 @@
 package com.macaosoftware.plugin.auth
 
+import android.content.ContentValues
+import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.auth.actionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
+import com.google.firebase.database.getValue
 import com.google.firebase.ktx.Firebase
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.LoginError
@@ -26,72 +33,229 @@ import kotlinx.coroutines.tasks.await
 class FirebaseAuthPlugin : AuthPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
-    private val firebaseAuth: FirebaseAuth = Firebase.auth
-    private val firebaseDatastore: FirebaseDatabase = Firebase.database
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val usersReference: DatabaseReference = database.reference.child("Users")
 
     override suspend fun initialize(): Boolean {
         return true
     }
 
-    override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
-
+    override suspend fun fetchUserData(): MacaoResult<com.macaosoftware.plugin.UserData> {
         return try {
-            val taskResult = firebaseAuth
-                .createUserWithEmailAndPassword(signupRequest.email, signupRequest.password)
-                .await()
-            taskResult.user?.let {
-                storeUserData(
-                    it.uid,
-                    signupRequest.email,
-                    signupRequest.username,
-                    signupRequest.password,
-                    "https://macao-software.com/",
-                    "United States"
-                )
-                MacaoResult.Success(it.toMacaoUser())
-            } ?: run {
-                MacaoResult.Error(SignupError(errorDescription = "createUserWithEmailAndPassword:success but unexpected use null"))
+            val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
+            val userReference = usersReference.child(firebaseAuth.currentUser!!.uid)
+            val dataSnapshot = userReference.get().await()
+            val userListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val userData = snapshot.getValue<com.macaosoftware.plugin.UserData>()
+                    println(" User Listener ${userData.toString()}")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
             }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            MacaoResult.Error(SignupError(errorDescription = ex.message.orEmpty()))
+            userReference.addValueEventListener(userListener)
+            val userData = dataSnapshot.getValue(com.macaosoftware.plugin.UserData::class.java)
+
+            userReference.let {
+                MacaoResult.Success(it)
+            } ?: run {
+                MacaoResult.Error(LoginError(errorDescription = "User User Found"))
+            }
+            userData?.let {
+                MacaoResult.Success(it)
+            } ?: run {
+                MacaoResult.Error(LoginError(errorDescription = "User data not found"))
+            }
+
+        } catch (e: Exception) {
+            MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
         }
     }
 
-    override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
-
-        if (!isValidEmail(loginRequest.email) || !isValidPassword(loginRequest.password)) {
-            return MacaoResult.Error(
-                LoginError(
-                    errorDescription = "Invalid email or password format"
-                )
-            )
-        }
-        return try {
-            val taskResult = firebaseAuth
-                .signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
-                .await()
-            taskResult.user?.let {
-                MacaoResult.Success(it.toMacaoUser())
-            } ?: run {
-                MacaoResult.Error(LoginError(errorDescription = "signInWithEmailAndPassword:success but unexpected use null"))
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+        val currentUser = firebaseAuth.currentUser
+        return if (currentUser != null) {
+            try {
+                fetchUserData()
+            } catch (e: Exception) {
+                MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
             }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            MacaoResult.Error(LoginError(errorDescription = ex.message.orEmpty()))
+        } else {
+            MacaoResult.Error(LoginError(errorDescription = "User is not signed in"))
+        }
+    }
+
+    override suspend fun logoutUser(): MacaoResult<Unit> {
+        return MacaoResult.Success(firebaseAuth.signOut())
+    }
+
+    override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
+        return try {
+            val result = firebaseAuth.createUserWithEmailAndPassword(
+                signupRequest.email,
+                signupRequest.password
+            )
+
+            result.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                    val user = firebaseAuth.currentUser
+                    user?.let {
+                        // Store user data in the database after successful sign-up
+                        storeUserData(
+                            it.uid,
+                            signupRequest.email,
+                            signupRequest.username,
+                            signupRequest.password,
+                            "https://macao-software.com/",
+                            "United States"
+                        )
+                    }                    // updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
+                    // updateUI(null)
+                }
+            }
+
+            result.await()
+
+            result.result?.user?.let {
+                // Sign up success
+                MacaoResult.Success(MacaoUser(signupRequest.email))
+            } ?: run {
+                // Sign up failed
+                MacaoResult.Error(SignupError(errorDescription = "Empty User"))
+            }
+        } catch (e: Exception) {
+            Log.e(
+                "com.macaosoftware.sdui.plugin.AuthPluginAndroid",
+                "Signup Failed: ${e.message}",
+                e
+            )
+            MacaoResult.Error(SignupError(errorDescription = e.message ?: "Unknown error"))
+        }
+    }
+
+    private fun storeUserData(
+        userId: String,
+        email: String,
+        displayName: String,
+        password: String,
+        photoUrl: String,
+        country: String
+    ) {
+        // Create a map with user data
+        val userData = mapOf(
+            "uid" to userId,
+            "email" to email,
+            "displayName" to displayName,
+            "password" to password,
+            "photoUrl" to photoUrl,
+            "country" to country
+            // Add more fields as needed
+        )
+
+        // Store data in the "users" node with the user's ID as the key
+        val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
+        usersReference.child(userId).setValue(userData)
+    }
+
+    override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
+        return try {
+            if (isValidEmail(loginRequest.email) && isValidPassword(loginRequest.password)) {
+                val result = firebaseAuth.signInWithEmailAndPassword(
+                    loginRequest.email,
+                    loginRequest.password
+                ).await()
+
+                result.user?.let {
+                    // Login success
+                    MacaoResult.Success(MacaoUser(loginRequest.email))
+                } ?: run {
+                    // Login failed
+                    MacaoResult.Error(LoginError(errorDescription = "Empty User"))
+                }
+            } else {
+                MacaoResult.Error(
+                    LoginError(
+                        errorDescription = "Invalid email or password format"
+                    )
+                )
+            }
+        } catch (e: FirebaseAuthException) {
+            Log.e(
+                "com.macaosoftware.sdui.plugin.AuthPluginAndroid",
+                "Login Failed: ${e.message}",
+                e
+            )
+            MacaoResult.Error(LoginError(errorDescription = "Login Failed: ${e.message}"))
         }
     }
 
     override suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink) {
-        // TODO("Not yet implemented")
+        val auth = Firebase.auth
+        val intent = Intent()
+        val emailLink = intent.data.toString()
+
+        // Confirm the link is a sign-in with email link.
+        if (auth.isSignInWithEmailLink(emailLink)) {
+            // Retrieve this from wherever you stored it
+            val email = "someemail@domain.com"
+
+            // The client SDK will parse the code from the link for you.
+            auth.signInWithEmailLink(email, emailLink)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Successfully signed in with email link!")
+                        val result = task.result
+                        //Move to Profile or Home Screen
+                        result.getAdditionalUserInfo()?.isNewUser()
+                    } else {
+                        Log.e(TAG, "Error signing in with email link", task.exception)
+                    }
+                }
+        }
     }
 
     override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
-        // TODO("Not yet implemented")
+        buildActionCodeSettings(loginRequest.email)
     }
 
-    override suspend fun checkCurrentUser(): MacaoResult<MacaoUser> {
+    private fun buildActionCodeSettings(email: String) {
+        // [START auth_build_action_code_settings]
+        val actionCodeSettings = actionCodeSettings {
+            // URL you want to redirect back to. The domain (www.example.com) for this
+            // URL must be whitelisted in the Firebase Console.
+            url = "https://www.example.com/finishSignUp?cartId=1234"
+            // This must be true
+            handleCodeInApp = true
+            setIOSBundleId("com.example.ios")
+            setAndroidPackageName(
+                "com.example.android",
+                true, // installIfNotAvailable
+                "12", // minimumVersion
+            )
+        }
+        sendSignInLink("", actionCodeSettings)
+    }
 
+    private fun sendSignInLink(email: String, actionCodeSettings: ActionCodeSettings) {
+        // [START auth_send_sign_in_link]
+        Firebase.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Email sent.")
+                }
+            }
+        // [END auth_send_sign_in_link]
+    }
+
+
+    override suspend fun checkCurrentUser(): MacaoResult<MacaoUser> {
         return try {
             val user = firebaseAuth.currentUser
             if (user != null) {
@@ -105,7 +269,6 @@ class FirebaseAuthPlugin : AuthPlugin {
     }
 
     override suspend fun getUserProfile(): MacaoResult<MacaoUser> {
-
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -144,7 +307,6 @@ class FirebaseAuthPlugin : AuthPlugin {
         displayName: String,
         photoUrl: String
     ): MacaoResult<MacaoUser> {
-
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -173,8 +335,7 @@ class FirebaseAuthPlugin : AuthPlugin {
         facebookLink: String?,
         linkedIn: String?,
         github: String?
-    ): MacaoResult<UserData> {
-
+    ): MacaoResult<com.macaosoftware.plugin.UserData> {
         try {
             val userData = UserData(
                 displayName = displayName,
@@ -188,7 +349,7 @@ class FirebaseAuthPlugin : AuthPlugin {
 
             // Reference to the specific user node
             val userReference =
-                firebaseDatastore.reference.child("Users").child(firebaseAuth.currentUser!!.uid)
+                database.reference.child("Users").child(firebaseAuth.currentUser!!.uid)
 
             // Update data in the database
             userReference.updateChildren(userData.toMap())
@@ -205,6 +366,19 @@ class FirebaseAuthPlugin : AuthPlugin {
             return MacaoResult.Error(LoginError(errorDescription = "Error updating user data: ${e.message}"))
         }
     }
+
+    fun UserData.toMap(): Map<String, Any?> {
+        return mapOf(
+            "displayName" to displayName,
+            "country" to country,
+            "photoUrl" to photoUrl,
+            "phoneNo" to phoneNo,
+            "facebookLink" to facebookLink,
+            "linkedIn" to linkedIn,
+            "github" to github
+        )
+    }
+
 
     override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
         return try {
@@ -284,91 +458,6 @@ class FirebaseAuthPlugin : AuthPlugin {
         } catch (e: Exception) {
             MacaoResult.Error(LoginError(errorDescription = "Error deleting user account: ${e.message}"))
         }
-    }
-
-    override suspend fun fetchUserData(): MacaoResult<UserData> {
-
-        return try {
-            val usersReference = firebaseDatastore.reference.child("Users")
-            val userReference = usersReference.child(firebaseAuth.currentUser!!.uid)
-            val dataSnapshot = userReference.get().await()
-            val userData = dataSnapshot.getValue(UserData::class.java)
-
-            userReference.let {
-                MacaoResult.Success(it)
-            } ?: run {
-                MacaoResult.Error(LoginError(errorDescription = "User User Found"))
-            }
-            userData?.let {
-                MacaoResult.Success(it)
-            } ?: run {
-                MacaoResult.Error(LoginError(errorDescription = "User data not found"))
-            }
-
-        } catch (e: Exception) {
-            MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
-        }
-    }
-
-    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
-        // Check if user is signed in (non-null)
-        val currentUser = firebaseAuth.currentUser
-        return if (currentUser != null) {
-            // User is already signed in, fetch user data
-            try {
-                fetchUserData()
-            } catch (e: Exception) {
-                // Handle exceptions if any
-                MacaoResult.Error(LoginError(errorDescription = "Error fetching user data: ${e.message}"))
-            }
-        } else {
-            // User is not signed in, return a placeholder or handle accordingly
-            MacaoResult.Error(LoginError(errorDescription = "User is not signed in"))
-        }
-    }
-
-    override suspend fun logoutUser(): MacaoResult<Unit> {
-        return MacaoResult.Success(firebaseAuth.signOut())
-    }
-
-    private fun FirebaseUser.toMacaoUser(): MacaoUser {
-        return MacaoUser(this.email ?: "no_email")
-    }
-
-    fun UserData.toMap(): Map<String, Any?> {
-        return mapOf(
-            "displayName" to displayName,
-            "country" to country,
-            "photoUrl" to photoUrl,
-            "phoneNo" to phoneNo,
-            "facebookLink" to facebookLink,
-            "linkedIn" to linkedIn,
-            "github" to github
-        )
-    }
-
-    private fun storeUserData(
-        userId: String,
-        email: String,
-        displayName: String,
-        password: String,
-        photoUrl: String,
-        country: String
-    ) {
-        // Create a map with user data
-        val userData = mapOf(
-            "uid" to userId,
-            "email" to email,
-            "displayName" to displayName,
-            "password" to password,
-            "photoUrl" to photoUrl,
-            "country" to country
-            // Add more fields as needed
-        )
-
-        // Store data in the "users" node with the user's ID as the key
-        val usersReference = FirebaseDatabase.getInstance().reference.child("Users")
-        usersReference.child(userId).setValue(userData)
     }
 
     private fun isValidEmail(email: String): Boolean {
