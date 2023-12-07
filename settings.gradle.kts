@@ -43,3 +43,4 @@ include(":auth-supabase")
 //include(":component")
 //project(":component").projectDir = File("../component/component")
 
+include(":auth-firebase-macao:jsApp")

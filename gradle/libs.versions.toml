@@ -27,6 +27,13 @@ gmazzo = "4.1.1"
 sqldeligh = "2.0.0"
 dokka = "1.9.10"
 realm = "1.12.0"
+kotlin190 = "1.9.0"
+core-ktx = "1.12.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+lifecycle-runtime-ktx = "2.6.1"
+compose-bom = "2023.08.00"
 
 [libraries]
 
@@ -63,6 +70,18 @@ com-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "gs
 io-ktor-server-default-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
 io-ktor-ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version = "1.0.0-alpha01" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 
@@ -75,3 +94,4 @@ gmazzo = { id = "com.github.gmazzo.buildconfig", version.ref = "gmazzo" }
 sqldeligh = { id = "app.cash.sqldelight", version.ref = "sqldeligh" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 realm = { id = "io.realm.kotlin", version.ref = "realm" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin190" }

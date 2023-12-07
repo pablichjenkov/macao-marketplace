@@ -49,12 +49,9 @@ class LoginScreen(
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
-        // TODO: Put all these int the AuthViewModel
         var emai by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isError by remember { mutableStateOf(false) }
-        var showMessage by remember { mutableStateOf(false) }
-        var messageText by remember { mutableStateOf("") }
         var loadingState by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -115,11 +112,7 @@ class LoginScreen(
                         loadingState = true
                         keyboardController?.hide()
 
-                        val loginRequest = LoginRequest(
-                            email = emai,
-                            password = password
-                        )
-                        authViewModel.login(loginRequest.email, loginRequest.password)
+                        authViewModel.login(emai, password)
                     },
                     modifier = Modifier.padding(8.dp).fillMaxWidth()
                 ) {
@@ -129,13 +122,13 @@ class LoginScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            if (showMessage) messageText else "Login", // Show message or "Login" text
-                            modifier = Modifier.weight(1f, true), // Center the text
-                            textAlign = TextAlign.Center // Center the text horizontally
+                            if (authViewModel.showMessage) authViewModel.messageText else "Login",
+                            modifier = Modifier.weight(1f, true),
+                            textAlign = TextAlign.Center
                         )
-                        if (!showMessage) {
-                            Spacer(modifier = Modifier.width(8.dp)) // Add spacing between text and CircularProgressIndicator
-                            AnimatedVisibility(visible = loadingState) {
+                        if (!authViewModel.showMessage) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            AnimatedVisibility(visible = authViewModel.loadingState) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.size(24.dp),
                                     color = Color.White

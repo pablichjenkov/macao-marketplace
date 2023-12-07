@@ -1,6 +1,8 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.AuthPlugin
@@ -23,6 +25,10 @@ class AuthViewModel(
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)
     var userData = mutableStateOf<UserData?>(null)
+    var loadingState by mutableStateOf(false)
+    var showMessage by mutableStateOf(false)
+    var messageText by mutableStateOf("")
+    var isError by mutableStateOf(false)
 
     override fun onAttach() {
         //Initialize
@@ -98,18 +104,17 @@ class AuthViewModel(
         when (result) {
             is MacaoResult.Error -> {
                 val loginError = result.error
-                println("Login Failed: $loginError")
-                /*loadingState = false
+                isError = true
                 showMessage = true
-                messageText = "Login successful!"*/
+                loadingState = false
+                messageText = "Login Failed: $loginError"
             }
 
             is MacaoResult.Success -> {
                 val macaoUser = result.value
-                println("Login Successful: $macaoUser")
-                /*loadingState = false
                 showMessage = true
-                messageText = "Error While Login..."*/
+                loadingState = false
+                messageText = "Login Successful: $macaoUser"
             }
         }
     }
@@ -138,20 +143,17 @@ class AuthViewModel(
         when (result) {
             is MacaoResult.Error -> {
                 val signupError = result.error
-                println("Signup Failed: $signupError")
-                /*loadingState = false
+                isError = true
                 showMessage = true
-                messageText = "Sign up failed: ${e.message}"*/
+                loadingState = false
+                messageText = "Signup Failed: $signupError"
             }
 
             is MacaoResult.Success -> {
                 val macaoUser = result.value
-                println("Signup Successful: $macaoUser")
-
-                storeData(macaoUser)
-                /*loadingState = false
                 showMessage = true
-                messageText = "Sign up successful!"*/
+                loadingState = false
+                messageText = "Signup Successful: $macaoUser"
             }
         }
     }

@@ -45,11 +45,14 @@ kotlin {
             implementation("com.google.firebase:firebase-database-ktx")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
         }
-        jvmMain.dependencies {
-            implementation(libs.kotlinx.coroutines.swing)
-        }
         jsMain.dependencies {
             implementation(libs.kotlinx.coroutines.core.js)
+            // Firebase
+            implementation("dev.gitlive:firebase-auth:1.10.4")
+            implementation("dev.gitlive:firebase-database:1.10.4")
+        }
+        jvmMain.dependencies {
+            implementation(libs.kotlinx.coroutines.swing)
         }
     }
 }

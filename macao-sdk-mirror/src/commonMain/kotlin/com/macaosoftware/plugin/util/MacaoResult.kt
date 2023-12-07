@@ -11,3 +11,6 @@ sealed class MacaoResult2<out S, out E> {
 }
 
 interface MacaoError
+sealed class MacaoErrors : MacaoError{
+    data class CustomError(val errorDescription: String) : MacaoErrors()
+}

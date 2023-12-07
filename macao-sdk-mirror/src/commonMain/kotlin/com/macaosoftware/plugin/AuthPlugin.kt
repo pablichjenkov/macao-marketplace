@@ -166,7 +166,11 @@ data class UserData(
     val  facebookLink: String? ="",
     val linkedIn: String?= "",
     val github: String?= ""
-)
+) {
+    // Empty primary constructor required by Firebase
+    constructor() : this("", "", "", "", "", "","","","","")
+}
+
 
 data class SignupRequest(
     val email: String,
