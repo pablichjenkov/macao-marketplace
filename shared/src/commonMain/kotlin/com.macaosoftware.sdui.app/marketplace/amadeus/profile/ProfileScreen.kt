@@ -18,8 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Facebook
+import androidx.compose.material.icons.filled.Gite
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Settings
@@ -36,8 +36,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,13 +55,14 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.plugin.User
+import com.macaosoftware.plugin.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProfileScreen(
@@ -71,35 +70,21 @@ class ProfileScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        var usersData by remember { mutableStateOf<User?>(null) }
-        var user by remember { mutableStateOf<User?>(null) }
-        val context = rememberCoroutineScope()
-        /*val firebaseUser = Firebase.auth
-        val firebaseDatabase =
-            Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
-        val data = firebaseDatabase.reference().child("Users")
-        LaunchedEffect(Unit){
-            val userData = data.valueEvents.collect { data ->
-                usersData = data.value()
-            }
-            val users = data.child(firebaseUser.currentUser!!.uid).valueEvents.collect{latestData ->
-                user = latestData.value as User?
-            }
-        }*/
-
-
+        val usersData = authViewModel?.userData?.value
         val coroutineScope = rememberCoroutineScope()
-        val currentUser = User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
+        val currentUser =
+            User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
         var editProfile by remember { mutableStateOf(false) }
-        var username by remember { mutableStateOf("${usersData?.username + user?.username} ") }
-        var email by remember { mutableStateOf("${currentUser?.email}") }
-        var phone by remember { mutableStateOf("${currentUser?.phoneNo}") }
-        var pass by remember { mutableStateOf("") }
-
-
-
+        var displayName by remember { mutableStateOf("") }
+        var country by remember { mutableStateOf("") }
+        var phone by remember { mutableStateOf("") }
+        var photoUrl by remember { mutableStateOf("") }
+        var facebookUrl by remember { mutableStateOf("") }
+        var linkedinUrl by remember { mutableStateOf("") }
+        var githubUrl by remember { mutableStateOf("") }
+        var loading by remember { mutableStateOf(true) }
 
         Column(modifier = Modifier.fillMaxSize()) { // Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
 
@@ -244,13 +229,23 @@ class ProfileScreen(
                             OutlinedButton(
                                 onClick = {
                                     coroutineScope.launch {
-                                        if (currentUser != null) {
-                                            //firebaseUser.signOut()
-                                            delay(100)
-                                            navigator?.popAll()
-                                        } else {
-                                            //firebaseUser.fetchSignInMethodsForEmail(email)
-                                        }
+                                       authViewModel?.let {
+                                           val result = it.authPlugin.logoutUser()
+                                           when (result) {
+                                               is MacaoResult.Success -> {
+                                                   navigator?.push(LoginScreen(authViewModel))
+                                                   println("User Data: $usersData")
+                                               }
+
+                                               is MacaoResult.Error -> {
+
+                                                   // Handle error
+                                                   println("Error: ")
+                                               }
+
+                                               else -> {}
+                                           }
+                                       }
                                     }
                                 },
                                 modifier = Modifier.fillMaxWidth(0.75f).padding(top = 20.dp),
@@ -294,7 +289,7 @@ class ProfileScreen(
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = username,
+                            text = "${usersData?.displayName}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
@@ -302,7 +297,7 @@ class ProfileScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Software Developer",
+                            text = "Software Developer ${usersData?.uid.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.Gray
                         )
@@ -311,7 +306,7 @@ class ProfileScreen(
 
                         // Add more items as needed
                         Text(
-                            text = "Location: City, Country",
+                            text = "Location: ${usersData?.country.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
 
                             )
@@ -319,20 +314,20 @@ class ProfileScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Email: $email",
+                            text = "Email: ${usersData?.email.toString()}",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
-                                uriHandler.openUri("john.doe@example.com")
+                                uriHandler.openUri("${usersData?.email}")
                             }
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Phone: +1 (555) 123-4567",
+                            text = "Phone: ${usersData?.phoneNo}",
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.clickable {
-                                uriHandler.openUri("+1 (555) 123-4567")
+                                uriHandler.openUri(usersData?.phoneNo.toString())
                             }
                         )
 
@@ -345,12 +340,12 @@ class ProfileScreen(
                         ) {
                             SocialLink(
                                 icon = Icons.Default.Facebook,
-                                link = "https://www.facebook.com/"
+                                link = "${usersData?.facebookLink}"
                             )
-                            SocialLink(icon = Icons.Default.Email, link = "https://email.com/")
+                            SocialLink(icon = Icons.Default.Gite, link = "${usersData?.github}")
                             SocialLink(
                                 icon = Icons.Default.InstallMobile,
-                                link = "https://www.instagram.com/"
+                                link = "${usersData?.linkedIn}"
                             )
                         }
 
@@ -363,14 +358,14 @@ class ProfileScreen(
                             text = {
                                 Column {
                                     OutlinedTextField(
-                                        value = username,
-                                        onValueChange = { username = it },
+                                        value = displayName,
+                                        onValueChange = { displayName = it },
                                         label = { Text("Username") }
                                     )
                                     OutlinedTextField(
-                                        value = email,
-                                        onValueChange = { email = it },
-                                        label = { Text("Email") }
+                                        value = country,
+                                        onValueChange = { country = it },
+                                        label = { Text("Country") }
                                     )
                                     OutlinedTextField(
                                         value = phone,
@@ -378,9 +373,24 @@ class ProfileScreen(
                                         label = { Text("Phone") }
                                     )
                                     OutlinedTextField(
-                                        value = pass,
-                                        onValueChange = { pass = it },
-                                        label = { Text("Password") }
+                                        value = photoUrl,
+                                        onValueChange = { photoUrl = it },
+                                        label = { Text("PhotoUrl") }
+                                    )
+                                    OutlinedTextField(
+                                        value = facebookUrl,
+                                        onValueChange = { facebookUrl = it },
+                                        label = { Text("Facebook") }
+                                    )
+                                    OutlinedTextField(
+                                        value = linkedinUrl,
+                                        onValueChange = { linkedinUrl = it },
+                                        label = { Text("LinedIn") }
+                                    )
+                                    OutlinedTextField(
+                                        value = githubUrl,
+                                        onValueChange = { githubUrl = it },
+                                        label = { Text("Github") }
                                     )
                                 }
                             },
@@ -389,12 +399,17 @@ class ProfileScreen(
                                     onClick = {
                                         // Save changes
                                         coroutineScope.launch {
-                                            val updatedUser = User(email, pass, username, phone)
-                                            authViewModel?.updateData(currentUser!!, updatedUser)
+                                            authViewModel?.authPlugin?.updateFullProfile(
+                                                displayName = displayName,
+                                                phoneNo = phone,
+                                                country = country,
+                                                photoUrl = photoUrl,
+                                                facebookLink = facebookUrl,
+                                                linkedIn = linkedinUrl,
+                                                github = githubUrl
+                                            )
                                         }
-
                                         editProfile = false
-
                                     },
                                     content = { Text("Save") },
                                     colors = ButtonDefaults.buttonColors(

@@ -1,5 +1,6 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth
 
+import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.AuthPlugin
@@ -9,6 +10,7 @@ import com.macaosoftware.plugin.LoginRequestForLink
 import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.plugin.User
+import com.macaosoftware.plugin.UserData
 import com.macaosoftware.plugin.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,10 +18,11 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authComponent: StateComponent<AuthViewModel>,
-    private val authPlugin: AuthPlugin
+    val authPlugin: AuthPlugin
 ) : ComponentViewModel() {
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)
+    var userData = mutableStateOf<UserData?>(null)
 
     override fun onAttach() {
         //Initialize
@@ -31,7 +34,7 @@ class AuthViewModel(
     }
 
     override fun onStart() {
-
+        checkAndFetchUserData()
     }
 
     override fun onStop() {
@@ -71,12 +74,28 @@ class AuthViewModel(
         username: String,
         phoneNo: String
     ) = viewModelScope.launch {
-        val result = authPlugin.signup(SignupRequest(email, password, username, phoneNo) )
+        val result = authPlugin.signup(SignupRequest(email, password, username, phoneNo))
         handleSignupResult(result)
     }
 
+    fun checkAndFetchUserData() = viewModelScope.launch {
+        val result = authPlugin.checkAndFetchUserData()
+        when (result) {
+            is MacaoResult.Success -> {
+                println("User Data: $result")
+                userData.value = result.value
+            }
+
+            is MacaoResult.Error -> {
+                println("User not logged in: ${result.error}")
+                // Handle error
+                println("Error: ${result.error}")
+            }
+        }
+    }
+
     private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
-        when(result) {
+        when (result) {
             is MacaoResult.Error -> {
                 val loginError = result.error
                 println("Login Failed: $loginError")
@@ -84,6 +103,7 @@ class AuthViewModel(
                 showMessage = true
                 messageText = "Login successful!"*/
             }
+
             is MacaoResult.Success -> {
                 val macaoUser = result.value
                 println("Login Successful: $macaoUser")
@@ -94,8 +114,28 @@ class AuthViewModel(
         }
     }
 
+    fun fetchUserDataAndHandleResult() {
+        viewModelScope.launch {
+            val userDataResult = authPlugin.fetchUserData()
+
+            when (userDataResult) {
+                is MacaoResult.Success -> {
+                    val userData = userDataResult.value
+                    // Handle user data
+                    println("User Data: $userData")
+                }
+
+                is MacaoResult.Error -> {
+                    val error = userDataResult.error
+                    // Handle error
+                    println("Error: $error")
+                }
+            }
+        }
+    }
+
     private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
-        when(result) {
+        when (result) {
             is MacaoResult.Error -> {
                 val signupError = result.error
                 println("Signup Failed: $signupError")
@@ -103,6 +143,7 @@ class AuthViewModel(
                 showMessage = true
                 messageText = "Sign up failed: ${e.message}"*/
             }
+
             is MacaoResult.Success -> {
                 val macaoUser = result.value
                 println("Signup Successful: $macaoUser")
@@ -134,4 +175,5 @@ class AuthViewModel(
         //firebase.sendPasswordResetEmail(email)
         println("Reset Email Sent")
     }
+
 }
