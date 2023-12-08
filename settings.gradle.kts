@@ -39,6 +39,7 @@ include(":macao-sdk-mirror")
 include(":auth-firebase-macao")
 include(":auth-firebase-gitlive")
 include(":auth-supabase")
+include(":notifications-macao")
 
 //include(":component")
 //project(":component").projectDir = File("../component/component")
