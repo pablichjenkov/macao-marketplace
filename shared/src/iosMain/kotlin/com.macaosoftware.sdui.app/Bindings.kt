@@ -6,25 +6,17 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
-import com.macaosoftware.component.IosComponentRender
-import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
+import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import platform.UIKit.UIViewController
 
-fun buildDemoViewController(
-    rootComponent: Component,
-    iosBridge: IosBridge,
-    onBackPress: () -> Unit = {}
-): UIViewController = ComposeUIViewController {
-    IosComponentRender(rootComponent, iosBridge, onBackPress)
-}
-
 fun buildDemoMacaoApplication(
     iosBridge: IosBridge,
+    firebaseAuth: FirebaseAuth,
     onBackPress: () -> Unit = {}
 ): UIViewController = ComposeUIViewController {
 
@@ -33,7 +25,7 @@ fun buildDemoMacaoApplication(
         onBackPress = onBackPress,
         macaoApplicationState = MacaoApplicationState(
             Dispatchers.IO,
-            IosRootComponentProvider(iosBridge)
+            IosRootComponentProvider(iosBridge, firebaseAuth)
         )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

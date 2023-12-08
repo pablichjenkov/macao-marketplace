@@ -1,23 +1,25 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.component.core.Component
+import com.macaosoftware.plugin.AuthPlugin
+import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.plugin.PlatformLifecyclePlugin
-import com.macaosoftware.sdui.data.SduiRemoteService
+import com.macaosoftware.plugin.RootComponentProvider
+import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
 import com.macaosoftware.sdui.app.di.commonModule
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.AuthPluginEmpty
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
+import com.macaosoftware.sdui.data.SduiRemoteService
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.storage.IosDriverFactory
 import com.pablichj.incubator.amadeus.storage.createDatabase
 import kotlinx.coroutines.delay
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
-import com.macaosoftware.plugin.RootComponentProvider
 
 class IosRootComponentProvider(
-    private val iosBridge: IosBridge
+    private val iosBridge: IosBridge,
+    private val firebaseAuth: FirebaseAuth
 ) : RootComponentProvider {
 
     override suspend fun provideRootComponent(): Component {
@@ -26,10 +28,7 @@ class IosRootComponentProvider(
         val pluginsModule = module {
             single<Database> { database }
             single<PlatformLifecyclePlugin> { iosBridge.platformLifecyclePlugin }
-            single<AuthPlugin> { AuthPluginEmpty() }
-            /*single<AuthPlugin> { // Not working good
-                com.macaosoftware.plugin.auth.AuthPluginGitLive()
-            }*/
+            single<AuthPlugin> { FirebaseAuthPlugin(firebaseAuth) }
         }
         val koinRootContainer = koinApplication {
             printLogger()

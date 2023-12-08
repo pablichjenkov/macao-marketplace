@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyA8Jux1WU3DRnVRygmTp-R7_K417vg8NJU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>756228098779</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.pablichj.incubator.uistate3.iOSDemoApp</string>
+	<key>PROJECT_ID</key>
+	<string>macao-sdui-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>macao-sdui-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:756228098779:ios:23bc33de8a1952ab045afe</string>
+</dict>
+</plist>
