@@ -3,11 +3,12 @@
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
     js(IR) {
-        browser() /*{ // todo: report error when uncommenting the block bellow
+        browser()/*{ // todo: report error when uncommenting the block bellow
             commonWebpackConfig(
                 Action<KotlinWebpackConfig> {
                     outputFileName = "sdui-demo-app.js"
@@ -18,6 +19,7 @@ kotlin {
     }
     sourceSets {
         jsMain.dependencies {
+            implementation(compose.html.core)
             implementation(compose.runtime)
             implementation(compose.ui)
             implementation(compose.foundation)
@@ -38,7 +40,6 @@ kotlin {
         }
     }
 }
-
 compose.experimental {
     web.application {}
 }

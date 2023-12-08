@@ -50,6 +50,8 @@ kotlin {
             // Firebase
             implementation("dev.gitlive:firebase-auth:1.10.4")
             implementation("dev.gitlive:firebase-database:1.10.4")
+            implementation(compose.html.core)
+            implementation(compose.runtime)
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
