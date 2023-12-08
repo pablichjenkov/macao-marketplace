@@ -15,14 +15,14 @@
 		9401746D2A777BE500BA34D2 /* iOSDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */; };
 		9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */; };
 		947220A12AFF1EB300270F1B /* IosRootComponetProviderSw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */; };
+		94B106352B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
+		94B106362B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
+		94B106372B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
 		94D231652B230EB700AB1C3C /* MacaoPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 94D231642B230EB700AB1C3C /* MacaoPackage */; };
 		94D231682B23200700AB1C3C /* MacaoAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D231672B23200700AB1C3C /* MacaoAppDelegate.swift */; };
 		94D2316E2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
 		94D2316F2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
 		94D231702B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
-		94D231722B23385A00AB1C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D231712B23385A00AB1C3C /* GoogleService-Info.plist */; };
-		94D231732B23385A00AB1C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D231712B23385A00AB1C3C /* GoogleService-Info.plist */; };
-		94D231742B23385A00AB1C3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D231712B23385A00AB1C3C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,10 +55,11 @@
 		9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITests.swift; sourceTree = "<group>"; };
 		9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosRootComponetProviderSw.swift; sourceTree = "<group>"; };
+		94B106342B2343CE0026F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		94B106382B2344BF0026F741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		94D231602B23075400AB1C3C /* MacaoPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MacaoPackage; sourceTree = "<group>"; };
 		94D231672B23200700AB1C3C /* MacaoAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacaoAppDelegate.swift; sourceTree = "<group>"; };
 		94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthPluginSf.swift; sourceTree = "<group>"; };
-		94D231712B23385A00AB1C3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +113,8 @@
 		9401744F2A777BE400BA34D2 /* iOSDemoApp */ = {
 			isa = PBXGroup;
 			children = (
-				94D231712B23385A00AB1C3C /* GoogleService-Info.plist */,
+				94B106382B2344BF0026F741 /* Info.plist */,
+				94B106342B2343CE0026F741 /* GoogleService-Info.plist */,
 				947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */,
 				940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */,
 				940174522A777BE400BA34D2 /* ContentView.swift */,
@@ -269,8 +271,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				940174592A777BE500BA34D2 /* Preview Assets.xcassets in Resources */,
-				94D231722B23385A00AB1C3C /* GoogleService-Info.plist in Resources */,
 				940174552A777BE500BA34D2 /* Assets.xcassets in Resources */,
+				94B106352B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D231732B23385A00AB1C3C /* GoogleService-Info.plist in Resources */,
+				94B106362B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D231742B23385A00AB1C3C /* GoogleService-Info.plist in Resources */,
+				94B106372B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +485,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSDemoApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -528,6 +531,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOSDemoApp/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
