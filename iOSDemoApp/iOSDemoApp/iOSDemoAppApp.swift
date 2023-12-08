@@ -1,12 +1,20 @@
 import SwiftUI
 import MacaoSuiDemoKt
+import MacaoPackage
+import FirebaseCore
+import FirebaseAuth
 
 @main
 struct iOSDemoAppApp: App {
 
     let iosBridge = BindingsKt.createPlatformBridge()
+    
+    // register app delegate for Firebase setup
+    @UIApplicationDelegateAdaptor(MacaoAppDelegate.self) var delegate
        
     init() {
+        //FirebaseApp.configure()
+        let number : Int = TestVisibility().ty
     }
        
        var body: some Scene {
