@@ -20,4 +20,7 @@ iOSDemoApp/iOSDemoApp.xcodeproj/*
 
 ### Mac OS ###
 .DS_Store
+
+### Firebase ###
 /androidApp/google-services.json
+iOSDemoApp/iOSDemoApp/GoogleService-Info.plist
