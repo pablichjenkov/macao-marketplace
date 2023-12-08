@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,6 +49,7 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileScreen
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 
 class LoginScreen(
     private val authViewModel: AuthViewModel,
@@ -62,7 +64,6 @@ class LoginScreen(
         var loadingState by remember { mutableStateOf(false) }
         val navigator = LocalNavigator.current
         val keyboardController = LocalSoftwareKeyboardController.current
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -72,6 +73,10 @@ class LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                TextButton(onClick = {}){
+                    Text(text = "Show Notification")
+                }
                 // Email TextField
                 OutlinedTextField(
                     value = email,

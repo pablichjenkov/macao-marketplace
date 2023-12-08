@@ -4,6 +4,7 @@ amadeusApi = "0.3.4"
 componentsResources = "1.5.11"
 componentToolkit = "0.5.11"
 kamelImage = "0.9.0"
+kmpnotifier = "0.1.9"
 koinCore = "3.5.0"
 kotlin = "1.9.21"
 agp = "8.2.0"
@@ -11,6 +12,7 @@ compose = "1.5.11"
 androidx-appcompat = "1.6.1"
 androidx-activityCompose = "1.8.1"
 compose-uitooling = "1.5.4"
+permissionsCompose = "0.17.0"
 skiko = "0.7.89.1"
 voyager = "1.0.0-rc10"
 composeImageLoader = "1.7.1"
@@ -45,12 +47,14 @@ components-resources = { module = "org.jetbrains.compose.components:components-r
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 font-awesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
+kmpnotifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmpnotifier" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "moko-mvvm" }
+permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissionsCompose" }
 skiko = { module = "org.jetbrains.skiko:skiko", version.ref = "skiko" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }

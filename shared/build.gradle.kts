@@ -76,6 +76,8 @@ kotlin {
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
             implementation(project(":macao-sdk-mirror"))
+            implementation(project(":permission-macao"))
+            implementation(project(":notifications-macao"))
 
             // Auth Plugins
             // implementation(project(":auth-firebase-gitlive")) // Not working good
@@ -87,6 +89,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(project(":notifications-macao"))
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)

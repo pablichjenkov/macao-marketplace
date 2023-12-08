@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "NotificationsMacao"
+            baseName = "PermissionMacao"
             isStatic = true
         }
     }
@@ -36,19 +36,19 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            api(libs.permissions.compose)
             api(libs.moko.mvvm)
-            api(libs.kmpnotifier)
         }
         iosMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
+            api(libs.permissions.compose)
             api(libs.moko.mvvm)
-            api(libs.kmpnotifier)
         }
     }
 }
 
 android {
-    namespace = "com.macaosoftware.plugin.notifications.macao"
+    namespace = "com.macaosoftware.plugin.permission.macao"
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
