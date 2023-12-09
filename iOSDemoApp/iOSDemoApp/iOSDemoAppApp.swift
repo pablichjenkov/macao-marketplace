@@ -1,5 +1,5 @@
 import SwiftUI
-import MacaoSuiDemoKt
+import shared
 import MacaoPackage
 import FirebaseCore
 import FirebaseAuth

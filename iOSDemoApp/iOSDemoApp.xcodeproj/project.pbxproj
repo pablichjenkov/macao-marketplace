@@ -14,15 +14,16 @@
 		940174632A777BE500BA34D2 /* iOSDemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940174622A777BE500BA34D2 /* iOSDemoAppTests.swift */; };
 		9401746D2A777BE500BA34D2 /* iOSDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */; };
 		9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */; };
-		947220A12AFF1EB300270F1B /* IosRootComponetProviderSw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */; };
+		9496CE402B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */; };
+		9496CE412B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */; };
+		9496CE422B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */; };
+		9496CE432B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
+		9496CE442B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
+		9496CE452B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
 		94B106352B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
 		94B106362B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
 		94B106372B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
 		94D231652B230EB700AB1C3C /* MacaoPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 94D231642B230EB700AB1C3C /* MacaoPackage */; };
-		94D231682B23200700AB1C3C /* MacaoAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D231672B23200700AB1C3C /* MacaoAppDelegate.swift */; };
-		94D2316E2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
-		94D2316F2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
-		94D231702B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,12 +55,11 @@
 		940174682A777BE500BA34D2 /* iOSDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITests.swift; sourceTree = "<group>"; };
 		9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosRootComponetProviderSw.swift; sourceTree = "<group>"; };
+		9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IosRootComponetProviderSw.swift; sourceTree = "<group>"; };
+		9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthPluginSf.swift; sourceTree = "<group>"; };
 		94B106342B2343CE0026F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		94B106382B2344BF0026F741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		94D231602B23075400AB1C3C /* MacaoPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MacaoPackage; sourceTree = "<group>"; };
-		94D231672B23200700AB1C3C /* MacaoAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacaoAppDelegate.swift; sourceTree = "<group>"; };
-		94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthPluginSf.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,16 +113,16 @@
 		9401744F2A777BE400BA34D2 /* iOSDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				9496CE3D2B23E78F009B8717 /* FirebaseAuthMacao */,
 				94B106382B2344BF0026F741 /* Info.plist */,
 				94B106342B2343CE0026F741 /* GoogleService-Info.plist */,
-				947220A02AFF1EB300270F1B /* IosRootComponetProviderSw.swift */,
 				940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */,
+				9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */,
+				9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */,
 				940174522A777BE400BA34D2 /* ContentView.swift */,
 				940174542A777BE500BA34D2 /* Assets.xcassets */,
 				940174562A777BE500BA34D2 /* iOSDemoApp.entitlements */,
 				940174572A777BE500BA34D2 /* Preview Content */,
-				94D231672B23200700AB1C3C /* MacaoAppDelegate.swift */,
-				94D2316D2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift */,
 			);
 			path = iOSDemoApp;
 			sourceTree = "<group>";
@@ -150,6 +150,13 @@
 				9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */,
 			);
 			path = iOSDemoAppUITests;
+			sourceTree = "<group>";
+		};
+		9496CE3D2B23E78F009B8717 /* FirebaseAuthMacao */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = FirebaseAuthMacao;
 			sourceTree = "<group>";
 		};
 		94D231612B2308EB00AB1C3C /* Frameworks */ = {
@@ -319,11 +326,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				947220A12AFF1EB300270F1B /* IosRootComponetProviderSw.swift in Sources */,
+				9496CE432B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */,
+				9496CE402B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */,
 				940174532A777BE400BA34D2 /* ContentView.swift in Sources */,
-				94D231682B23200700AB1C3C /* MacaoAppDelegate.swift in Sources */,
 				940174512A777BE400BA34D2 /* iOSDemoAppApp.swift in Sources */,
-				94D2316E2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,8 +337,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D2316F2B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */,
 				940174632A777BE500BA34D2 /* iOSDemoAppTests.swift in Sources */,
+				9496CE442B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */,
+				9496CE412B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +347,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9496CE452B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */,
+				9496CE422B23EE3A009B8717 /* IosRootComponetProviderSw.swift in Sources */,
 				9401746D2A777BE500BA34D2 /* iOSDemoAppUITests.swift in Sources */,
-				94D231702B2328F400AB1C3C /* FirebaseAuthPluginSf.swift in Sources */,
 				9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,7 +488,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSDemoApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = JHRZ3PC8R8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
@@ -526,7 +534,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iOSDemoApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = JHRZ3PC8R8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";

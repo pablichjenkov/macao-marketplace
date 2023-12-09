@@ -7,6 +7,6 @@
 		<dict/>
 	</array>
     <key>CADisableMinimumFrameDurationOnPhone</key>
-        <true/>
+    <true/>
 </dict>
 </plist>
