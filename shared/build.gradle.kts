@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
@@ -16,6 +18,7 @@ kotlin {
     }
 
     // IOS
+    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -23,7 +26,9 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries {
             framework {
-                baseName = "MacaoSuiDemoKt"
+                //baseName = "MacaoSuiDemoKt"
+                baseName = "shared"
+                xcf.add(this)
                 isStatic = true
             }
         }

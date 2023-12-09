@@ -14,10 +14,18 @@ let package = Package(
             url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.19.0"),
     ],
     targets: [
+        .binaryTarget(
+            name: "shared",
+            path: "../../shared/build/XCFrameworks/debug/shared.xcframework"
+        ),
         .target(
             name: "MacaoPackage",
             dependencies: [
-                .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
+                .byName(name: "shared"),
+                .product(
+                    name: "FirebaseAuth",
+                    package: "firebase-ios-sdk"
+                ),
             ]),
         .testTarget(
             name: "MacaoPackageTests",

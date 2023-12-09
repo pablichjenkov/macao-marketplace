@@ -1,13 +1,7 @@
-//
-//  IosRootComponetProviderSw.swift
-//  iOSDemoApp
-//
-//  Created by Pablo Valdes on 11/10/23.
-//
-
+/*
 import Foundation
 import shared
-/*
+
 class IosRootComponentProviderSw: MacaoSuiDemoKt.RootComponentProvider {
     
     var iosBridge: IosBridge
