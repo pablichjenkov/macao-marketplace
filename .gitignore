@@ -21,3 +21,4 @@ iOSDemoApp/iOSDemoApp.xcodeproj/*
 ### Mac OS ###
 .DS_Store
 /androidApp/google-services.json
+/auth-firebase-gitlive/
