@@ -1,14 +1,15 @@
-package com.macaosoftware.plugin
+package com.macaosoftware.sdui.app.plugin
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.macaosoftware.plugin.PermissionsHandler
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import dev.icerock.moko.permissions.DeniedAlwaysException
 import dev.icerock.moko.permissions.DeniedException
 import dev.icerock.moko.permissions.Permission
 import dev.icerock.moko.permissions.PermissionsController
 import kotlinx.coroutines.launch
 
-class PermissionsViewModel(private val permissionsController: PermissionsController) : ViewModel(),
+class PermissionViewModel(private val permissionsController: PermissionsController) : androidx.lifecycle.ViewModel(),
     PermissionsHandler {
 
     override fun onImagePermissionPressed() {

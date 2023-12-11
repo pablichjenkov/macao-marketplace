@@ -90,6 +90,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
             implementation(project(":notifications-macao"))
+            implementation(project(":permission-macao"))
+            implementation("dev.icerock.moko:permissions-compose:0.17.0")
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)

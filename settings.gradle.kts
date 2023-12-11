@@ -40,6 +40,7 @@ include(":auth-firebase-macao")
 include(":auth-firebase-gitlive")
 include(":auth-supabase")
 include(":notifications-macao")
+include(":stripe-macao")
 include(":permission-macao")
 
 //include(":component")

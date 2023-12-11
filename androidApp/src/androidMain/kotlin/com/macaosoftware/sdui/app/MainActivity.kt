@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 Box(modifier = Modifier.fillMaxSize()) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = "Example of Android Splash Screen"
+                        text = "Example of Android Splash Screen",
                     )
                 }
             }
