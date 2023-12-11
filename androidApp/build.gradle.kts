@@ -24,6 +24,10 @@ kotlin {
             // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+            implementation(project(":stripe-macao"))
+            // Stripe Android SDK
+            implementation("com.stripe:stripe-java:24.0.0")
+            implementation("com.stripe:stripe-android:20.35.1")
         }
     }
 }

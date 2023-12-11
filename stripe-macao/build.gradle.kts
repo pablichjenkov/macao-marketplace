@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose)
-    // alias(libs.plugins.kotlinx.serialization)
+     alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -36,8 +36,18 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            // ktor
+            implementation(libs.ktor.core)
+            implementation(libs.io.ktor.ktor.client.serialization)
+            implementation(libs.io.ktor.client.content.negotiation)
+            implementation(libs.io.ktor.ktor.client.serialization)
+            implementation(libs.ktor.client.logging)
+
             api(libs.permissions.compose)
             api(libs.moko.mvvm)
+            // Stripe Android SDK
+            implementation("com.stripe:stripe-java:24.0.0")
+            implementation("com.stripe:stripe-android:20.35.1")
         }
         iosMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)

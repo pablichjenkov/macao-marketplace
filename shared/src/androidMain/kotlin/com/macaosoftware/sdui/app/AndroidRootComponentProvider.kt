@@ -19,7 +19,7 @@ class AndroidRootComponentProvider(
 ) : RootComponentProvider {
 
     override suspend fun provideRootComponent(): Component {
-        delay(1000)
+        delay(1000000)
         val database = createDatabase(AndroidDriverFactory(context))
         val pluginsModule = module {
             single<Database> { database }
