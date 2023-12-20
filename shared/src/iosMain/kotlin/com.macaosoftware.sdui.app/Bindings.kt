@@ -6,10 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
+import com.macaosoftware.app.IosMacaoApplication
+import com.macaosoftware.app.MacaoApplicationState
 import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
 import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.IosBridge
-import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import platform.UIKit.UIViewController

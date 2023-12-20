@@ -20,8 +20,9 @@ import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
+import com.macaosoftware.app.JvmMacaoApplication
+import com.macaosoftware.app.MacaoApplicationState
 import com.macaosoftware.plugin.DesktopBridge
-import com.macaosoftware.plugin.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 import java.awt.SystemTray
 import java.awt.Toolkit
