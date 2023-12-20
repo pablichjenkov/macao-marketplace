@@ -1,11 +1,11 @@
 package com.macaosoftware.sdui.app
 
+import com.macaosoftware.app.RootComponentProvider
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.plugin.PlatformLifecyclePlugin
-import com.macaosoftware.plugin.RootComponentProvider
 import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory

@@ -46,7 +46,7 @@ class AmadeusHomeCoordinatorViewModel(
         println("${topBarComponent.instanceId()}::AmadeusHomeCoordinatorViewModel::onStart()")
         val shouldPushFirstChild: Boolean = if (currentComponent == null) {
             true
-        } else if (topBarComponent.isFirstComponentInStackPreviousCache) {
+        } else if (topBarComponent.backstackInfo.isTopComponentStaled) {
             currentComponent != homeComponent
         } else false
 

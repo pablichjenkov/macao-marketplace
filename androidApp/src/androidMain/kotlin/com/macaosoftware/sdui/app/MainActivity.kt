@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.macaosoftware.plugin.MacaoApplicationState
+import com.macaosoftware.app.AndroidMacaoApplication
+import com.macaosoftware.app.MacaoApplicationState
 import kotlinx.coroutines.Dispatchers
 
 class MainActivity : ComponentActivity() {

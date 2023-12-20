@@ -20,10 +20,10 @@
 		9496CE432B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
 		9496CE442B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
 		9496CE452B23EE3A009B8717 /* FirebaseAuthPluginSf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */; };
-		94B106352B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
-		94B106362B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
-		94B106372B2343CE0026F741 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94B106342B2343CE0026F741 /* GoogleService-Info.plist */; };
 		94D231652B230EB700AB1C3C /* MacaoPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 94D231642B230EB700AB1C3C /* MacaoPackage */; };
+		94D9FB7B2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
+		94D9FB7C2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
+		94D9FB7D2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,9 +57,9 @@
 		9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IosRootComponetProviderSw.swift; sourceTree = "<group>"; };
 		9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthPluginSf.swift; sourceTree = "<group>"; };
-		94B106342B2343CE0026F741 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		94B106382B2344BF0026F741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		94D231602B23075400AB1C3C /* MacaoPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MacaoPackage; sourceTree = "<group>"; };
+		94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,9 +113,9 @@
 		9401744F2A777BE400BA34D2 /* iOSDemoApp */ = {
 			isa = PBXGroup;
 			children = (
+				94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */,
 				9496CE3D2B23E78F009B8717 /* FirebaseAuthMacao */,
 				94B106382B2344BF0026F741 /* Info.plist */,
-				94B106342B2343CE0026F741 /* GoogleService-Info.plist */,
 				940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */,
 				9496CE3F2B23EE3A009B8717 /* FirebaseAuthPluginSf.swift */,
 				9496CE3E2B23EE3A009B8717 /* IosRootComponetProviderSw.swift */,
@@ -278,8 +278,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				940174592A777BE500BA34D2 /* Preview Assets.xcassets in Resources */,
+				94D9FB7B2B32A74C004396A2 /* GoogleService-Info.plist in Resources */,
 				940174552A777BE500BA34D2 /* Assets.xcassets in Resources */,
-				94B106352B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94B106362B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
+				94D9FB7C2B32A74C004396A2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94B106372B2343CE0026F741 /* GoogleService-Info.plist in Resources */,
+				94D9FB7D2B32A74C004396A2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

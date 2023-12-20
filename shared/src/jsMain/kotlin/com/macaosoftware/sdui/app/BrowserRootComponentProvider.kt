@@ -1,10 +1,10 @@
 package com.macaosoftware.sdui.app
 
+import com.macaosoftware.app.RootComponentProvider
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.AuthPluginEmpty
 import com.macaosoftware.plugin.JsBridge
-import com.macaosoftware.plugin.RootComponentProvider
 import com.macaosoftware.sdui.app.di.commonModule
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.macaosoftware.sdui.data.SduiRemoteService
