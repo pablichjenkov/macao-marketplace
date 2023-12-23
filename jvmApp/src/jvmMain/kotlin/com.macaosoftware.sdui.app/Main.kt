@@ -1,15 +1,10 @@
 package com.macaosoftware.sdui.app
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
@@ -22,7 +17,9 @@ import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.app.JvmMacaoApplication
 import com.macaosoftware.app.MacaoApplicationState
+import com.macaosoftware.app.WindowWithCustomTopDecoration
 import com.macaosoftware.plugin.DesktopBridge
+import com.macaosoftware.sdui.app.view.SplashScreen
 import kotlinx.coroutines.Dispatchers
 import java.awt.SystemTray
 import java.awt.Toolkit
@@ -138,15 +135,9 @@ fun main() {
                 windowState = windowState,
                 desktopBridge = desktopBridge,
                 onBackPress = { exitProcess(0) },
-                macaoApplicationState = macaoApplicationState
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "Example of JVM Splash Screen"
-                    )
-                }
-            }
+                macaoApplicationState = macaoApplicationState,
+                splashScreenContent = { SplashScreen() }
+            )
         }
     }
 }

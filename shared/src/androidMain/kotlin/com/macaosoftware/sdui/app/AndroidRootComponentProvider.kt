@@ -26,9 +26,6 @@ class AndroidRootComponentProvider(
             single<AuthPlugin> {
                 com.macaosoftware.plugin.auth.FirebaseAuthPlugin()
             }
-            /*single<AuthPlugin> { // Not working good
-                com.macaosoftware.plugin.auth.AuthPluginGitLive()
-            }*/
         }
         val koinRootContainer = koinApplication {
             printLogger()
@@ -36,7 +33,7 @@ class AndroidRootComponentProvider(
         }
         val sduiComponentFactory = SduiComponentFactory(koinRootContainer)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()
-        val rootComponentJson = SduiRemoteService.getRemoteRootComponent("123")
+        val rootComponentJson = SduiRemoteService.getRemoteRootComponent(ownerId = "123")
 
         return sduiComponentFactory.getComponentInstanceOf(
             componentJson = rootComponentJson ?: rootComponentJsonResilience
