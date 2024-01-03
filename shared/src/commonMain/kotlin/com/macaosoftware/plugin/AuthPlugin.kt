@@ -1,9 +1,8 @@
 package com.macaosoftware.plugin
 
-import com.macaosoftware.plugin.util.MacaoError
-import com.macaosoftware.plugin.util.MacaoResult
+import com.macaosoftware.sdui.app.util.MacaoError
+import com.macaosoftware.sdui.app.util.MacaoResult
 import kotlinx.serialization.Serializable
-
 
 interface AuthPlugin : MacaoPlugin {
     suspend fun initialize(): Boolean

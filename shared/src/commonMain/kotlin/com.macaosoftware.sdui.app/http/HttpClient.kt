@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.http
+package com.macaosoftware.sdui.app.http
 
 import io.ktor.client.*
 import io.ktor.client.plugins.*

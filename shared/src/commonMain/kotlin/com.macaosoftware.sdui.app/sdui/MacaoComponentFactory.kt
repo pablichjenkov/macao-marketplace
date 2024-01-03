@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui
+package com.macaosoftware.sdui.app.sdui
 
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.NavItem

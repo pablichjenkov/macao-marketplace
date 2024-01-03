@@ -37,7 +37,6 @@ include(":macao-sdk-mirror")
 
 // Auth Plugin implementations
 include(":auth-firebase-macao")
-include(":auth-firebase-gitlive")
 include(":auth-supabase")
 
 //include(":component")

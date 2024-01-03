@@ -1,6 +1,6 @@
 package com.macaosoftware.sdui.app.marketplace.navigator.drawer
 
-import com.macaosoftware.sdui.JsonObjectHandler
+import com.macaosoftware.sdui.app.sdui.JsonObjectHandler
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import kotlinx.serialization.json.JsonObject
 

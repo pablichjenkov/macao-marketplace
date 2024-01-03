@@ -1,10 +1,9 @@
 package com.macaosoftware.sdui.app
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.macaosoftware.app.IosMacaoApplication
-import com.macaosoftware.app.MacaoApplicationState
+import com.macaosoftware.app.MacaoKoinApplication
+import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
-import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.sdui.app.view.SplashScreen
 import kotlinx.coroutines.Dispatchers
@@ -17,12 +16,13 @@ fun buildDemoMacaoApplication(
     onBackPress: () -> Unit = {}
 ): UIViewController = ComposeUIViewController {
 
-    IosMacaoApplication(
+    MacaoKoinApplication(
         iosBridge = iosBridge,
         onBackPress = onBackPress,
-        macaoApplicationState = MacaoApplicationState(
-            Dispatchers.IO,
-            IosRootComponentProvider(iosBridge, firebaseAuth)
+        applicationState = MacaoKoinApplicationState(
+            dispatcher = Dispatchers.IO,
+            rootComponentKoinProvider = IosRootComponentProvider(iosBridge, firebaseAuth),
+            koinModuleInitializer = IosKoinModuleInitializer(iosBridge)
         ),
         splashScreenContent = { SplashScreen() }
     )

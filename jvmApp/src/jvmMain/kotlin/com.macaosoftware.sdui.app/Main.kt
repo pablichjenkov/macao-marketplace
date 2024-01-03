@@ -15,8 +15,8 @@ import androidx.compose.ui.window.Notification
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
-import com.macaosoftware.app.JvmMacaoApplication
-import com.macaosoftware.app.MacaoApplicationState
+import com.macaosoftware.app.MacaoKoinApplication
+import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.WindowWithCustomTopDecoration
 import com.macaosoftware.plugin.DesktopBridge
 import com.macaosoftware.sdui.app.view.SplashScreen
@@ -30,9 +30,11 @@ fun main() {
 
     val desktopBridge = DesktopBridge()
     val windowState = WindowState(size = DpSize(800.dp, 600.dp))
-    val macaoApplicationState = MacaoApplicationState(
-        Dispatchers.IO,
-        JvmRootComponentProvider()
+
+    val applicationState = MacaoKoinApplicationState(
+        dispatcher = Dispatchers.IO,
+        rootComponentKoinProvider = JvmRootComponentProvider(),
+        koinModuleInitializer = JvmKoinModuleInitializer()
     )
 
     singleWindowApplication(
@@ -45,7 +47,7 @@ fun main() {
             onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
             onCloseClick = { exitProcess(0) },
             onRefreshClick = {
-                macaoApplicationState.fetchRootComponent()
+                applicationState.start()
             },
             onBackClick = {
                 desktopBridge.backPressDispatcherPlugin.dispatchBackPressed()
@@ -131,11 +133,11 @@ fun main() {
                     }
                 }
             }
-            JvmMacaoApplication(
+            MacaoKoinApplication(
                 windowState = windowState,
                 desktopBridge = desktopBridge,
                 onBackPress = { exitProcess(0) },
-                macaoApplicationState = macaoApplicationState,
+                applicationState = applicationState,
                 splashScreenContent = { SplashScreen() }
             )
         }

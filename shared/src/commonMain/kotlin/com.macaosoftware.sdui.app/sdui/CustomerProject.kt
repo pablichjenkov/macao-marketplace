@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui
+package com.macaosoftware.sdui.app.sdui
 
 import kotlinx.serialization.Serializable
 

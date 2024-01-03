@@ -24,9 +24,9 @@ kotlin {
 
             // Macao Libs
             implementation(project(":shared"))
-            implementation(project(":macao-sdk-mirror"))
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+            implementation(libs.macao.sdk.di.koin)
         }
     }
 }

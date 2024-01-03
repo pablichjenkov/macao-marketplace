@@ -1,6 +1,6 @@
-package com.macaosoftware.plugin
+package com.macaosoftware.plugin.auth
 
-interface FirebaseAuth {
+interface FirebaseAuthAdapter {
 
     fun createUser(
         email: String,
