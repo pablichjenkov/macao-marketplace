@@ -1,6 +1,6 @@
-package com.macaosoftware.sdui
+package com.macaosoftware.sdui.app.sdui
 
-import com.macaosoftware.plugin.util.MacaoError
+import com.macaosoftware.sdui.app.util.MacaoError
 import kotlinx.serialization.Serializable
 
 @Serializable

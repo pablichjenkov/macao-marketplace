@@ -1,4 +1,4 @@
-package com.macaosoftware.plugin.util
+package com.macaosoftware.sdui.app.util
 
 import kotlinx.coroutines.flow.Flow
 

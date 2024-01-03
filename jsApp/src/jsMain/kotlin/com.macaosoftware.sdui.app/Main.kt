@@ -2,8 +2,8 @@ package com.macaosoftware.sdui.app
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
-import com.macaosoftware.app.BrowserMacaoApplication
-import com.macaosoftware.app.MacaoApplicationState
+import com.macaosoftware.app.MacaoKoinApplication
+import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.plugin.JsBridge
 import com.macaosoftware.sdui.app.view.SplashScreen
 import kotlinx.coroutines.Dispatchers
@@ -14,18 +14,19 @@ fun main() {
     onWasmReady {
         val jsBridge = JsBridge()
         val rootComponentProvider = BrowserRootComponentProvider(jsBridge)
-        val macaoApplicationState = MacaoApplicationState(
-            Dispatchers.Default,
-            rootComponentProvider
+        val applicationState = MacaoKoinApplicationState(
+            dispatcher = Dispatchers.Default,
+            rootComponentKoinProvider = rootComponentProvider,
+            koinModuleInitializer = BrowserKoinModuleInitializer()
         )
 
         CanvasBasedWindow("Macao SDUI Demo") {
-            BrowserMacaoApplication(
+            MacaoKoinApplication(
                 jsBridge = jsBridge,
                 onBackPress = {
                     println("Back press dispatched in root node")
                 },
-                macaoApplicationState = macaoApplicationState,
+                applicationState = applicationState,
                 splashScreenContent = { SplashScreen() }
             )
         }

@@ -17,11 +17,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -36,7 +34,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.MacaoUser
-import com.macaosoftware.plugin.util.MacaoResult
+import com.macaosoftware.sdui.app.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen

@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.error
+package com.macaosoftware.sdui.app.sdui.error
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

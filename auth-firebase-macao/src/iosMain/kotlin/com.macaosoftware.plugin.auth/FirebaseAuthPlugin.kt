@@ -1,7 +1,6 @@
 package com.macaosoftware.plugin.auth
 
 import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.FirebaseAuth
 import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.LoginRequestForEmailWithLink
 import com.macaosoftware.plugin.LoginRequestForLink
@@ -15,7 +14,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAuthPlugin(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuthAdapter: FirebaseAuthAdapter
 ) : AuthPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
@@ -27,7 +26,7 @@ class FirebaseAuthPlugin(
     override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAuth.createUser(signupRequest.email, signupRequest.password) {
+            firebaseAuthAdapter.createUser(signupRequest.email, signupRequest.password) {
                     continuation.resume(MacaoResult.Success(it))
             }
         }
@@ -36,7 +35,7 @@ class FirebaseAuthPlugin(
     override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAuth.createUser(loginRequest.email, loginRequest.password) {
+            firebaseAuthAdapter.createUser(loginRequest.email, loginRequest.password) {
                 continuation.resume(MacaoResult.Success(it))
             }
         }

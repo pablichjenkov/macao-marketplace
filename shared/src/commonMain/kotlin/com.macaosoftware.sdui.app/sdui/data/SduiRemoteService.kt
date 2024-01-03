@@ -1,7 +1,7 @@
 package com.macaosoftware.sdui.data
 
-import com.macaosoftware.sdui.MacaoApiError
-import com.macaosoftware.sdui.http.httpClient
+import com.macaosoftware.sdui.app.http.httpClient
+import com.macaosoftware.sdui.app.sdui.MacaoApiError
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

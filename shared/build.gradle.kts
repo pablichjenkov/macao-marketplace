@@ -80,11 +80,12 @@ kotlin {
             // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
-            implementation(project(":macao-sdk-mirror"))
+            implementation(libs.macao.sdk.di.koin)
+            //implementation(project(":macao-sdk-mirror"))
 
             // Auth Plugins
             // implementation(project(":auth-firebase-gitlive")) // Not working good
-            implementation(project(":auth-firebase-macao"))
+            // implementation(project(":auth-firebase-macao"))
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

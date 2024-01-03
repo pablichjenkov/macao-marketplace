@@ -10,7 +10,6 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(project(":shared"))
-            implementation(project(":macao-sdk-mirror"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.ui)
@@ -24,6 +23,7 @@ kotlin {
             // Macao Libs
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
+            implementation(libs.macao.sdk.di.koin)
         }
     }
 }
