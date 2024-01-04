@@ -2,9 +2,11 @@
 import shared
 import FirebaseAuth
 
-class FirebaseAuthPluginSf : Macao_sdk_mirrorFirebaseAuth {
+public class FirebaseAuthSwiftAdapterImpl : Auth_firebase_macaoFirebaseAuthSwiftAdapter {
     
-    func createUser(email: String, password: String, onResult: @escaping (Macao_sdk_mirrorMacaoUser) -> Void) {
+    public init(){}
+    
+    public func createUser(email: String, password: String, onResult: @escaping (Macao_sdk_mirrorMacaoUser) -> Void) {
     
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
           
@@ -25,7 +27,7 @@ class FirebaseAuthPluginSf : Macao_sdk_mirrorFirebaseAuth {
         
     }
     
-    func signIn(email: String, password: String, onResult: @escaping (KotlinBoolean) -> Void) {
+    public func signIn(email: String, password: String, onResult: @escaping (KotlinBoolean) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
           
             if (error == nil) {
@@ -41,4 +43,3 @@ class FirebaseAuthPluginSf : Macao_sdk_mirrorFirebaseAuth {
     }
 
 }
-

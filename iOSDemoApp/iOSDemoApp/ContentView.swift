@@ -21,7 +21,6 @@ struct ComposeView : UIViewControllerRepresentable {
 
         let mainViewController = BindingsKt.buildDemoMacaoApplication(
             iosBridge: iosBridge,
-            firebaseAuth: FirebaseAuthPluginSf(),
             onBackPress: {
                 exit(0)
             }

@@ -1,4 +1,4 @@
-package com.macaosoftware.sdui.app.util
+package com.macaosoftware.app.util
 
 sealed class MacaoResult<out T> {
     class Success<T>(val value: T) : MacaoResult<T>()

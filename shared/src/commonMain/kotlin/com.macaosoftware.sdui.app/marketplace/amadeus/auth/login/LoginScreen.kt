@@ -34,7 +34,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.macaosoftware.plugin.LoginRequest
 import com.macaosoftware.plugin.MacaoUser
-import com.macaosoftware.sdui.app.util.MacaoResult
+import com.macaosoftware.app.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen

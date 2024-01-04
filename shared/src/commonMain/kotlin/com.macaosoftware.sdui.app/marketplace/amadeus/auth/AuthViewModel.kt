@@ -11,7 +11,7 @@ import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupRequest
 import com.macaosoftware.plugin.User
 import com.macaosoftware.plugin.UserData
-import com.macaosoftware.sdui.app.util.MacaoResult
+import com.macaosoftware.app.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

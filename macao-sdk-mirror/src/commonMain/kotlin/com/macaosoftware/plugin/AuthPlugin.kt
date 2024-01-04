@@ -1,7 +1,7 @@
 package com.macaosoftware.plugin
 
-import com.macaosoftware.sdui.app.util.MacaoError
-import com.macaosoftware.sdui.app.util.MacaoResult
+import com.macaosoftware.app.util.MacaoError
+import com.macaosoftware.app.util.MacaoResult
 import kotlinx.serialization.Serializable
 
 interface AuthPlugin : MacaoPlugin {
@@ -133,7 +133,7 @@ class AuthPluginEmpty : AuthPlugin {
         println(" AuthPluginEmpty::logoutUser() has been called")
         return MacaoResult.Success(Unit)
     }
-    
+
 }
 
 @Serializable
@@ -161,10 +161,10 @@ data class UserData(
     val password: String? = "",
     val photoUrl: String? = "",
     val country: String? = "",
-    val phoneNo: String? ="",
-    val  facebookLink: String? ="",
-    val linkedIn: String?= "",
-    val github: String?= ""
+    val phoneNo: String? = "",
+    val facebookLink: String? = "",
+    val linkedIn: String? = "",
+    val github: String? = ""
 )
 
 data class SignupRequest(

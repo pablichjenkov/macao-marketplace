@@ -55,7 +55,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.plugin.User
-import com.macaosoftware.sdui.app.util.MacaoResult
+import com.macaosoftware.app.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
