@@ -4,6 +4,7 @@ import android.content.Context
 import com.macaosoftware.app.KoinModuleInitializer
 import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.AuthPluginEmpty
+import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
@@ -23,8 +24,7 @@ class AndroidKoinModuleInitializer(
         return module {
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
-            // single<AuthPlugin> { FirebaseAuthPlugin(firebaseAuth) }
-            single<AuthPlugin> { AuthPluginEmpty() }
+            single<AuthPlugin> { FirebaseAuthPlugin() }
         }
     }
 }

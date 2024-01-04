@@ -1,6 +1,8 @@
 package com.macaosoftware.plugin.auth
 
-interface FirebaseAuthAdapter {
+import com.macaosoftware.plugin.MacaoUser
+
+interface FirebaseAuthSwiftAdapter {
 
     fun createUser(
         email: String,

@@ -7,7 +7,9 @@ import FirebaseAuth
 @main
 struct iOSDemoAppApp: App {
 
-    let iosBridge = BindingsKt.createPlatformBridge()
+    let iosBridge = BindingsKt.createPlatformBridge(
+        firebaseAuthSwiftAdapter: FirebaseAuthSwiftAdapterImpl()
+    )
     
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(MacaoAppDelegate.self) var delegate
