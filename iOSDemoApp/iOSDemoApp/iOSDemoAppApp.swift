@@ -11,12 +11,14 @@ struct iOSDemoAppApp: App {
         firebaseAuthSwiftAdapter: FirebaseAuthSwiftAdapterImpl()
     )
     
+    let platformLifecyclePlugin: AppLifecycleDispatcher
+    
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(MacaoAppDelegate.self) var delegate
        
     init() {
-        //FirebaseApp.configure()
-        let number : Int = TestVisibility().ty
+        // FirebaseApp.configure()
+        platformLifecyclePlugin = iosBridge.platformLifecyclePlugin
     }
        
        var body: some Scene {
@@ -29,7 +31,7 @@ struct iOSDemoAppApp: App {
                        }
                        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
                            print("application_didBecomeActive")
-                           iosBridge.platformLifecyclePlugin.dispatchAppLifecycleEvent(
+                           platformLifecyclePlugin.dispatchAppLifecycleEvent(
                                appLifecycleEvent: .start
                            )
                        }
@@ -37,7 +39,7 @@ struct iOSDemoAppApp: App {
                            print("application_willResignActive")
                        }.onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                            print("application_didEnterBackground")
-                           iosBridge.platformLifecyclePlugin.dispatchAppLifecycleEvent(
+                           platformLifecyclePlugin.dispatchAppLifecycleEvent(
                                appLifecycleEvent: .stop
                            )
                        }
