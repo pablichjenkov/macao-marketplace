@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,7 @@ import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 class SeeScreen(
     private val hotelListing: List<HotelListing>
 ) : Screen {
-    @OptIn(ExperimentalMaterial3Api::class)
+
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current

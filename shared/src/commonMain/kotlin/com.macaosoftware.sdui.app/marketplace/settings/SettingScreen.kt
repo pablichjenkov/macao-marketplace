@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -54,7 +53,7 @@ import com.macaosoftware.sdui.app.marketplace.settings.sync.SyncMode
 import com.macaosoftware.sdui.app.marketplace.settings.theme.DarkMode
 
 class SettingScreen() : Screen {
-    @OptIn(ExperimentalMaterial3Api::class)
+
     @Composable
     override fun Content() {
         var darkMode by remember { mutableStateOf(false) }

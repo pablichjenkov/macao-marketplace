@@ -18,11 +18,10 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.headers
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
 object KtorClientApi {
-    @OptIn(ExperimentalSerializationApi::class)
+
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json {

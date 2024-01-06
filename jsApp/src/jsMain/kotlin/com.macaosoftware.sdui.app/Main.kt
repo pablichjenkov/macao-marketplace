@@ -1,6 +1,5 @@
 package com.macaosoftware.sdui.app
 
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
@@ -9,7 +8,6 @@ import com.macaosoftware.sdui.app.view.SplashScreen
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skiko.wasm.onWasmReady
 
-@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
         val jsBridge = JsBridge()

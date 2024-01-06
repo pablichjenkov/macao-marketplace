@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -35,12 +34,11 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 class SignUpScreen(
     private val authViewModel: AuthViewModel,
 ) : Screen {
-    @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
+
     @Composable
     override fun Content() {
         var username by remember { mutableStateOf("") }
