@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 val HotelDemoComponentView: @Composable StateComponent<HotelDemoViewModel>.(
@@ -38,7 +37,6 @@ val HotelDemoComponentView: @Composable StateComponent<HotelDemoViewModel>.(
     HotelDemoView(modifier, viewModel)
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalResourceApi::class)
 @Composable
 fun HotelDemoView(
     modifier: Modifier,

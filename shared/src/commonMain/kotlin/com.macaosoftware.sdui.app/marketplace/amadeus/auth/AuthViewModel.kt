@@ -9,7 +9,6 @@ import com.macaosoftware.plugin.LoginRequestForEmailWithLink
 import com.macaosoftware.plugin.LoginRequestForLink
 import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.plugin.SignupRequest
-import com.macaosoftware.plugin.User
 import com.macaosoftware.plugin.UserData
 import com.macaosoftware.app.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
@@ -163,7 +162,7 @@ class AuthViewModel(
         println("Data Store Successfully: $user ")
     }
 
-    fun updateData(currentUser: User, updatedUser: User) = viewModelScope.launch {
+    fun updateData(currentUser: MacaoUser, updatedUser: MacaoUser) = viewModelScope.launch {
         //val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
         //val userRef = database.reference().child("Users").child(currentUser.uid)
         //userRef.setValue(updatedUser)

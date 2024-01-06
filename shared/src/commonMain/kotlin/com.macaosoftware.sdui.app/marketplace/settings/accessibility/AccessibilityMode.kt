@@ -17,7 +17,6 @@ import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.WheelchairPickup
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +38,6 @@ class AccessibilityMode() : Screen {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccessibilityModeContent() {
     val navigator = LocalNavigator.current
@@ -111,8 +109,6 @@ fun AccessibilityModeContent() {
     )
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccessibilitySettingItem(
     icon: ImageVector,

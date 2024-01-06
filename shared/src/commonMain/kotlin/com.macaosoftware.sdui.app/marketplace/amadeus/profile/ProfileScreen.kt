@@ -54,8 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.plugin.User
 import com.macaosoftware.app.util.MacaoResult
+import com.macaosoftware.plugin.MacaoUser
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
@@ -73,7 +73,7 @@ class ProfileScreen(
         val usersData = authViewModel?.userData?.value
         val coroutineScope = rememberCoroutineScope()
         val currentUser =
-            User("email@email.com", "123", "username", "305-213-2345")//firebaseUser.currentUser
+            MacaoUser("email@email.com",)//firebaseUser.currentUser
         val navigator = LocalNavigator.current
         val uriHandler = LocalUriHandler.current
         var editProfile by remember { mutableStateOf(false) }

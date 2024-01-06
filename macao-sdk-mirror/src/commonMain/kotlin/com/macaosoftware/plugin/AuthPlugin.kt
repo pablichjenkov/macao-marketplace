@@ -3,6 +3,7 @@ package com.macaosoftware.plugin
 import com.macaosoftware.app.util.MacaoError
 import com.macaosoftware.app.util.MacaoResult
 import kotlinx.serialization.Serializable
+import kotlin.native.ObjCName
 
 interface AuthPlugin : MacaoPlugin {
     suspend fun initialize(): Boolean
@@ -146,14 +147,6 @@ data class ProviderData(
 )
 
 @Serializable
-data class User(
-    val email: String,
-    val password: String,
-    val username: String,
-    val phoneNo: String,
-)
-
-@Serializable
 data class UserData(
     val uid: String? = "",
     val email: String? = "",
@@ -190,6 +183,7 @@ data class LoginRequestForEmailWithLink(
     val onResult: (MacaoResult<MacaoUser>) -> Unit
 )
 
+@ObjCName(name = "MacaoUser", exact = true)
 data class MacaoUser(
     val email: String
 )

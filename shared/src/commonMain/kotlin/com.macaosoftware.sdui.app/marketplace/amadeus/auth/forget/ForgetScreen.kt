@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
@@ -33,13 +32,10 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
 class ForgetScreen(
     private val authViewModel: AuthViewModel? = null
 ) : Screen {
-    @OptIn(ExperimentalResourceApi::class, ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val coroutineScope = rememberCoroutineScope()

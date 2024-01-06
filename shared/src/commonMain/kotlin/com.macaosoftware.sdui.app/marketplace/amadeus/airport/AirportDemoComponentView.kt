@@ -33,7 +33,6 @@ val AirportDemoComponentView: @Composable StateComponent<AirportDemoViewModel>.(
     AirportDemoView(modifier, viewModel)
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AirportDemoView(
     modifier: Modifier,
