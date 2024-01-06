@@ -1,21 +1,13 @@
-package com.macaosoftware.plugin.auth
+package com.macaosoftware.plugin.account
 
-import com.macaosoftware.app.util.MacaoResult
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.LoginRequest
-import com.macaosoftware.plugin.LoginRequestForEmailWithLink
-import com.macaosoftware.plugin.LoginRequestForLink
-import com.macaosoftware.plugin.MacaoUser
-import com.macaosoftware.plugin.ProviderData
-import com.macaosoftware.plugin.SignupError
-import com.macaosoftware.plugin.SignupRequest
-import com.macaosoftware.plugin.UserData
+import com.macaosoftware.util.MacaoResult
+import com.macaosoftware.util.ifNotNull
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class FirebaseAuthPlugin(
-    private val firebaseAuthSwiftAdapter: FirebaseAuthSwiftAdapter
-) : AuthPlugin {
+class FirebaseAccountPlugin(
+    private val firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapter
+) : AccountPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
 
@@ -23,38 +15,67 @@ class FirebaseAuthPlugin(
         return true
     }
 
-    override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
+    override suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAuthSwiftAdapter.createUser(signupRequest.email, signupRequest.password) {
-                continuation.resume(MacaoResult.Success(it))
+            firebaseAccountSwiftAdapter.createUserWithEmailAndPassword(
+                signUpRequest.email, signUpRequest.password
+            ) { user, error ->
+                println("FirebaseAccountPlugin::createUserWithEmailAndPassword -> User = $user and Error = $error")
+                error.ifNotNull {
+                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
+                    return@createUserWithEmailAndPassword
+                }
+                user.ifNotNull {
+                    continuation.resume(MacaoResult.Success(it))
+                }
             }
         }
     }
 
-    override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
+    override suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAuthSwiftAdapter.createUser(loginRequest.email, loginRequest.password) {
-                continuation.resume(MacaoResult.Success(it))
+            firebaseAccountSwiftAdapter.signInWithEmailAndPassword(
+                signInRequest.email, signInRequest.password
+            ) { user, error ->
+                println("FirebaseAccountPlugin::signInWithEmailAndPassword -> User = $user and Error = $error")
+                user.ifNotNull {
+                    continuation.resume(MacaoResult.Success(it))
+                    return@signInWithEmailAndPassword
+                }
+                error.ifNotNull {
+                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
+                }
             }
         }
     }
 
-    override suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink) {
-        println("IosFirebase_loginEmailAndLink")
+    override suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser> {
+
+        return suspendCoroutine { continuation ->
+            firebaseAccountSwiftAdapter.signInWithEmailLink(
+                signInRequest.email, signInRequest.magicLink
+            ) { user, error ->
+                println("FirebaseAccountPlugin::signInWithEmailLink -> User = $user and Error = $error")
+                user.ifNotNull {
+                    continuation.resume(MacaoResult.Success(it))
+                    return@signInWithEmailLink
+                }
+                error.ifNotNull {
+                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
+                }
+            }
+        }
     }
 
-    override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
-        println("IosFirebase_sendEmailLink")
+    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit> {
+        println("IosFirebase_sendSignInLinkToEmail")
+        return MacaoResult.Success(Unit)
     }
 
-    override suspend fun checkCurrentUser(): MacaoResult<MacaoUser> {
-        return MacaoResult.Error(SignupError(errorDescription = ""))
-    }
-
-    override suspend fun getUserProfile(): MacaoResult<MacaoUser> {
-        println("IosFirebase_getUserProfile")
+    override suspend fun getCurrentUser(): MacaoResult<MacaoUser> {
+        println("IosFirebase_getCurrentUser")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
@@ -119,7 +140,7 @@ class FirebaseAuthPlugin(
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun logoutUser(): MacaoResult<Unit> {
+    override suspend fun signOut(): MacaoResult<Unit> {
         println("IosFirebase_logoutUser")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }

@@ -3,21 +3,21 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.auth
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.LoginRequest
-import com.macaosoftware.plugin.LoginRequestForEmailWithLink
-import com.macaosoftware.plugin.LoginRequestForLink
-import com.macaosoftware.plugin.MacaoUser
-import com.macaosoftware.plugin.SignupRequest
-import com.macaosoftware.plugin.UserData
-import com.macaosoftware.app.util.MacaoResult
+import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.plugin.account.SignInRequest
+import com.macaosoftware.plugin.account.EmailLinkData
+import com.macaosoftware.plugin.account.MacaoUser
+import com.macaosoftware.plugin.account.SignInRequestForEmailLink
+import com.macaosoftware.plugin.account.SignUpRequest
+import com.macaosoftware.plugin.account.UserData
+import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authComponent: StateComponent<AuthViewModel>,
-    val authPlugin: AuthPlugin
+    val accountPlugin: AccountPlugin
 ) : ComponentViewModel() {
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)
@@ -45,25 +45,17 @@ class AuthViewModel(
         link: String
     ) = viewModelScope.launch {
 
-        authPlugin.loginEmailAndLink(
-            LoginRequestForEmailWithLink(
-                email, link
-            ) { result ->
-                handleLoginResult(result)
-            }
+        accountPlugin.signInWithEmailLink(
+            SignInRequestForEmailLink(email, link)
         )
     }
 
     fun sendEmailLink(email: String) = viewModelScope.launch {
-        authPlugin.sendEmailLink(
-            LoginRequestForLink(email) { result ->
-                handleLoginResult(result)
-            }
-        )
+        accountPlugin.sendSignInLinkToEmail(EmailLinkData(email))
     }
 
     fun login(email: String, password: String) = viewModelScope.launch {
-        val result = authPlugin.login(LoginRequest(email, password))
+        val result = accountPlugin.signInWithEmailAndPassword(SignInRequest(email, password))
         handleLoginResult(result)
     }
 
@@ -73,12 +65,14 @@ class AuthViewModel(
         username: String,
         phoneNo: String
     ) = viewModelScope.launch {
-        val result = authPlugin.signup(SignupRequest(email, password, username, phoneNo))
+        val result = accountPlugin.createUserWithEmailAndPassword(
+            SignUpRequest(email, password, username, phoneNo)
+        )
         handleSignupResult(result)
     }
 
     fun checkAndFetchUserData() = viewModelScope.launch {
-        val result = authPlugin.checkAndFetchUserData()
+        val result = accountPlugin.checkAndFetchUserData()
         when (result) {
             is MacaoResult.Success -> {
                 println("User Data: $result")
@@ -115,7 +109,7 @@ class AuthViewModel(
 
     fun fetchUserDataAndHandleResult() {
         viewModelScope.launch {
-            val userDataResult = authPlugin.fetchUserData()
+            val userDataResult = accountPlugin.fetchUserData()
 
             when (userDataResult) {
                 is MacaoResult.Success -> {

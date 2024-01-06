@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "AuthSupabase"
+            baseName = "MacaoAccountSupabase"
             isStatic = true
         }
     }
@@ -32,15 +32,16 @@ kotlin {
             // Macao Libs
             implementation(project(":macao-sdk-mirror"))
             implementation(libs.component.toolkit)
+
+            // Supabase
+            implementation("io.github.jan-tennert.supabase:gotrue-kt:2.0.4")
+            // implementation("io.github.jan-tennert.supabase:compose-auth:2.0.4")
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
-
-            // Supabase
-            // ...
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)

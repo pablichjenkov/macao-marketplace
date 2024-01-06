@@ -5,8 +5,9 @@ import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.plugin.DefaultPlatformLifecyclePlugin
 import com.macaosoftware.plugin.IosBridge
-import com.macaosoftware.plugin.auth.FirebaseAuthSwiftAdapter
-import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
+import com.macaosoftware.plugin.account.FirebaseAccountPlugin
+import com.macaosoftware.plugin.account.FirebaseAccountSwiftAdapter
+import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.macaosoftware.sdui.app.view.SplashScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -29,9 +30,15 @@ fun buildDemoMacaoApplication(
     )
 }
 
-fun createPlatformBridge(firebaseAuthSwiftAdapter: FirebaseAuthSwiftAdapter): IosBridge {
+fun createPlatformBridge(
+    firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapter
+): IosBridge {
+
+    val accountPlugin = SupabaseAccountPlugin()
+    // val accountPlugin = FirebaseAccountPlugin(firebaseAccountSwiftAdapter)
+
     return IosBridge(
         platformLifecyclePlugin = DefaultPlatformLifecyclePlugin(),
-        authPlugin = FirebaseAuthPlugin(firebaseAuthSwiftAdapter)
+        accountPlugin = accountPlugin
     )
 }

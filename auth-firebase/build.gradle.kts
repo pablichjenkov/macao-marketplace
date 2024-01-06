@@ -14,7 +14,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "AuthFirebaseMacao"
+            baseName = "MacaoAccountFirebase"
             isStatic = true
         }
     }
@@ -38,6 +38,9 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+
+            // Also add the dependency for the Google Play services library and specify its version
+            implementation("com.google.android.gms:play-services-auth:20.7.0")
 
             // Firebase
             implementation(platform("com.google.firebase:firebase-bom:32.6.0")) // This line to add the firebase bom

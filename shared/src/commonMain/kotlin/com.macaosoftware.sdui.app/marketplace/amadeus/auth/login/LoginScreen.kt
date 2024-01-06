@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import com.macaosoftware.plugin.LoginRequest
-import com.macaosoftware.plugin.MacaoUser
-import com.macaosoftware.app.util.MacaoResult
+import com.macaosoftware.plugin.account.SignInRequest
+import com.macaosoftware.plugin.account.MacaoUser
+import com.macaosoftware.util.MacaoResult
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget.ForgetScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignUpScreen
@@ -111,11 +111,11 @@ class LoginScreen(
                         loadingState = true
                         keyboardController?.hide()
 
-                        val loginRequest = LoginRequest(
+                        val signInRequest = SignInRequest(
                             email = emai,
                             password = password
                         )
-                        authViewModel.login(loginRequest.email, loginRequest.password)
+                        authViewModel.login(signInRequest.email, signInRequest.password)
                     },
                     modifier = Modifier.padding(8.dp).fillMaxWidth()
                 ) {

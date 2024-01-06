@@ -8,7 +8,7 @@ import FirebaseAuth
 struct iOSDemoAppApp: App {
 
     let iosBridge = BindingsKt.createPlatformBridge(
-        firebaseAuthSwiftAdapter: FirebaseAuthSwiftAdapterImpl()
+        firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapterImpl()
     )
     
     let platformLifecyclePlugin: AppLifecycleDispatcher

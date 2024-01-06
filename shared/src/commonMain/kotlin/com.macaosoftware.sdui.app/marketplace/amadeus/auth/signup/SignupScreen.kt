@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.plugin.SignupRequest
+import com.macaosoftware.plugin.account.SignUpRequest
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import kotlinx.coroutines.delay
@@ -155,7 +155,7 @@ class SignUpScreen(
                             coroutineScope.launch {
                                 loadingState = true
                                 keyboardController?.hide()
-                                val signupRequest = SignupRequest(
+                                val signupRequest = SignUpRequest(
                                     email = email,
                                     password = password,
                                     username = username,

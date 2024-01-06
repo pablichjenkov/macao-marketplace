@@ -2,12 +2,12 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.auth.login
 
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.LoginRequest
+import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.plugin.account.SignInRequest
 
 class LoginViewModel(
     private val loginComponent: StateComponent<LoginViewModel>,
-    private val authPlugin: AuthPlugin
+    private val accountPlugin: AccountPlugin
 ): ComponentViewModel() {
 
     override fun onAttach() {
@@ -27,8 +27,8 @@ class LoginViewModel(
     }
 
    suspend fun login() {
-        authPlugin.login(
-            LoginRequest("am.pablo.vc@gmail.com", "123")
+        accountPlugin.signInWithEmailAndPassword(
+            SignInRequest("am.pablo.vc@gmail.com", "123")
         )
     }
 }

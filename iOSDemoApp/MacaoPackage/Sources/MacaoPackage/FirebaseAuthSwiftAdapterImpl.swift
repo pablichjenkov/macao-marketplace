@@ -2,42 +2,60 @@
 import shared
 import FirebaseAuth
 
-public class FirebaseAuthSwiftAdapterImpl : Auth_firebase_macaoFirebaseAuthSwiftAdapter {
+public class FirebaseAccountSwiftAdapterImpl : MacaoFirebaseAccountSwiftAdapter {
     
     public init(){}
     
-    public func createUser(email: String, password: String, onResult: @escaping (Macao_sdk_mirrorMacaoUser) -> Void) {
+    public func createUserWithEmailAndPassword(email: String, password: String, onResult: @escaping (MacaoUser?, String?) -> Void) {
     
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
           
+            print("createUserWithEmailAndPassword -> AuthResult = \(authResult), Error = \(error)")
+            
             if (error == nil) {
-                onResult(
-                    Macao_sdk_mirrorMacaoUser(
-                        email: "FromIosEmail"
-                    )
-                )
+                onResult(nil, error?.localizedDescription)
                 return
             }
+            
             onResult(
-                Macao_sdk_mirrorMacaoUser(
-                    email: "FromIosEmail_error"
-                )
+                MacaoUser(email: authResult?.user.email ?? ""),
+                nil
             )
         }
         
     }
     
-    public func signIn(email: String, password: String, onResult: @escaping (KotlinBoolean) -> Void) {
+    public func signInWithEmailAndPassword(email: String, password: String, onResult: @escaping (MacaoUser?, String?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
           
-            if (error == nil) {
-                onResult(
-                    true
-                )
+            print("signInWithEmailAndPassword -> AuthResult = \(authResult), Error = \(error)")
+            
+            guard let authResult = authResult else {
+                onResult(nil, error?.localizedDescription)
                 return
             }
+            
             onResult(
-                false
+                MacaoUser(email: authResult.user.email ?? ""),
+                nil
+            )
+        }
+    }
+    
+    public func signInWithEmailLink(email: String, magicLink: String, onResult: @escaping (MacaoUser?, String?) -> Void) {
+        
+        Auth.auth().signIn(withEmail: email, link: magicLink) { authResult, error in
+          
+            print("signInWithEmailLink -> AuthResult = \(authResult), Error = \(error)")
+            
+            if (error == nil) {
+                onResult(nil, error?.localizedDescription)
+                return
+            }
+            
+            onResult(
+                MacaoUser(email: authResult?.user.email ?? ""),
+                nil
             )
         }
     }
