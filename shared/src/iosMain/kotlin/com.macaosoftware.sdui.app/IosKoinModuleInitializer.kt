@@ -1,10 +1,9 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.app.KoinModuleInitializer
-import com.macaosoftware.plugin.AuthPlugin
 import com.macaosoftware.plugin.IosBridge
 import com.macaosoftware.plugin.PlatformLifecyclePlugin
-import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
+import com.macaosoftware.plugin.account.AccountPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
@@ -26,7 +25,7 @@ class IosKoinModuleInitializer(
 
             single<Database> { database }
             single<PlatformLifecyclePlugin> { iosBridge.platformLifecyclePlugin }
-            single<AuthPlugin> { iosBridge.authPlugin }
+            single<AccountPlugin> { iosBridge.accountPlugin }
         }
     }
 }

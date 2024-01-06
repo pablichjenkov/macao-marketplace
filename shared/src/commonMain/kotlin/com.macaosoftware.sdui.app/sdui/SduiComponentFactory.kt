@@ -25,7 +25,7 @@ import com.macaosoftware.component.panel.PanelComponentDefaults
 import com.macaosoftware.component.topbar.TopBarComponent
 import com.macaosoftware.component.topbar.TopBarComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
-import com.macaosoftware.plugin.AuthPlugin
+import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
@@ -80,8 +80,6 @@ import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.koin.core.Koin
-import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -389,10 +387,10 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.Amadeus.Auth.Login -> {
 
-                val authPlugin: AuthPlugin = get()
+                val accountPlugin: AccountPlugin = get()
 
                 StateComponent<AuthViewModel>(
-                    viewModelFactory = AuthViewModelFactory(authPlugin),
+                    viewModelFactory = AuthViewModelFactory(accountPlugin),
                     content = AuthComponentView
                 )
             }

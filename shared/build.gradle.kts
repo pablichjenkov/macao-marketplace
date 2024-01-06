@@ -84,7 +84,8 @@ kotlin {
             implementation(project(":macao-sdk-mirror"))
 
             // Macao Plugins
-            implementation(project(":auth-firebase-macao"))
+            implementation(project(":auth-firebase"))
+            implementation(project(":auth-supabase"))
         }
         commonTest.dependencies {
             implementation(kotlin("test"))

@@ -2,9 +2,9 @@ package com.macaosoftware.sdui.app
 
 import android.content.Context
 import com.macaosoftware.app.KoinModuleInitializer
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.AuthPluginEmpty
-import com.macaosoftware.plugin.auth.FirebaseAuthPlugin
+import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.plugin.account.FirebaseAccountPlugin
+import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
@@ -24,7 +24,8 @@ class AndroidKoinModuleInitializer(
         return module {
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
-            single<AuthPlugin> { FirebaseAuthPlugin() }
+            // single<AccountPlugin> { FirebaseAccountPlugin() }
+            single<AccountPlugin> { SupabaseAccountPlugin() }
         }
     }
 }

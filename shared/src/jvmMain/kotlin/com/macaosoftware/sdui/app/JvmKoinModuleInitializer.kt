@@ -1,8 +1,8 @@
 package com.macaosoftware.sdui.app
 
 import com.macaosoftware.app.KoinModuleInitializer
-import com.macaosoftware.plugin.AuthPlugin
-import com.macaosoftware.plugin.AuthPluginEmpty
+import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
@@ -21,7 +21,7 @@ class JvmKoinModuleInitializer : KoinModuleInitializer {
             // TODO: Move this to a common module initializer
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
-            single<AuthPlugin> { AuthPluginEmpty() }
+            single<AccountPlugin> { SupabaseAccountPlugin() }
         }
     }
 }

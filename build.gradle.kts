@@ -16,12 +16,6 @@ plugins {
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        mavenLocal()
-    }
     afterEvaluate {
         tasks.withType<KotlinCompilationTask<*>>().configureEach {
             compilerOptions {

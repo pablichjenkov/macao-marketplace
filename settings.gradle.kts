@@ -1,3 +1,17 @@
+rootProject.name = "macao-sdui-app"
+include(":shared")
+include(":androidApp")
+include(":jsApp")
+include(":jvmApp")
+include(":macao-sdk-mirror")
+
+// Auth Plugin implementations
+include(":auth-firebase")
+include(":auth-supabase")
+
+//include(":component")
+//project(":component").projectDir = File("../component/component")
+
 pluginManagement {
     repositories {
         google()
@@ -6,7 +20,6 @@ pluginManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         mavenLocal()
     }
-
     plugins {
         val kotlinVersion = extra["kotlin.version"] as String
         val agpVersion = extra["agp.version"] as String
@@ -26,19 +39,13 @@ pluginManagement {
         // Realm
         id("io.realm.kotlin") version "1.11.1"
     }
-
 }
 
-include(":shared")
-include(":androidApp")
-include(":jsApp")
-include(":jvmApp")
-include(":macao-sdk-mirror")
-
-// Auth Plugin implementations
-include(":auth-firebase-macao")
-include(":auth-supabase")
-
-//include(":component")
-//project(":component").projectDir = File("../component/component")
-
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        mavenLocal()
+    }
+}

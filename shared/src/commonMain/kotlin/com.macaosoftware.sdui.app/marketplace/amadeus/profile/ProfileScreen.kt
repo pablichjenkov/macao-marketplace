@@ -54,8 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.app.util.MacaoResult
-import com.macaosoftware.plugin.MacaoUser
+import com.macaosoftware.util.MacaoResult
+import com.macaosoftware.plugin.account.MacaoUser
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginScreen
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
@@ -230,7 +230,7 @@ class ProfileScreen(
                                 onClick = {
                                     coroutineScope.launch {
                                        authViewModel?.let {
-                                           val result = it.authPlugin.logoutUser()
+                                           val result = it.accountPlugin.signOut()
                                            when (result) {
                                                is MacaoResult.Success -> {
                                                    navigator?.push(LoginScreen(authViewModel))
@@ -399,7 +399,7 @@ class ProfileScreen(
                                     onClick = {
                                         // Save changes
                                         coroutineScope.launch {
-                                            authViewModel?.authPlugin?.updateFullProfile(
+                                            authViewModel?.accountPlugin?.updateFullProfile(
                                                 displayName = displayName,
                                                 phoneNo = phone,
                                                 country = country,

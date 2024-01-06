@@ -1,22 +1,22 @@
-package com.macaosoftware.plugin
+package com.macaosoftware.plugin.account
 
-import com.macaosoftware.app.util.MacaoError
-import com.macaosoftware.app.util.MacaoResult
+import com.macaosoftware.plugin.MacaoPlugin
+import com.macaosoftware.util.MacaoError
+import com.macaosoftware.util.MacaoResult
 import kotlinx.serialization.Serializable
 import kotlin.native.ObjCName
 
-interface AuthPlugin : MacaoPlugin {
+interface AccountPlugin : MacaoPlugin {
     suspend fun initialize(): Boolean
-    suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser>
-    suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser>
-    suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink)
-    suspend fun sendEmailLink(loginRequest: LoginRequestForLink)
-    suspend fun checkCurrentUser(): MacaoResult<MacaoUser>
-    suspend fun getUserProfile(): MacaoResult<MacaoUser>
+    suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser>
+    suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser>
+    suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser>
+    suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit>
+    suspend fun getCurrentUser(): MacaoResult<MacaoUser>
+
     suspend fun getProviderData(): MacaoResult<ProviderData>
     suspend fun updateProfile(displayName: String, photoUrl: String): MacaoResult<MacaoUser>
     suspend fun updateFullProfile(displayName: String?, country: String?, photoUrl: String?, phoneNo: String?, facebookLink: String?, linkedIn: String?, github: String?): MacaoResult<UserData>
-
     suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser>
     suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser>
     suspend fun sendEmailVerification(): MacaoResult<MacaoUser>
@@ -24,52 +24,45 @@ interface AuthPlugin : MacaoPlugin {
     suspend fun deleteUser(): MacaoResult<Unit>
     suspend fun fetchUserData(): MacaoResult<UserData>
     suspend fun checkAndFetchUserData(): MacaoResult<UserData>
-    suspend fun logoutUser(): MacaoResult<Unit>
+    suspend fun signOut(): MacaoResult<Unit>
 }
 
 /**
  * An empty implementation for those platforms that don't have Firebase.
  * */
-class AuthPluginEmpty : AuthPlugin {
+class AccountPluginEmpty : AccountPlugin {
     override suspend fun initialize(): Boolean {
         println(" AuthPluginEmpty::initialize() has been called")
         return true
     }
 
-    override suspend fun signup(signupRequest: SignupRequest): MacaoResult<MacaoUser> {
-        println(" AuthPluginEmpty::signup() has been called")
+    override suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser> {
+        println(" AuthPluginEmpty::createUserWithEmailAndPassword() has been called")
         return MacaoResult.Success(
             MacaoUser("test@gmail.com")
         )
     }
 
-    override suspend fun login(loginRequest: LoginRequest): MacaoResult<MacaoUser> {
-        println(" AuthPluginEmpty::login() has been called")
+    override suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser> {
+        println(" AuthPluginEmpty::signInWithEmailAndPassword() has been called")
         return MacaoResult.Success(
             MacaoUser("test@gmail.com")
         )
     }
 
-    override suspend fun loginEmailAndLink(loginRequest: LoginRequestForEmailWithLink) {
-        println(" AuthPluginEmpty::loginEmailAndLink() has been called")
+    override suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser> {
+        println(" AuthPluginEmpty::signInWithEmailLink() has been called")
+        return MacaoResult.Success(MacaoUser("empty@gmail.com"))
     }
 
-    override suspend fun sendEmailLink(loginRequest: LoginRequestForLink) {
-        println(" AuthPluginEmpty::sendEmailLink() has been called")
+    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit> {
+        println(" AuthPluginEmpty::sendSignInLinkToEmail() has been called")
+        return MacaoResult.Success(Unit)
     }
 
-    override suspend fun checkCurrentUser(): MacaoResult<MacaoUser> {
-        println(" AuthPluginEmpty::checkCurrentUser() has been called")
-        return MacaoResult.Success(
-            MacaoUser("empty@gmail.com")
-        )
-    }
-
-    override suspend fun getUserProfile(): MacaoResult<MacaoUser> {
-        println(" AuthPluginEmpty::getUserProfile() has been called")
-        return MacaoResult.Success(
-            MacaoUser("empty@gmail.com")
-        )
+    override suspend fun getCurrentUser(): MacaoResult<MacaoUser> {
+        println(" AuthPluginEmpty::getCurrentUser() has been called")
+        return MacaoResult.Success(MacaoUser("empty@gmail.com"))
     }
 
     override suspend fun getProviderData(): MacaoResult<ProviderData> {
@@ -130,7 +123,7 @@ class AuthPluginEmpty : AuthPlugin {
         )
     }
 
-    override suspend fun logoutUser(): MacaoResult<Unit> {
+    override suspend fun signOut(): MacaoResult<Unit> {
         println(" AuthPluginEmpty::logoutUser() has been called")
         return MacaoResult.Success(Unit)
     }
@@ -160,27 +153,29 @@ data class UserData(
     val github: String? = ""
 )
 
-data class SignupRequest(
+@ObjCName(name = "MacaoSignUpRequest", exact = true)
+data class SignUpRequest(
     val email: String,
     val password: String,
     val username: String,
     val phoneNo: String
 )
 
-data class LoginRequest(
+@ObjCName(name = "MacaoSignInRequest", exact = true)
+data class SignInRequest(
     val email: String,
     val password: String
 )
 
-data class LoginRequestForLink(
+@ObjCName(name = "MacaoSignInRequestForEmailLink", exact = true)
+data class SignInRequestForEmailLink(
     val email: String,
-    val onResult: (MacaoResult<MacaoUser>) -> Unit
+    val magicLink: String
 )
 
-data class LoginRequestForEmailWithLink(
-    val email: String,
-    val link: String,
-    val onResult: (MacaoResult<MacaoUser>) -> Unit
+@ObjCName(name = "MacaoEmailLinkData", exact = true)
+data class EmailLinkData(
+    val email: String
 )
 
 @ObjCName(name = "MacaoUser", exact = true)
