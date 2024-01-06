@@ -25,13 +25,13 @@ allprojects {
     afterEvaluate {
         tasks.withType<KotlinCompilationTask<*>>().configureEach {
             compilerOptions {
-                with(freeCompilerArgs) {
-                    add("-opt-in=kotlin.experimental.ExperimentalObjCName")
-                    add("-opt-in=androidx.compose.ui.ExperimentalComposeUiApi")
-                    add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
-                    add("-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi")
-                    add("-opt-in=org.jetbrains.compose.resources.ExperimentalResourceApi")
-                    add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
+                with(optIn) {
+                    add("kotlin.experimental.ExperimentalObjCName")
+                    add("androidx.compose.ui.ExperimentalComposeUiApi")
+                    add("androidx.compose.material3.ExperimentalMaterial3Api")
+                    add("androidx.compose.foundation.layout.ExperimentalLayoutApi")
+                    add("org.jetbrains.compose.resources.ExperimentalResourceApi")
+                    add("kotlinx.serialization.ExperimentalSerializationApi")
                 }
             }
         }
