@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Login
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -40,9 +39,6 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVo
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersComponentView
-import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.offers.OffersViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.profile.ProfileViewModelFactory
@@ -52,9 +48,6 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelComponentView
-import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.travel.TravelViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBar
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarFactory
 import com.macaosoftware.sdui.app.marketplace.navigationbar.topappbar.CustomTopAppBarViewModel
@@ -184,14 +177,6 @@ class SduiComponentFactory(
                     label = "Schedule",
                     component = getComponentInstanceOf(componentJson),
                     icon = Icons.Default.DateRange
-                )
-            }
-
-            SduiConstants.ComponentType.Amadeus.HotelOffers -> {
-                NavItem(
-                    label = "Offers",
-                    component = getComponentInstanceOf(componentJson),
-                    icon = Icons.Filled.Notifications
                 )
             }
 
@@ -361,20 +346,6 @@ class SduiComponentFactory(
                 StateComponent<ScheduleViewModel>(
                     viewModelFactory = ScheduleViewModelFactory(),
                     content = ScheduleComponentView
-                )
-            }
-
-            SduiConstants.ComponentType.Amadeus.HotelOffers -> {
-                StateComponent<OffersViewModel>(
-                    viewModelFactory = OffersViewModelFactory(),
-                    content = OffersComponentView
-                )
-            }
-
-            SduiConstants.ComponentType.Amadeus.Travel -> {
-                StateComponent<TravelViewModel>(
-                    viewModelFactory = TravelViewModelFactory(),
-                    content = TravelComponentView
                 )
             }
 

@@ -67,5 +67,4 @@ object KtorClientApi {
         return client.get(url).body()
     }
 
-
 }
