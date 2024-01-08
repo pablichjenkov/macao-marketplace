@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.android.library).apply(false)
     alias(libs.plugins.kotlinx.serialization).apply(false)
     alias(libs.plugins.gmazzo).apply(false)
-    alias(libs.plugins.sqldeligh).apply(false)
+    alias(libs.plugins.sqldelight).apply(false)
     alias(libs.plugins.dokka).apply(false)
     alias(libs.plugins.realm).apply(false)
     id("com.google.gms.google-services").version("4.4.0").apply(false)

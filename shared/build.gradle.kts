@@ -55,9 +55,6 @@ kotlin {
             //Awesome Icons
             implementation(libs.font.awesome)
 
-            //Moko MVVM
-            implementation(libs.mvvm.core)
-
             //Kamel
             implementation(libs.kamel.image)
 
