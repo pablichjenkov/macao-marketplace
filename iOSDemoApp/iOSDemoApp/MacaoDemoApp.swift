@@ -1,11 +1,11 @@
 import SwiftUI
 import shared
-import MacaoPackage
-import FirebaseCore
-import FirebaseAuth
+import iOSDemoAppPackage
+// import FirebaseCore
+// import FirebaseAuth
 
 @main
-struct iOSDemoAppApp: App {
+struct MacaoDemoApp: App {
 
     let iosBridge = BindingsKt.createPlatformBridge(
         firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapterImpl()
@@ -14,7 +14,7 @@ struct iOSDemoAppApp: App {
     let platformLifecyclePlugin: AppLifecycleDispatcher
     
     // register app delegate for Firebase setup
-    @UIApplicationDelegateAdaptor(MacaoAppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(MacaoDemoAppDelegate.self) var delegate
        
     init() {
         // FirebaseApp.configure()

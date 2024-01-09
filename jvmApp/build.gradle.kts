@@ -15,8 +15,6 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
-            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.kotlinx.serialization.json)
