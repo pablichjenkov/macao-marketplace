@@ -24,13 +24,11 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
-        iosTarget.binaries {
-            framework {
-                //baseName = "MacaoSuiDemoKt"
-                baseName = "shared"
-                xcf.add(this)
-                isStatic = true
-            }
+        iosTarget.binaries.framework {
+            //baseName = "MacaoSuiDemoKt"
+            baseName = "shared"
+            isStatic = true
+            xcf.add(this)
         }
     }
 
@@ -43,6 +41,11 @@ kotlin {
     jvm()
 
     sourceSets {
+        all {
+            languageSettings {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.ui)
@@ -63,7 +66,6 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.components.resources)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
 

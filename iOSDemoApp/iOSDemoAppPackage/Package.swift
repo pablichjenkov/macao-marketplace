@@ -4,10 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "MacaoPackage",
+    name: "iOSDemoAppPackage",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(name: "MacaoPackage", targets: ["MacaoPackage"]),
+        .library(
+            name: "iOSDemoAppPackage",
+            targets: ["iOSDemoAppPackage"]),
     ],
     dependencies: [
         .package(
@@ -19,16 +21,18 @@ let package = Package(
             path: "../../shared/build/XCFrameworks/debug/shared.xcframework"
         ),
         .target(
-            name: "MacaoPackage",
+            name: "iOSDemoAppPackage",
             dependencies: [
                 .byName(name: "shared"),
                 .product(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"
                 ),
-            ]),
+            ]
+        ),
         .testTarget(
-            name: "MacaoPackageTests",
-            dependencies: ["MacaoPackage"])
+            name: "iOSDemoAppPackageTests",
+            dependencies: ["iOSDemoAppPackage"]
+        ),
     ]
 )

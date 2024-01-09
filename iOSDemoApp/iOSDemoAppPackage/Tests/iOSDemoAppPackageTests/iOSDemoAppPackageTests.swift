@@ -1,7 +1,7 @@
 import XCTest
-@testable import MacaoPackage
+@testable import iOSDemoAppPackage
 
-final class MacaoPackageTests: XCTestCase {
+final class iOSDemoAppPackageTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

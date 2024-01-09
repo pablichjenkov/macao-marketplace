@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		940174512A777BE400BA34D2 /* iOSDemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */; };
+		940174512A777BE400BA34D2 /* MacaoDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940174502A777BE400BA34D2 /* MacaoDemoApp.swift */; };
 		940174532A777BE400BA34D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940174522A777BE400BA34D2 /* ContentView.swift */; };
 		940174552A777BE500BA34D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 940174542A777BE500BA34D2 /* Assets.xcassets */; };
 		940174592A777BE500BA34D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 940174582A777BE500BA34D2 /* Preview Assets.xcassets */; };
 		940174632A777BE500BA34D2 /* iOSDemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940174622A777BE500BA34D2 /* iOSDemoAppTests.swift */; };
 		9401746D2A777BE500BA34D2 /* iOSDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */; };
 		9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */; };
-		94D231652B230EB700AB1C3C /* MacaoPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 94D231642B230EB700AB1C3C /* MacaoPackage */; };
+		948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */; };
+		948FD8D12B4D0ACE00A9B754 /* iOSDemoAppPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */; };
 		94D9FB7B2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7C2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7D2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
@@ -39,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		9401744D2A777BE400BA34D2 /* iOSDemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppApp.swift; sourceTree = "<group>"; };
+		940174502A777BE400BA34D2 /* MacaoDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacaoDemoApp.swift; sourceTree = "<group>"; };
 		940174522A777BE400BA34D2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		940174542A777BE500BA34D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		940174562A777BE500BA34D2 /* iOSDemoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSDemoApp.entitlements; sourceTree = "<group>"; };
@@ -49,8 +50,8 @@
 		940174682A777BE500BA34D2 /* iOSDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITests.swift; sourceTree = "<group>"; };
 		9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		948FD8CC2B4D065500A9B754 /* iOSDemoAppPackage */ = {isa = PBXFileReference; lastKnownFileType = text; path = iOSDemoAppPackage; sourceTree = SOURCE_ROOT; };
 		94B106382B2344BF0026F741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		94D231602B23075400AB1C3C /* MacaoPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MacaoPackage; sourceTree = "<group>"; };
 		94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,7 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94D231652B230EB700AB1C3C /* MacaoPackage in Frameworks */,
+				948FD8D12B4D0ACE00A9B754 /* iOSDemoAppPackage in Frameworks */,
+				948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +85,7 @@
 		940174442A777BE400BA34D2 = {
 			isa = PBXGroup;
 			children = (
-				94D231602B23075400AB1C3C /* MacaoPackage */,
+				948FD8CC2B4D065500A9B754 /* iOSDemoAppPackage */,
 				9401744F2A777BE400BA34D2 /* iOSDemoApp */,
 				940174612A777BE500BA34D2 /* iOSDemoAppTests */,
 				9401746B2A777BE500BA34D2 /* iOSDemoAppUITests */,
@@ -106,9 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */,
-				9496CE3D2B23E78F009B8717 /* FirebaseAuthMacao */,
 				94B106382B2344BF0026F741 /* Info.plist */,
-				940174502A777BE400BA34D2 /* iOSDemoAppApp.swift */,
+				940174502A777BE400BA34D2 /* MacaoDemoApp.swift */,
 				940174522A777BE400BA34D2 /* ContentView.swift */,
 				940174542A777BE500BA34D2 /* Assets.xcassets */,
 				940174562A777BE500BA34D2 /* iOSDemoApp.entitlements */,
@@ -142,13 +143,6 @@
 			path = iOSDemoAppUITests;
 			sourceTree = "<group>";
 		};
-		9496CE3D2B23E78F009B8717 /* FirebaseAuthMacao */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = FirebaseAuthMacao;
-			sourceTree = "<group>";
-		};
 		94D231612B2308EB00AB1C3C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,7 +168,8 @@
 			);
 			name = iOSDemoApp;
 			packageProductDependencies = (
-				94D231642B230EB700AB1C3C /* MacaoPackage */,
+				948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */,
+				948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */,
 			);
 			productName = iOSDemoApp;
 			productReference = 9401744D2A777BE400BA34D2 /* iOSDemoApp.app */;
@@ -249,7 +244,7 @@
 			);
 			mainGroup = 940174442A777BE400BA34D2;
 			packageReferences = (
-				94D231662B2312C700AB1C3C /* XCLocalSwiftPackageReference "MacaoPackage" */,
+				948FD8CD2B4D090E00A9B754 /* XCLocalSwiftPackageReference "iOSDemoAppPackage" */,
 			);
 			productRefGroup = 9401744E2A777BE400BA34D2 /* Products */;
 			projectDirPath = "";
@@ -317,7 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				940174532A777BE400BA34D2 /* ContentView.swift in Sources */,
-				940174512A777BE400BA34D2 /* iOSDemoAppApp.swift in Sources */,
+				940174512A777BE400BA34D2 /* MacaoDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,16 +682,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		94D231662B2312C700AB1C3C /* XCLocalSwiftPackageReference "MacaoPackage" */ = {
+		948FD8CD2B4D090E00A9B754 /* XCLocalSwiftPackageReference "iOSDemoAppPackage" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = MacaoPackage;
+			relativePath = iOSDemoAppPackage;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		94D231642B230EB700AB1C3C /* MacaoPackage */ = {
+		948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = MacaoPackage;
+			package = 948FD8CD2B4D090E00A9B754 /* XCLocalSwiftPackageReference "iOSDemoAppPackage" */;
+			productName = iOSDemoAppPackage;
+		};
+		948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = iOSDemoAppPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

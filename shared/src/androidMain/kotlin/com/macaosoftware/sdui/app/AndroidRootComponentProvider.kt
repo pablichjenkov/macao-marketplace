@@ -5,7 +5,6 @@ import com.macaosoftware.app.RootComponentKoinProvider
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.macaosoftware.sdui.data.SduiRemoteService
-import kotlinx.coroutines.delay
 import org.koin.core.component.KoinComponent
 
 class AndroidRootComponentProvider(
@@ -15,8 +14,6 @@ class AndroidRootComponentProvider(
     override suspend fun provideRootComponent(
         koinComponent: KoinComponent
     ): Component {
-
-        delay(1000)
 
         val sduiComponentFactory = SduiComponentFactory(koinComponent)
         val rootComponentJsonResilience = SduiRemoteService.getRootJsonResilience()

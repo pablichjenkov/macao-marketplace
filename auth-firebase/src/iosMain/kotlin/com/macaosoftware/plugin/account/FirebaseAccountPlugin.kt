@@ -1,7 +1,6 @@
 package com.macaosoftware.plugin.account
 
 import com.macaosoftware.util.MacaoResult
-import com.macaosoftware.util.ifNotNull
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -19,17 +18,15 @@ class FirebaseAccountPlugin(
 
         return suspendCoroutine { continuation ->
             firebaseAccountSwiftAdapter.createUserWithEmailAndPassword(
-                signUpRequest.email, signUpRequest.password
-            ) { user, error ->
-                println("FirebaseAccountPlugin::createUserWithEmailAndPassword -> User = $user and Error = $error")
-                error.ifNotNull {
-                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
-                    return@createUserWithEmailAndPassword
-                }
-                user.ifNotNull {
+                email = signUpRequest.email,
+                password = signUpRequest.password,
+                onResult = {
                     continuation.resume(MacaoResult.Success(it))
+                },
+                onError = {
+                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
                 }
-            }
+            )
         }
     }
 
@@ -37,17 +34,15 @@ class FirebaseAccountPlugin(
 
         return suspendCoroutine { continuation ->
             firebaseAccountSwiftAdapter.signInWithEmailAndPassword(
-                signInRequest.email, signInRequest.password
-            ) { user, error ->
-                println("FirebaseAccountPlugin::signInWithEmailAndPassword -> User = $user and Error = $error")
-                user.ifNotNull {
+                email = signInRequest.email,
+                password = signInRequest.password,
+                onResult = {
                     continuation.resume(MacaoResult.Success(it))
-                    return@signInWithEmailAndPassword
-                }
-                error.ifNotNull {
+                },
+                onError = {
                     continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
                 }
-            }
+            )
         }
     }
 
@@ -55,17 +50,15 @@ class FirebaseAccountPlugin(
 
         return suspendCoroutine { continuation ->
             firebaseAccountSwiftAdapter.signInWithEmailLink(
-                signInRequest.email, signInRequest.magicLink
-            ) { user, error ->
-                println("FirebaseAccountPlugin::signInWithEmailLink -> User = $user and Error = $error")
-                user.ifNotNull {
+                email = signInRequest.email,
+                magicLink = signInRequest.magicLink,
+                onResult = {
                     continuation.resume(MacaoResult.Success(it))
-                    return@signInWithEmailLink
-                }
-                error.ifNotNull {
+                },
+                onError = {
                     continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
                 }
-            }
+            )
         }
     }
 

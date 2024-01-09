@@ -34,8 +34,8 @@ fun createPlatformBridge(
     firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapter
 ): IosBridge {
 
-    val accountPlugin = SupabaseAccountPlugin()
-    // val accountPlugin = FirebaseAccountPlugin(firebaseAccountSwiftAdapter)
+    // val accountPlugin = SupabaseAccountPlugin()
+    val accountPlugin = FirebaseAccountPlugin(firebaseAccountSwiftAdapter)
 
     return IosBridge(
         platformLifecyclePlugin = DefaultPlatformLifecyclePlugin(),

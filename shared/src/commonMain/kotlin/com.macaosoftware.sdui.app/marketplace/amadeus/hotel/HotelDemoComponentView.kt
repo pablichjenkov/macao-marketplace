@@ -48,7 +48,8 @@ fun HotelDemoView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource("logo.png"),
+//            painter = painterResource("logo.png"),
+            painter = painterResource("images/logo1.png"),
             contentDescription = null,
             modifier = Modifier.size(140.dp)
         )
