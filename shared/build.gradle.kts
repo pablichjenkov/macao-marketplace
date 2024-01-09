@@ -84,6 +84,8 @@ kotlin {
 
             // Macao Plugins
             implementation(project(":auth-firebase"))
+        }
+        iosMain.dependencies {
             implementation(project(":auth-supabase"))
         }
         commonTest.dependencies {
@@ -92,9 +94,11 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(project(":auth-supabase"))
         }
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(project(":auth-supabase"))
         }
         jsMain.dependencies {
             implementation(libs.kotlinx.coroutines.core.js)
