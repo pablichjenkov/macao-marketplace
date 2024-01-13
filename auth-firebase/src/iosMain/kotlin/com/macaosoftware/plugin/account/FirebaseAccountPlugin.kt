@@ -5,7 +5,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAccountPlugin(
-    private val firebaseAccountSwiftAdapter: FirebaseAccountSwiftAdapter
+    private val firebaseAuthKmpWrapper: FirebaseAuthKmpWrapper
 ) : AccountPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
@@ -17,7 +17,7 @@ class FirebaseAccountPlugin(
     override suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAccountSwiftAdapter.createUserWithEmailAndPassword(
+            firebaseAuthKmpWrapper.createUserWithEmailAndPassword(
                 email = signUpRequest.email,
                 password = signUpRequest.password,
                 onResult = {
@@ -33,7 +33,7 @@ class FirebaseAccountPlugin(
     override suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAccountSwiftAdapter.signInWithEmailAndPassword(
+            firebaseAuthKmpWrapper.signInWithEmailAndPassword(
                 email = signInRequest.email,
                 password = signInRequest.password,
                 onResult = {
@@ -49,7 +49,7 @@ class FirebaseAccountPlugin(
     override suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser> {
 
         return suspendCoroutine { continuation ->
-            firebaseAccountSwiftAdapter.signInWithEmailLink(
+            firebaseAuthKmpWrapper.signInWithEmailLink(
                 email = signInRequest.email,
                 magicLink = signInRequest.magicLink,
                 onResult = {
