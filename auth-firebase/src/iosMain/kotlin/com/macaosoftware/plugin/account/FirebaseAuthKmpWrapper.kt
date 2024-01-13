@@ -1,7 +1,7 @@
 package com.macaosoftware.plugin.account
 
-@ObjCName(name = "MacaoFirebaseAccountSwiftAdapter", exact = true)
-interface FirebaseAccountSwiftAdapter {
+@ObjCName(name = "MacaoFirebaseAuthKmpWrapper", exact = true)
+interface FirebaseAuthKmpWrapper {
 
     fun createUserWithEmailAndPassword(
         email: String,

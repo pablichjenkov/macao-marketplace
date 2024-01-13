@@ -26,6 +26,7 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             //baseName = "MacaoSuiDemoKt"
+            export(project(":auth-firebase"))
             baseName = "shared"
             isStatic = true
             xcf.add(this)
@@ -41,11 +42,6 @@ kotlin {
     jvm()
 
     sourceSets {
-        all {
-            languageSettings {
-                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
-            }
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.ui)
@@ -83,7 +79,7 @@ kotlin {
             implementation(project(":macao-sdk-mirror"))
 
             // Macao Plugins
-            implementation(project(":auth-firebase"))
+            api(project(":auth-firebase"))
         }
         iosMain.dependencies {
             implementation(project(":auth-supabase"))
