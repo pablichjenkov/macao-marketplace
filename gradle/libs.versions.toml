@@ -2,24 +2,25 @@
 
 amadeusApi = "0.3.4"
 componentsResources = "1.5.11"
-componentToolkit = "0.5.16"
+macaoSdkKoin = "0.5.16"
+componentToolkit = "0.6.0-dev"
 kamelImage = "0.9.0"
-koinCore = "3.5.0"
+koinCore = "3.5.3"
 kotlin = "1.9.21"
 agp = "8.1.4"
 compose = "1.5.11"
 androidx-appcompat = "1.6.1"
-androidx-activityCompose = "1.8.1"
+androidx-activityCompose = "1.8.2"
 compose-uitooling = "1.5.4"
 voyager = "1.0.0-rc10"
 composeImageLoader = "1.7.1"
 napier = "2.6.1"
 kotlinx-coroutines = "1.7.3"
-ktor = "2.3.6"
+ktor = "2.3.7"
 gson = "2.10.1"
 composeIcons = "1.1.0"
-kotlinx-serialization = "1.6.1"
-kotlinx-datetime = "0.4.1"
+kotlinx-serialization = "1.6.2"
+kotlinx-datetime = "0.5.0"
 multiplatformSettings = "1.1.1"
 gmazzo = "4.1.1"
 sqldelight = "2.0.0"
@@ -32,7 +33,7 @@ amadeus-api = { module = "io.github.pablichjenkov:amadeus-api", version.ref = "a
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 component-toolkit = { module = "io.github.pablichjenkov:component-toolkit", version.ref = "componentToolkit" }
-macao-sdk-di-koin = { module = "io.github.pablichjenkov:macao-sdk-di-koin", version.ref = "componentToolkit" }
+macao-sdk-di-koin = { module = "io.github.pablichjenkov:macao-sdk-di-koin", version.ref = "macaoSdkKoin" }
 components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "componentsResources" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
 font-awesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }

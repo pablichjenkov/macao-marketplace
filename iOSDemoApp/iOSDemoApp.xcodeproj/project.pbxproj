@@ -16,7 +16,6 @@
 		9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */; };
 		942F836A2B52357400A0CD1A /* FirebaseAuthKmp in Frameworks */ = {isa = PBXBuildFile; productRef = 942F83692B52357400A0CD1A /* FirebaseAuthKmp */; };
 		948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */; };
-		948FD8D12B4D0ACE00A9B754 /* iOSDemoAppPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */; };
 		94D9FB7B2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7C2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7D2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
@@ -61,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				948FD8D12B4D0ACE00A9B754 /* iOSDemoAppPackage in Frameworks */,
 				948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */,
 				942F836A2B52357400A0CD1A /* FirebaseAuthKmp in Frameworks */,
 			);
@@ -171,7 +169,6 @@
 			name = iOSDemoApp;
 			packageProductDependencies = (
 				948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */,
-				948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */,
 				942F83692B52357400A0CD1A /* FirebaseAuthKmp */,
 			);
 			productName = iOSDemoApp;
@@ -704,10 +701,6 @@
 		948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 948FD8CD2B4D090E00A9B754 /* XCLocalSwiftPackageReference "iOSDemoAppPackage" */;
-			productName = iOSDemoAppPackage;
-		};
-		948FD8D02B4D0ACE00A9B754 /* iOSDemoAppPackage */ = {
-			isa = XCSwiftPackageProductDependency;
 			productName = iOSDemoAppPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
