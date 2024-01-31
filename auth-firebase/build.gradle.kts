@@ -117,10 +117,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
 
             // Macao Libs
-            // When developing
+            // When developing use line bellow
             implementation(project(":macao-sdk-mirror"))
-            // When releasing(Before release copy the classes from the mirror to macao sdk plugins)
-            //implementation(libs.component.toolkit)
+
+            // (Before release copy the classes from the mirror to macao sdk plugins)
+            // Then make a macao release and then update bellow and comment the mirror above
+            implementation(libs.component.toolkit)
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)
