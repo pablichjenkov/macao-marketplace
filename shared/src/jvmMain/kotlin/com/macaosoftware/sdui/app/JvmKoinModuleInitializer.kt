@@ -1,6 +1,6 @@
 package com.macaosoftware.sdui.app
 
-import com.macaosoftware.app.KoinModuleInitializer
+import com.macaosoftware.app.KoinRootModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.pablichj.incubator.amadeus.Database
@@ -11,14 +11,13 @@ import com.pablichj.incubator.amadeus.storage.createDatabase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class JvmKoinModuleInitializer : KoinModuleInitializer {
+class JvmKoinModuleInitializer : KoinRootModuleInitializer {
 
     override suspend fun initialize(): Module {
 
         val database = createDatabase(DesktopDriverFactory())
 
         return module {
-            // TODO: Move this to a common module initializer
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
             single<AccountPlugin> { SupabaseAccountPlugin() }

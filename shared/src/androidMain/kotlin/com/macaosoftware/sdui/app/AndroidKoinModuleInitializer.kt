@@ -1,7 +1,7 @@
 package com.macaosoftware.sdui.app
 
 import android.content.Context
-import com.macaosoftware.app.KoinModuleInitializer
+import com.macaosoftware.app.KoinRootModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.FirebaseAccountPlugin
 import com.macaosoftware.plugin.account.SupabaseAccountPlugin
@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 class AndroidKoinModuleInitializer(
     private val context: Context
-) : KoinModuleInitializer {
+) : KoinRootModuleInitializer {
 
     override suspend fun initialize(): Module {
 
@@ -24,8 +24,8 @@ class AndroidKoinModuleInitializer(
         return module {
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
-            // single<AccountPlugin> { FirebaseAccountPlugin() }
-            single<AccountPlugin> { SupabaseAccountPlugin() }
+            single<AccountPlugin> { FirebaseAccountPlugin() }
+            //single<AccountPlugin> { SupabaseAccountPlugin() }
         }
     }
 }

@@ -30,7 +30,6 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
 
             // Macao Libs
-            implementation(project(":macao-sdk-mirror"))
             implementation(libs.component.toolkit)
 
             // Supabase

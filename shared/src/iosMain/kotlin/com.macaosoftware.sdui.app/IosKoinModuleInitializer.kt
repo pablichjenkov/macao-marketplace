@@ -1,8 +1,6 @@
 package com.macaosoftware.sdui.app
 
-import com.macaosoftware.app.KoinModuleInitializer
-import com.macaosoftware.plugin.IosBridge
-import com.macaosoftware.plugin.PlatformLifecyclePlugin
+import com.macaosoftware.app.KoinRootModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
@@ -14,17 +12,16 @@ import org.koin.dsl.module
 
 class IosKoinModuleInitializer(
     private val iosBridge: IosBridge
-) : KoinModuleInitializer {
+) : KoinRootModuleInitializer {
 
     override suspend fun initialize(): Module {
 
         val database = createDatabase(IosDriverFactory())
 
         return module {
-            single<ITimeProvider> { DefaultTimeProvider() }
 
+            single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
-            single<PlatformLifecyclePlugin> { iosBridge.platformLifecyclePlugin }
             single<AccountPlugin> { iosBridge.accountPlugin }
         }
     }

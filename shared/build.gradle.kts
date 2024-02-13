@@ -76,7 +76,6 @@ kotlin {
             implementation(libs.amadeus.api)
             implementation(libs.component.toolkit)
             implementation(libs.macao.sdk.di.koin)
-            implementation(project(":macao-sdk-mirror"))
 
             // Macao Plugins
             api(project(":auth-firebase"))

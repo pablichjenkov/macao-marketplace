@@ -2,8 +2,8 @@
 
 amadeusApi = "0.3.4"
 componentsResources = "1.5.11"
-macaoSdkKoin = "0.5.16"
-componentToolkit = "0.6.0-dev"
+macaoSdkKoin = "0.5.17"
+componentToolkit = "0.5.17"
 kamelImage = "0.9.0"
 koinCore = "3.5.3"
 kotlin = "1.9.21"

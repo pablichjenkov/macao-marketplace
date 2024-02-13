@@ -3,7 +3,6 @@ include(":shared")
 include(":androidApp")
 include(":jsApp")
 include(":jvmApp")
-include(":macao-sdk-mirror")
 
 // Auth Plugin implementations
 include(":auth-firebase")
