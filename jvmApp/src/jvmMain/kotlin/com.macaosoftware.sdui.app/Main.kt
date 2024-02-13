@@ -34,7 +34,7 @@ fun main() {
     val applicationState = MacaoKoinApplicationState(
         dispatcher = Dispatchers.IO,
         rootComponentKoinProvider = JvmRootComponentProvider(),
-        koinModuleInitializer = JvmKoinModuleInitializer()
+        koinRootModuleInitializer = JvmKoinModuleInitializer()
     )
 
     singleWindowApplication(
@@ -137,8 +137,7 @@ fun main() {
                 windowState = windowState,
                 desktopBridge = desktopBridge,
                 onBackPress = { exitProcess(0) },
-                applicationState = applicationState,
-                splashScreenContent = { SplashScreen() }
+                applicationState = applicationState
             )
         }
     }

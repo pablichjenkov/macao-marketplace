@@ -2,15 +2,12 @@ package com.macaosoftware.sdui.app
 
 import com.macaosoftware.app.RootComponentKoinProvider
 import com.macaosoftware.component.core.Component
-import com.macaosoftware.plugin.JsBridge
 import com.macaosoftware.sdui.app.sdui.SduiComponentFactory
 import com.macaosoftware.sdui.data.SduiRemoteService
 import org.koin.core.component.KoinComponent
 
 // TODO: Move this to shared
-class BrowserRootComponentProvider(
-    private val jsBridge: JsBridge
-) : RootComponentKoinProvider {
+class BrowserRootComponentProvider : RootComponentKoinProvider {
 
     override suspend fun provideRootComponent(koinComponent: KoinComponent): Component {
 
