@@ -1,5 +1,5 @@
 import SwiftUI
-import shared
+import composeApp
 import FirebaseAuthKmp
 import iOSDemoAppPackage
 

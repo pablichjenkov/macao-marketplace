@@ -19,13 +19,13 @@ let package = Package(
     ],
     targets: [
         .binaryTarget(
-            name: "shared",
-            path: "../../shared/build/XCFrameworks/debug/shared.xcframework"
+            name: "composeApp",
+            path: "../../composeApp/build/XCFrameworks/debug/composeApp.xcframework"
         ),
         .target(
             name: "iOSDemoAppPackage",
             dependencies: [
-                .byName(name: "shared"),
+                .byName(name: "composeApp"),
                 .product(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"

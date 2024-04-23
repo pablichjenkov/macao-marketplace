@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-import shared
+import composeApp
 
 struct ComposeView : UIViewControllerRepresentable {
 
@@ -20,10 +20,7 @@ struct ComposeView : UIViewControllerRepresentable {
         */
 
         let mainViewController = BindingsKt.buildDemoMacaoApplication(
-            iosBridge: iosBridge,
-            onBackPress: {
-                exit(0)
-            }
+            iosBridge: iosBridge
         )
 
         return mainViewController
