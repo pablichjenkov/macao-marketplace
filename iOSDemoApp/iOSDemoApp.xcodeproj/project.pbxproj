@@ -157,7 +157,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 940174722A777BE500BA34D2 /* Build configuration list for PBXNativeTarget "iOSDemoApp" */;
 			buildPhases = (
-				94DE1C952ABBF8BF00F391C5 /* ShellScript */,
 				940174492A777BE400BA34D2 /* Sources */,
 				9401744A2A777BE400BA34D2 /* Frameworks */,
 				9401744B2A777BE400BA34D2 /* Resources */,
@@ -286,26 +285,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		94DE1C952ABBF8BF00F391C5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:assembleSharedDebugXCFramework\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		940174492A777BE400BA34D2 /* Sources */ = {
