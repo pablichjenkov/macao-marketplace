@@ -19,7 +19,7 @@ class MacaoKoinApplicationState(
     fun start() {
         coroutineScope.launch {
 
-            stage.value = Stage.Loading
+            stage.value = Stage.InitializingDiAndRootComponent
             val appModule = koinRootModuleInitializer.initialize()
 
             val koinApplication = koinApplication {
@@ -38,6 +38,6 @@ class MacaoKoinApplicationState(
 
 sealed class Stage {
     data object Created : Stage()
-    data object Loading : Stage()
+    data object InitializingDiAndRootComponent : Stage()
     class Started(val rootComponent: Component) : Stage()
 }

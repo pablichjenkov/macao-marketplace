@@ -19,7 +19,7 @@ fun MacaoKoinApplication(
             }
         }
 
-        Stage.Loading -> {
+        Stage.InitializingDiAndRootComponent -> {
         }
 
         is Stage.Started -> {
