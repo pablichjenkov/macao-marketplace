@@ -15,7 +15,7 @@ fun MacaoKoinApplication(
             SideEffect { applicationState.start() }
         }
 
-        Stage.Loading -> {
+        Stage.InitializingDiAndRootComponent -> {
         }
 
         is Stage.Started -> {
