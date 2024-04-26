@@ -10,9 +10,8 @@ fun main() {
     onWasmReady {
         val rootComponentProvider = BrowserRootComponentProvider()
         val applicationState = MacaoKoinApplicationState(
-            dispatcher = Dispatchers.Default,
             rootComponentKoinProvider = rootComponentProvider,
-            koinRootModuleInitializer = BrowserKoinModuleInitializer()
+            rootModuleKoinInitializer = BrowserKoinModuleInitializer()
         )
 
         CanvasBasedWindow("Macao SDUI Demo") {

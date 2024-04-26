@@ -18,7 +18,6 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.WindowWithCustomTopDecoration
-import kotlinx.coroutines.Dispatchers
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
@@ -29,9 +28,8 @@ fun main() {
     val windowState = WindowState(size = DpSize(800.dp, 600.dp))
 
     val applicationState = MacaoKoinApplicationState(
-        dispatcher = Dispatchers.IO,
         rootComponentKoinProvider = JvmRootComponentProvider(),
-        koinRootModuleInitializer = JvmKoinModuleInitializer()
+        rootModuleKoinInitializer = JvmKoinModuleInitializer()
     )
 
     singleWindowApplication(

@@ -1,6 +1,6 @@
 package com.macaosoftware.sdui.app
 
-import com.macaosoftware.app.KoinRootModuleInitializer
+import com.macaosoftware.app.RootModuleKoinInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.pablichj.incubator.amadeus.Database
@@ -11,7 +11,7 @@ import com.pablichj.incubator.amadeus.storage.createDatabase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-class JvmKoinModuleInitializer : KoinRootModuleInitializer {
+class JvmKoinModuleInitializer : RootModuleKoinInitializer {
 
     override suspend fun initialize(): Module {
 
