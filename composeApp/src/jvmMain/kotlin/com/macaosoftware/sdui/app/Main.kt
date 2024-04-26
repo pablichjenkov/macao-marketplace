@@ -129,7 +129,6 @@ fun main() {
                 }
             }
             MacaoKoinApplication(
-                windowState = windowState,
                 applicationState = applicationState
             )
         }
