@@ -11,9 +11,8 @@ import kotlinx.coroutines.Dispatchers
 class MainActivity : ComponentActivity() {
 
     val applicationState = MacaoKoinApplicationState(
-        dispatcher = Dispatchers.IO,
         rootComponentKoinProvider = AndroidRootComponentProvider(this@MainActivity),
-        koinRootModuleInitializer = AndroidKoinModuleInitializer(this@MainActivity)
+        rootModuleKoinInitializer = AndroidKoinModuleInitializer(this@MainActivity)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

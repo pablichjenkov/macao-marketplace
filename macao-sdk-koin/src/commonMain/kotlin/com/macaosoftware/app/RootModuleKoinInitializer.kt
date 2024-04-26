@@ -2,6 +2,6 @@ package com.macaosoftware.app
 
 import org.koin.core.module.Module
 
-interface KoinRootModuleInitializer {
+interface RootModuleKoinInitializer {
     suspend fun initialize() : Module
 }

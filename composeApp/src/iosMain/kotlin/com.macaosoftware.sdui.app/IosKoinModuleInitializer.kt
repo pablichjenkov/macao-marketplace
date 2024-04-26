@@ -1,6 +1,6 @@
 package com.macaosoftware.sdui.app
 
-import com.macaosoftware.app.KoinRootModuleInitializer
+import com.macaosoftware.app.RootModuleKoinInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 class IosKoinModuleInitializer(
     private val iosBridge: IosBridge
-) : KoinRootModuleInitializer {
+) : RootModuleKoinInitializer {
 
     override suspend fun initialize(): Module {
 

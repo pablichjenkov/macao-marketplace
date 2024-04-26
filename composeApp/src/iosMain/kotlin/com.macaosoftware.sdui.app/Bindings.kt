@@ -5,8 +5,6 @@ import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.plugin.account.FirebaseAccountPlugin
 import com.macaosoftware.plugin.account.FirebaseAuthKmpWrapper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import platform.UIKit.UIViewController
 
 fun buildDemoMacaoApplication(
@@ -15,9 +13,8 @@ fun buildDemoMacaoApplication(
 
     MacaoKoinApplication(
         applicationState = MacaoKoinApplicationState(
-            dispatcher = Dispatchers.IO,
             rootComponentKoinProvider = IosRootComponentProvider(),
-            koinRootModuleInitializer = IosKoinModuleInitializer(iosBridge)
+            rootModuleKoinInitializer = IosKoinModuleInitializer(iosBridge)
         )
     )
 }

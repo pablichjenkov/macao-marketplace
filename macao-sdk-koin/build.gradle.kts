@@ -125,28 +125,28 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
-            implementation(compose.foundation)
             implementation(compose.ui)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            implementation(compose.foundation)
+            implementation(libs.kotlinx.coroutines.core)
 
             // Macao Libs
             implementation(libs.component.toolkit)
 
             // Koin
             // api("io.insert-koin:koin-core:3.5.3")
-            api("io.insert-koin:koin-core:3.6.0-wasm-alpha2")
+            api(libs.koin.core)
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+            implementation(libs.kotlinx.coroutines.android)
         }
         jvmMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.0")
+            implementation(libs.kotlinx.coroutines.swing)
         }
         jsMain.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.8.0")
+            implementation(libs.kotlinx.coroutines.core.js)
         }
     }
 }
