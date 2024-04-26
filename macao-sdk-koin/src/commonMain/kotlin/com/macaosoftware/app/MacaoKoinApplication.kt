@@ -2,12 +2,10 @@ package com.macaosoftware.app
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import com.macaosoftware.component.IosComponentRender
+import com.macaosoftware.component.PlatformComponentRenderer
 
 @Composable
-fun MacaoKoinApplication(
-    applicationState: MacaoKoinApplicationState
-) {
+fun MacaoKoinApplication(applicationState: MacaoKoinApplicationState) {
 
     when (val stage = applicationState.stage.value) {
 
@@ -21,9 +19,7 @@ fun MacaoKoinApplication(
         }
 
         is Stage.Started -> {
-            IosComponentRender(
-                rootComponent = stage.rootComponent
-            )
+            PlatformComponentRenderer(rootComponent = stage.rootComponent)
         }
     }
 }
