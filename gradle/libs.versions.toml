@@ -2,7 +2,7 @@
 
 amadeusApi = "0.3.4"
 componentsResources = "1.6.1"
-componentToolkit = "0.6.10-rc1"
+componentToolkit = "0.6.10-rc02"
 kamelImage = "0.9.0"
 koinCore = "3.6.0-wasm-alpha2"
 kotlin = "1.9.23"

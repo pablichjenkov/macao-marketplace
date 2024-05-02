@@ -3,50 +3,89 @@ package com.macaosoftware.app
 import androidx.compose.runtime.mutableStateOf
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.plugin.CoroutineDispatchers
-import kotlinx.coroutines.CoroutineDispatcher
+import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.dsl.koinApplication
 
 class MacaoKoinApplicationState(
-    val rootComponentKoinProvider: RootComponentKoinProvider,
-    private val rootModuleKoinInitializer: RootModuleKoinInitializer,
-    private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default,
+    private val rootKoinModuleInitializer: RootKoinModuleInitializer,
+    private val startupTaskRunner: StartupTaskRunner,
+    private val rootComponentInitializer: RootComponentInitializer,
+    private val dispatchers: CoroutineDispatchers = CoroutineDispatchers.Default
 ) {
 
-    var stage = mutableStateOf<Stage>(Stage.Created)
+    var stage = mutableStateOf<Stage>(Created)
     private val coroutineScope = CoroutineScope(dispatchers.main)
 
-    fun start() {
-        coroutineScope.launch {
+    fun initialize() = coroutineScope.launch {
 
-            stage.value = Stage.InitializingDiAndRootComponent("Initializing: DiContainer")
+        val koinApplication = withContext(dispatchers.default) {
 
-            val koinApplication = withContext(dispatchers.default) {
+            val rootModule = rootKoinModuleInitializer.initialize()
+            // val commonModule = initCommonModule()
+            koinApplication {
+                printLogger()
+                modules(rootModule)
+            }
+        }
 
-                val appModule = rootModuleKoinInitializer.initialize()
-                // val commonModule = initCommonModule()
-                koinApplication {
-                    printLogger()
-                    modules(appModule)
+        runStartupTasks(KoinInjector(koinApplication))
+    }
+
+    private suspend fun runStartupTasks(koinInjector: KoinInjector) {
+
+        startupTaskRunner
+            .initialize(koinInjector)
+            .flowOn(dispatchers.default)
+            .collect { status ->
+                when (status) {
+                    is StartupTaskStatus.Running -> {
+                        stage.value = Initializing.StartupTask(status.taskName)
+                    }
+
+                    is StartupTaskStatus.CompleteError -> {
+                        stage.value = InitializationError(status.errorMsg)
+                    }
+
+                    is StartupTaskStatus.CompleteSuccess -> {
+                        initializeRootComponent(koinInjector)
+                    }
                 }
             }
+    }
 
-            stage.value = Stage.InitializingDiAndRootComponent("Initializing: RootComponent")
+    private suspend fun initializeRootComponent(koinInjector: KoinInjector) {
 
-            val rootComponent = withContext(dispatchers.default) {
-                val diContainerKoin = DiContainerKoin(koinApplication)
-                rootComponentKoinProvider.provideRootComponent(diContainerKoin)
+        if (rootComponentInitializer.shouldShowLoader()) {
+            stage.value = Initializing.RootComponent
+        }
+        val result = withContext(dispatchers.default) {
+            rootComponentInitializer.initialize(koinInjector)
+        }
+
+        when(result) {
+            is MacaoResult.Error -> {
+                stage.value = InitializationError(result.error.toString())
             }
-
-            stage.value = Stage.Started(rootComponent)
+            is MacaoResult.Success -> {
+                stage.value = InitializationSuccess(result.value)
+            }
         }
     }
+
 }
 
-sealed class Stage {
-    data object Created : Stage()
-    data class InitializingDiAndRootComponent(val initializerName: String) : Stage()
-    data class Started(val rootComponent: Component) : Stage()
+sealed class Stage
+data object Created : Stage()
+
+sealed class Initializing : Stage() {
+    // data object KoinRootModule : Initializing()
+    data class StartupTask(val taskName: String) : Initializing()
+    data object RootComponent : Initializing()
 }
+
+class InitializationError(val errorMsg: String) : Stage()
+class InitializationSuccess(val rootComponent: Component) : Stage()

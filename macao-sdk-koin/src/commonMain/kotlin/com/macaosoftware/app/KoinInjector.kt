@@ -4,7 +4,7 @@ import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 
-class DiContainerKoin(
+class KoinInjector(
     private val koinApplication: KoinApplication
 ) : KoinComponent {
 

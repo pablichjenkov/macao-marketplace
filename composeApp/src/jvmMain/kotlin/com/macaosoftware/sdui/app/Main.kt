@@ -17,7 +17,12 @@ import androidx.compose.ui.window.rememberNotification
 import androidx.compose.ui.window.singleWindowApplication
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
+import com.macaosoftware.app.StartupTaskRunnerDefault
 import com.macaosoftware.app.WindowWithCustomTopDecoration
+import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
+import com.macaosoftware.sdui.app.startup.DatabaseMigrationStartupTask
+import com.macaosoftware.sdui.app.startup.LaunchDarklyStartupTask
+import com.macaosoftware.sdui.app.startup.SdkXyzStartupTask
 import java.awt.SystemTray
 import java.awt.Toolkit
 import java.awt.TrayIcon
@@ -26,10 +31,15 @@ import kotlin.system.exitProcess
 fun main() {
 
     val windowState = WindowState(size = DpSize(800.dp, 600.dp))
-
+    val startupTasks = listOf(
+        DatabaseMigrationStartupTask(),
+        LaunchDarklyStartupTask(),
+        SdkXyzStartupTask()
+    )
     val applicationState = MacaoKoinApplicationState(
-        rootComponentKoinProvider = JvmRootComponentProvider(),
-        rootModuleKoinInitializer = JvmKoinModuleInitializer()
+        rootKoinModuleInitializer = JvmRootKoinModuleInitializer(),
+        startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
+        rootComponentInitializer = ComposeAppRootComponentInitializer()
     )
 
     singleWindowApplication(
@@ -42,7 +52,7 @@ fun main() {
             onMaximizeClick = { windowState.size = DpSize(width = 1200.dp, height = 1220.dp) },
             onCloseClick = { exitProcess(0) },
             onRefreshClick = {
-                applicationState.start()
+                applicationState.initialize()
             },
             onBackClick = { exitProcess(0) }
         ) {

@@ -1,7 +1,7 @@
 package com.macaosoftware.sdui.app
 
-import android.content.Context
-import com.macaosoftware.app.RootModuleKoinInitializer
+import android.app.Activity
+import com.macaosoftware.app.RootKoinModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.FirebaseAccountPlugin
 import com.pablichj.incubator.amadeus.Database
@@ -13,12 +13,12 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 class AndroidKoinModuleInitializer(
-    private val context: Context
-) : RootModuleKoinInitializer {
+    private val activity: Activity
+) : RootKoinModuleInitializer {
 
     override suspend fun initialize(): Module {
 
-        val database = createDatabase(AndroidDriverFactory(context))
+        val database = createDatabase(AndroidDriverFactory(activity))
 
         return module {
             single<ITimeProvider> { DefaultTimeProvider() }

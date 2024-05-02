@@ -13,27 +13,53 @@ import androidx.compose.ui.graphics.Color
 import com.macaosoftware.component.PlatformComponentRenderer
 
 @Composable
-fun MacaoKoinApplication(applicationState: MacaoKoinApplicationState) {
+fun MacaoKoinApplication(
+    applicationState: MacaoKoinApplicationState
+) = when (val stage = applicationState.stage.value) {
 
-    when (val stage = applicationState.stage.value) {
-
-        Stage.Created -> {
-            SideEffect {
-                applicationState.start()
-            }
+    Created -> {
+        SideEffect {
+            applicationState.initialize()
         }
+    }
 
-        is Stage.InitializingDiAndRootComponent -> {
-            Box(Modifier.fillMaxSize().background(Color.LightGray)) {
-                BasicText(
-                    modifier = Modifier.wrapContentSize().align(Alignment.Center),
-                    text = stage.initializerName
-                )
-            }
-        }
+    is Initializing -> {
+        InitializationHandler(stage)
+    }
 
-        is Stage.Started -> {
-            PlatformComponentRenderer(rootComponent = stage.rootComponent)
-        }
+    is InitializationError -> {
+        SplashScreen(stage.errorMsg)
+    }
+
+    is InitializationSuccess -> {
+        PlatformComponentRenderer(rootComponent = stage.rootComponent)
+    }
+}
+
+@Composable
+private fun InitializationHandler(
+    initializing: Initializing
+) = when (initializing) {
+
+//    Initializing.KoinRootModule -> {
+//        // No-op
+//    }
+
+    is Initializing.StartupTask -> {
+        SplashScreen(initializing.taskName)
+    }
+
+    Initializing.RootComponent -> {
+        SplashScreen("Fetching Root Component from Services")
+    }
+}
+
+@Composable
+private fun SplashScreen(text: String) {
+    Box(Modifier.fillMaxSize().background(Color.LightGray)) {
+        BasicText(
+            modifier = Modifier.wrapContentSize().align(Alignment.Center),
+            text = text
+        )
     }
 }
