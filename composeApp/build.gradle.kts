@@ -62,10 +62,10 @@ kotlin {
             implementation(libs.kotlinx.datetime)
 
             // ktor
-            implementation(libs.ktor.core)
-            implementation(libs.io.ktor.ktor.client.serialization)
-            implementation(libs.io.ktor.client.content.negotiation)
-            implementation(libs.io.ktor.ktor.client.serialization)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
 
             // Macao Libs
@@ -82,10 +82,16 @@ kotlin {
             // Macao Swift Plugins
             implementation(project(":auth-supabase"))
             api(project(":auth-firebase"))
+
+            // Ktor
+            implementation(libs.ktor.client.ios)
         }
         androidMain.dependencies {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
+
+            // Ktor
+            implementation(libs.ktor.client.android)
 
             // Macao Swift Plugins
             implementation(project(":auth-supabase"))
@@ -96,6 +102,9 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
 
+            // Ktor
+            implementation(libs.ktor.client.jvm)
+
             // Supabase
             implementation(project(":auth-supabase"))
         }
@@ -104,6 +113,9 @@ kotlin {
             implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
             implementation(npm("sql.js", "1.8.0"))
+
+            // Ktor
+            implementation(libs.ktor.client.js)
         }
     }
 
