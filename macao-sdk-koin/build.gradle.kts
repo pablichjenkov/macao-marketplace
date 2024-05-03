@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.pablichjenkov"
-version = (findProperty("component-toolkit.version") as? String).orEmpty()
+version = libs.versions.componentToolkit.get()
 val mavenCentralUser = (findProperty("mavenCentral.user") as? String).orEmpty()
 val mavenCentralPass = (findProperty("mavenCentral.pass") as? String).orEmpty()
 

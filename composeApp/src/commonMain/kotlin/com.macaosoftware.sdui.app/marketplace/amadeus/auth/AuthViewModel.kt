@@ -1,75 +1,71 @@
 package com.macaosoftware.sdui.app.marketplace.amadeus.auth
 
 import androidx.compose.runtime.mutableStateOf
-import com.macaosoftware.component.viewmodel.ComponentViewModel
+import com.macaosoftware.component.core.Component
+import com.macaosoftware.component.stack.StackComponent
+import com.macaosoftware.component.stack.StackComponentViewModel
+import com.macaosoftware.component.stack.StackStatePresenter
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.AccountPlugin
-import com.macaosoftware.plugin.account.SignInRequest
-import com.macaosoftware.plugin.account.EmailLinkData
 import com.macaosoftware.plugin.account.MacaoUser
-import com.macaosoftware.plugin.account.SignInRequestForEmailLink
-import com.macaosoftware.plugin.account.SignUpRequest
 import com.macaosoftware.plugin.account.UserData
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.login.LoginViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignupComponentView
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignupViewModel
+import com.macaosoftware.sdui.app.marketplace.amadeus.auth.signup.SignupViewModelFactory
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
-    private val authComponent: StateComponent<AuthViewModel>,
+    stackComponent: StackComponent<AuthViewModel>,
+    override val stackStatePresenter: StackStatePresenter,
     val accountPlugin: AccountPlugin
-) : ComponentViewModel() {
+) : StackComponentViewModel(stackComponent) {
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)
     var userData = mutableStateOf<UserData?>(null)
 
+    private var currentComponent: Component? = null
+
+    private val loginComponent = StateComponent<LoginViewModel>(
+        viewModelFactory = LoginViewModelFactory(accountPlugin = accountPlugin),
+        content = LoginComponentView
+    )
+
+    private val signupComponent = StateComponent<SignupViewModel>(
+        viewModelFactory = SignupViewModelFactory(accountPlugin = accountPlugin),
+        content = SignupComponentView
+    )
+
     override fun onAttach() {
-        //Initialize
         //authPlugin.initialize()
-    }
-
-    override fun onDetach() {
-
+        stackComponent.navigator.push(loginComponent)
     }
 
     override fun onStart() {
-        checkAndFetchUserData()
+
     }
 
     override fun onStop() {
 
     }
 
-    fun loginWithEmailAndLink(
-        email: String,
-        link: String
-    ) = viewModelScope.launch {
+    override fun onDetach() {
 
-        accountPlugin.signInWithEmailLink(
-            SignInRequestForEmailLink(email, link)
-        )
     }
 
-    fun sendEmailLink(email: String) = viewModelScope.launch {
-        accountPlugin.sendSignInLinkToEmail(EmailLinkData(email))
+    override fun onCheckChildForNextUriFragment(deepLinkPathSegment: String): Component? {
+        return loginComponent
     }
 
-    fun login(email: String, password: String) = viewModelScope.launch {
-        val result = accountPlugin.signInWithEmailAndPassword(SignInRequest(email, password))
-        handleLoginResult(result)
+    override fun onStackTopUpdate(topComponent: Component) {
+        currentComponent = topComponent
     }
 
-    fun signup(
-        email: String,
-        password: String,
-        username: String,
-        phoneNo: String
-    ) = viewModelScope.launch {
-        val result = accountPlugin.createUserWithEmailAndPassword(
-            SignUpRequest(email, password, username, phoneNo)
-        )
-        handleSignupResult(result)
-    }
 
     fun checkAndFetchUserData() = viewModelScope.launch {
         val result = accountPlugin.checkAndFetchUserData()
@@ -83,26 +79,6 @@ class AuthViewModel(
                 println("User not logged in: ${result.error}")
                 // Handle error
                 println("Error: ${result.error}")
-            }
-        }
-    }
-
-    private fun handleLoginResult(result: MacaoResult<MacaoUser>) {
-        when (result) {
-            is MacaoResult.Error -> {
-                val loginError = result.error
-                println("Login Failed: $loginError")
-                /*loadingState = false
-                showMessage = true
-                messageText = "Login successful!"*/
-            }
-
-            is MacaoResult.Success -> {
-                val macaoUser = result.value
-                println("Login Successful: $macaoUser")
-                /*loadingState = false
-                showMessage = true
-                messageText = "Error While Login..."*/
             }
         }
     }
@@ -127,46 +103,11 @@ class AuthViewModel(
         }
     }
 
-    private fun handleSignupResult(result: MacaoResult<MacaoUser>) {
-        when (result) {
-            is MacaoResult.Error -> {
-                val signupError = result.error
-                println("Signup Failed: $signupError")
-                /*loadingState = false
-                showMessage = true
-                messageText = "Sign up failed: ${e.message}"*/
-            }
-
-            is MacaoResult.Success -> {
-                val macaoUser = result.value
-                println("Signup Successful: $macaoUser")
-
-                storeData(macaoUser)
-                /*loadingState = false
-                showMessage = true
-                messageText = "Sign up successful!"*/
-            }
-        }
-    }
-
-    fun storeData(user: MacaoUser) = viewModelScope.launch {
-        //val firebaseUser = Firebase.auth.currentUser?.uid
-        //val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
-        //database.reference().child("Users").child("$firebaseUser").setValue(user)
-        println("Data Store Successfully: $user ")
-    }
-
     fun updateData(currentUser: MacaoUser, updatedUser: MacaoUser) = viewModelScope.launch {
         //val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
         //val userRef = database.reference().child("Users").child(currentUser.uid)
         //userRef.setValue(updatedUser)
         println("Data Updated Successfully: $updatedUser ")
-    }
-
-    fun resetPassword(email: String) = viewModelScope.launch {
-        //val firebase = Firebase.auth
-        //firebase.sendPasswordResetEmail(email)
-        println("Reset Email Sent")
     }
 
 }

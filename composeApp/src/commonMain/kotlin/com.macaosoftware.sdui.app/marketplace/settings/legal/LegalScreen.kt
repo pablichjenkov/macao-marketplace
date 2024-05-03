@@ -16,8 +16,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,90 +29,84 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PRIVACY
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.TERMS
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.WELCOME
 import com.macaosoftware.sdui.app.marketplace.settings.SettingScreen
 
+@Composable
+fun LegalScreen() {
 
-class LegalScreen : Screen {
-    @Composable
-    override fun Content() {
-        // Create a list of legal content
-        val legalContent = listOf(
-            TERMS,
-            PRIVACY,
-            WELCOME
-        )
+    // Create a list of legal content
+    val legalContent = listOf(
+        TERMS,
+        PRIVACY,
+        WELCOME
+    )
 
-        // Create a ViewPager-like state
-        var currentPage by remember { mutableStateOf(0) }
-        val navigator = LocalNavigator.current
+    // Create a ViewPager-like state
+    var currentPage by remember { mutableStateOf(0) }
 
-        Box(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
         ) {
-            Column(
+            // Legal content
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .weight(1f)
+                    .fillMaxWidth()
             ) {
-                // Legal content
-                LazyColumn(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                ) {
-                    items(legalContent.size) { index ->
-                        LegalPage(
-                            title = if (index == 0) "Terms & Conditions" else if (index == 1) "Privacy Policy" else "Welcome",
-                            content = legalContent[index],
-                            isCurrentPage = index == currentPage
-                        )
+                items(legalContent.size) { index ->
+                    LegalPage(
+                        title = if (index == 0) "Terms & Conditions" else if (index == 1) "Privacy Policy" else "Welcome",
+                        content = legalContent[index],
+                        isCurrentPage = index == currentPage
+                    )
+                }
+            }
+
+            // Dot indicator
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                for (index in legalContent.indices) {
+                    DotIndicator(selected = index == currentPage)
+                }
+            }
+
+            // Navigation buttons
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                NavigationButton(
+                    text = "Previous",
+                    onClick = { if (currentPage > 0) currentPage-- }
+                )
+
+                NavigationButton(
+                    text = "Skip",
+                    onClick = { currentPage = legalContent.size - 1 }
+                )
+
+                NavigationButton(
+                    text = if (currentPage < legalContent.size - 1) "Next" else "Finish",
+                    onClick = {
+                        //if (currentPage < legalContent.size - 1) currentPage++ else navigator!!.push(SettingScreen())
                     }
-                }
-
-                // Dot indicator
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    for (index in legalContent.indices) {
-                        DotIndicator(selected = index == currentPage)
-                    }
-                }
-
-                // Navigation buttons
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    NavigationButton(
-                        text = "Previous",
-                        onClick = { if (currentPage > 0) currentPage-- }
-                    )
-
-                    NavigationButton(
-                        text = "Skip",
-                        onClick = { currentPage = legalContent.size - 1 }
-                    )
-
-                    NavigationButton(
-                        text = if (currentPage < legalContent.size - 1) "Next" else "Finish",
-                        onClick = {
-                            if (currentPage < legalContent.size - 1) currentPage++ else navigator!!.push(SettingScreen())
-
-                        }
-                    )
-                }
+                )
             }
         }
     }

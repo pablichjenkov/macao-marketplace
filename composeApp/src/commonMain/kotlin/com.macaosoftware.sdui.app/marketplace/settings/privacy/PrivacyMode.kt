@@ -23,20 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PRIVACY
 
-class PrivacyMode() : Screen {
-    @Composable
-    override fun Content() {
-        PrivacyModeContent()
-    }
-}
-
 @Composable
-fun PrivacyModeContent() {
-    val navigator = LocalNavigator.current
+fun PrivacySettingsScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -45,7 +35,7 @@ fun PrivacyModeContent() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navigator!!.pop()
+                        // navigator!!.pop()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

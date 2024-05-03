@@ -28,31 +28,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 
-class AccountMode : Screen {
-    @Composable
-    override fun Content() {
-        var userName by remember { mutableStateOf("John Doe") }
-        var email by remember { mutableStateOf("john.doe@example.com") }
-        var notificationsEnabled by remember { mutableStateOf(true) }
-        val navigator = LocalNavigator.current
+@Composable
+fun AccountScreen() {
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+    var userName by remember { mutableStateOf("John Doe") }
+    var email by remember { mutableStateOf("john.doe@example.com") }
+    var notificationsEnabled by remember { mutableStateOf(true) }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(16.dp)
-            ) {item {
+            item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
                     IconButton(onClick = {
-                        navigator!!.pop()
+                        //navigator!!.pop()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -66,29 +64,28 @@ class AccountMode : Screen {
                     )
                 }
             }
-                item {
-                    AccountSettingItem(
-                        title = "Username",
-                        value = userName,
-                        onValueChange = { userName = it }
-                    )
-                }
-                item {
-                    AccountSettingItem(
-                        title = "Email",
-                        value = email,
-                        onValueChange = { email = it }
-                    )
-                }
-                item {
-                    SwitchSettingItem(
-                        title = "Enable Notifications",
-                        isChecked = notificationsEnabled,
-                        onCheckedChange = { notificationsEnabled = it }
-                    )
-                }
-                // Add more account settings as needed
+            item {
+                AccountSettingItem(
+                    title = "Username",
+                    value = userName,
+                    onValueChange = { userName = it }
+                )
             }
+            item {
+                AccountSettingItem(
+                    title = "Email",
+                    value = email,
+                    onValueChange = { email = it }
+                )
+            }
+            item {
+                SwitchSettingItem(
+                    title = "Enable Notifications",
+                    isChecked = notificationsEnabled,
+                    onCheckedChange = { notificationsEnabled = it }
+                )
+            }
+            // Add more account settings as needed
         }
     }
 }
@@ -146,4 +143,3 @@ fun SwitchSettingItem(
         )
     }
 }
-

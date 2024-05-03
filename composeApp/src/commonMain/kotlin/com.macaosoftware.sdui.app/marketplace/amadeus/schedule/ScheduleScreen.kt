@@ -27,82 +27,80 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
 
-class ScheduleScreen() : Screen {
+@Composable
+fun ScheduleScreen() {
 
-    @Composable
-    override fun Content() {
-        Column(modifier = Modifier.fillMaxSize()) {
-            // Custom Top App Bar
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 4.dp, end = 4.dp, top = 2.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Custom Top App Bar
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, top = 2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 //                CustomLogo(
 //                    res = "logo.png",
 //                    modifier = Modifier,
 //                    size = 140.dp
 //                )
 
-                Text(
-                    text = "Logo Template",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
-                )
+            Text(
+                text = "Logo Template",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp
+            )
 
-                // Navigation and Settings Icons
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+            // Navigation and Settings Icons
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                IconButton(
+                    onClick = {},
+                    enabled = true,
+                    modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
                 ) {
-                    IconButton(
-                        onClick = {},
-                        enabled = true,
-                        modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
-                    ) {
-                        Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
-                    }
+                    Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null)
+                }
 
-                    IconButton(
-                        onClick = {},
-                        enabled = true,
-                        modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
-                    ) {
-                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
-                    }
+                IconButton(
+                    onClick = {},
+                    enabled = true,
+                    modifier = Modifier.clip(shape = RoundedCornerShape(6.dp)),
+                ) {
+                    Icon(imageVector = Icons.Default.Settings, contentDescription = null)
                 }
             }
+        }
 
-            // Date Content
-            val dateState = rememberDateRangePickerState()
-            DateRangePicker(
-                state = dateState,
-                modifier = Modifier.fillMaxWidth().padding(8.dp)
-            )
+        // Date Content
+        val dateState = rememberDateRangePickerState()
+        DateRangePicker(
+            state = dateState,
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
+        )
 
-            // Divider between left and right sides
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(2.dp), // Adjust the height of the divider as needed
-                thickness = 2.dp,
-                color = Color.LightGray
-            )
+        // Divider between left and right sides
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp), // Adjust the height of the divider as needed
+            thickness = 2.dp,
+            color = Color.LightGray
+        )
 
-            // Right side with details
-            Box(modifier = Modifier.weight(0.55f)) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    MySchedules()
-                }
+        // Right side with details
+        Box(modifier = Modifier.weight(0.55f)) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                MySchedules()
             }
         }
     }

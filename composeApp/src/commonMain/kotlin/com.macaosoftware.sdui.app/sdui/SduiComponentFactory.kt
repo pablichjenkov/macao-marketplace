@@ -21,6 +21,8 @@ import com.macaosoftware.component.drawer.DrawerComponent
 import com.macaosoftware.component.drawer.DrawerComponentDefaults
 import com.macaosoftware.component.panel.PanelComponent
 import com.macaosoftware.component.panel.PanelComponentDefaults
+import com.macaosoftware.component.stack.StackComponent
+import com.macaosoftware.component.stack.StackComponentDefaults
 import com.macaosoftware.component.topbar.TopBarComponent
 import com.macaosoftware.component.topbar.TopBarComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
@@ -28,14 +30,10 @@ import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModel
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeViewWithVoyager
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoViewModelFactory
@@ -314,32 +312,17 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.Amadeus.HomeScreen -> {
 
-                val useAmadeusWithVoyager = true // Should come from the json
-
                 val database: Database = get()
                 val timeProvider: ITimeProvider = get()
 
-                if (useAmadeusWithVoyager) {
-                    StateComponent<AmadeusHomeViewModel>(
-                        viewModelFactory = AmadeusHomeViewModelFactory(
-                            database,
-                            timeProvider,
-                            onHotelClick = { hotelListing ->
-                                // no-op
-                            }
-                        ),
-                        content = AmadeusHomeViewWithVoyager
-                    )
-                } else {
-                    TopBarComponent<AmadeusHomeCoordinatorViewModel>(
-                        viewModelFactory = AmadeusHomeCoordinatorViewModelFactory(
-                            TopBarComponentDefaults.createTopBarStatePresenter(),
-                            database,
-                            timeProvider
-                        ),
-                        content = TopBarComponentDefaults.TopBarComponentView
-                    )
-                }
+                TopBarComponent<AmadeusHomeCoordinatorViewModel>(
+                    viewModelFactory = AmadeusHomeCoordinatorViewModelFactory(
+                        TopBarComponentDefaults.createTopBarStatePresenter(),
+                        database,
+                        timeProvider
+                    ),
+                    content = TopBarComponentDefaults.TopBarComponentView
+                )
             }
 
             SduiConstants.ComponentType.Amadeus.ScheduleScreen -> {
@@ -360,9 +343,12 @@ class SduiComponentFactory(
 
                 val accountPlugin: AccountPlugin = get()
 
-                StateComponent<AuthViewModel>(
-                    viewModelFactory = AuthViewModelFactory(accountPlugin),
-                    content = AuthComponentView
+                StackComponent<AuthViewModel>(
+                    viewModelFactory = AuthViewModelFactory(
+                        accountPlugin = accountPlugin,
+                        stackStatePresenter = StackComponentDefaults.createStackStatePresenter()
+                    ),
+                    content = StackComponentDefaults.DefaultStackComponentView
                 )
             }
 

@@ -57,9 +57,6 @@ kotlin {
             //Kamel
             implementation(libs.kamel.image)
 
-            //Voyager
-            implementation(libs.voyager.navigator)
-
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)

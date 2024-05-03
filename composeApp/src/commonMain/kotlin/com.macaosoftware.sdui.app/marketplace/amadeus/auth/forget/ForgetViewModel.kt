@@ -2,11 +2,16 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.auth.forget
 
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ForgetViewModel(
-
     private val loginComponent: StateComponent<ForgetViewModel>
 ): ComponentViewModel() {
+
+    val viewModelScope = CoroutineScope(Dispatchers.Default)
+
     override fun onAttach() {
         println("ForgetViewModel -  onAttach() : ")
     }
@@ -21,5 +26,16 @@ class ForgetViewModel(
 
     override fun onStop() {
         println("ForgetViewModel -  onStop() : ")
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$")
+        return email.trim().matches(emailRegex)
+    }
+
+    fun resetPassword(email: String) = viewModelScope.launch {
+        //val firebase = Firebase.auth
+        //firebase.sendPasswordResetEmail(email)
+        println("Reset Email Sent")
     }
 }

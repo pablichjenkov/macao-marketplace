@@ -33,21 +33,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.sdui.app.theme.AppTheme
-
-class AboutMode() : Screen {
-    @Composable
-    override fun Content() {
-        AboutModeContent()
-    }
-}
 
 @Composable
-fun AboutModeContent() {
+fun AboutScreen() {
     var isUpdateAvailable by remember { mutableStateOf(false) }
-    val navigator = LocalNavigator.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -56,7 +45,7 @@ fun AboutModeContent() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navigator!!.pop()
+                        //navigator!!.pop()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
