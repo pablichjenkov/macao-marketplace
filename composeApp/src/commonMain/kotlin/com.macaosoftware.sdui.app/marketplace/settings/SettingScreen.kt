@@ -38,24 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.macaosoftware.sdui.app.marketplace.settings.about.AboutMode
-import com.macaosoftware.sdui.app.marketplace.settings.accessibility.AccessibilityMode
-import com.macaosoftware.sdui.app.marketplace.settings.account.AccountMode
-import com.macaosoftware.sdui.app.marketplace.settings.language.LanguageMode
-import com.macaosoftware.sdui.app.marketplace.settings.legal.LegalScreen
 import com.macaosoftware.sdui.app.marketplace.settings.legal.SettingItem
-import com.macaosoftware.sdui.app.marketplace.settings.notifications.NotificationsMode
-import com.macaosoftware.sdui.app.marketplace.settings.privacy.PrivacyMode
-import com.macaosoftware.sdui.app.marketplace.settings.security.SecurityMode
-import com.macaosoftware.sdui.app.marketplace.settings.sync.SyncMode
-import com.macaosoftware.sdui.app.marketplace.settings.theme.DarkMode
 
-class SettingScreen() : Screen {
+@Composable
+fun SettingScreen() {
 
-    @Composable
-    override fun Content() {
         var darkMode by remember { mutableStateOf(false) }
         var notifications by remember { mutableStateOf(true) }
         var legal by remember { mutableStateOf(false) }
@@ -71,7 +58,6 @@ class SettingScreen() : Screen {
         var syncSettings by remember { mutableStateOf(false) }
         var aboutTheApp by remember { mutableStateOf(false) }
 
-        val navigator = LocalNavigator.current
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -91,7 +77,7 @@ class SettingScreen() : Screen {
                     },
                     navigationIcon = {
                         IconButton(onClick = {
-                            navigator!!.pop()
+                            //navigator!!.pop()
                         }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
@@ -110,7 +96,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Notifications",
                         description = "Notifications Setting",
-                        onClick = { navigator!!.push(NotificationsMode()) },
+                        onClick = { /*navigator!!.push(NotificationsMode())*/ },
                         switchValue = notifications,
                         startIcon = Icons.Default.Notifications,
                         endIcon = Icons.Default.KeyboardArrowRight
@@ -119,7 +105,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Dark Mode",
                         description = "Theme Setting",
-                        onClick = { navigator!!.push(DarkMode()) },
+                        onClick = {  },
                         switchValue = darkMode,
                         startIcon = Icons.Default.DarkMode,
                         endIcon = Icons.Default.KeyboardArrowRight
@@ -128,7 +114,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Terms Conditions",
                         description = "Terms & Condition",
-                        onClick = { navigator!!.push(LegalScreen()) },
+                        onClick = { /*navigator!!.push(LegalScreen())*/ },
                         switchValue = legal,
                         startIcon = Icons.Default.PrivacyTip,
                         endIcon = Icons.Default.KeyboardArrowRight
@@ -138,7 +124,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Account Settings",
                         description = "Manage your account details.",
-                        onClick = { navigator!!.push(AccountMode()) },
+                        onClick = { /*navigator!!.push(AccountMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.AccountBox
                     )
@@ -146,7 +132,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Language Preferences",
                         description = "Choose your preferred language.",
-                        onClick = { navigator!!.push(LanguageMode()) },
+                        onClick = { /*navigator!!.push(LanguageMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Language
                     )
@@ -155,7 +141,7 @@ class SettingScreen() : Screen {
                         title = "Privacy Settings",
                         description = "Customize privacy preferences.",
                         onClick = {
-                            navigator!!.push(PrivacyMode())
+                            //navigator!!.push(PrivacyMode())
                         },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.PrivacyTip
@@ -164,7 +150,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Security Settings",
                         description = "Enhance account security.",
-                        onClick = { navigator!!.push(SecurityMode()) },
+                        onClick = { /*navigator!!.push(SecurityMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Security
                     )
@@ -180,7 +166,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Accessibility Settings",
                         description = "Adjust accessibility features.",
-                        onClick = { navigator!!.push(AccessibilityMode()) },
+                        onClick = { /*navigator!!.push(AccessibilityMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Accessibility
                     )
@@ -188,7 +174,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "Sync Settings",
                         description = "Manage synchronization options.",
-                        onClick = { navigator!!.push(SyncMode()) },
+                        onClick = { /*navigator!!.push(SyncMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.Sync
                     )
@@ -196,7 +182,7 @@ class SettingScreen() : Screen {
                     SettingItem(
                         title = "About the App",
                         description = "Get information about the app.",
-                        onClick = { navigator!!.push(AboutMode()) },
+                        onClick = { /*navigator!!.push(AboutMode())*/ },
                         endIcon = Icons.Default.KeyboardArrowRight,
                         startIcon = Icons.Default.AppsOutage
                     )
@@ -257,4 +243,3 @@ class SettingScreen() : Screen {
             }
         )
     }
-}

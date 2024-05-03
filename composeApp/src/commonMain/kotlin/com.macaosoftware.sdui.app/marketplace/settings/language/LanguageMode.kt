@@ -22,66 +22,62 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 
-class LanguageMode() : Screen {
-    @Composable
-    override fun Content() {
-        var selectedLanguage by remember { mutableStateOf("English") }
-        val navigator = LocalNavigator.current
+@Composable
+fun LanguageSettingsScreen() {
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+    var selectedLanguage by remember { mutableStateOf("English") }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(16.dp)
-            ) {
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        IconButton(onClick = {
-                            navigator!!.pop()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowLeft,
-                                contentDescription = null
-                            )
-                        }
-                        Text(
-                            text = "Language Preferences",
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.primary,
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    IconButton(onClick = {
+                        //navigator!!.pop()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = null
                         )
                     }
-                }
-                item {
-                    LanguageOptionItem(
-                        language = "English",
-                        isSelected = selectedLanguage == "English",
-                        onClick = { selectedLanguage = "English" }
+                    Text(
+                        text = "Language Preferences",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
-                item {
-                    LanguageOptionItem(
-                        language = "Spanish",
-                        isSelected = selectedLanguage == "Spanish",
-                        onClick = { selectedLanguage = "Spanish" }
-                    )
-                }
-                item {
-                    LanguageOptionItem(
-                        language = "French",
-                        isSelected = selectedLanguage == "French",
-                        onClick = { selectedLanguage = "French" }
-                    )
-                }
-                // Add more language options as needed
             }
+            item {
+                LanguageOptionItem(
+                    language = "English",
+                    isSelected = selectedLanguage == "English",
+                    onClick = { selectedLanguage = "English" }
+                )
+            }
+            item {
+                LanguageOptionItem(
+                    language = "Spanish",
+                    isSelected = selectedLanguage == "Spanish",
+                    onClick = { selectedLanguage = "Spanish" }
+                )
+            }
+            item {
+                LanguageOptionItem(
+                    language = "French",
+                    isSelected = selectedLanguage == "French",
+                    onClick = { selectedLanguage = "French" }
+                )
+            }
+            // Add more language options as needed
         }
     }
 }

@@ -28,19 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-
-class AccessibilityMode() : Screen {
-    @Composable
-    override fun Content() {
-        AccessibilityModeContent()
-    }
-}
 
 @Composable
-fun AccessibilityModeContent() {
-    val navigator = LocalNavigator.current
+fun AccessibilityModeScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -49,7 +39,7 @@ fun AccessibilityModeContent() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navigator!!.pop()
+                        //navigator!!.pop()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

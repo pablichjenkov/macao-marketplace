@@ -23,89 +23,84 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 
-class NotificationsMode : Screen {
-    @Composable
-    override fun Content() {
-        var emailEnabled by remember { mutableStateOf(true) }
-        var pushEnabled by remember { mutableStateOf(true) }
-        var soundEnabled by remember { mutableStateOf(true) }
-        var vibrationEnabled by remember { mutableStateOf(true) }
-        var inAppEnabled by remember { mutableStateOf(false) }
+@Composable
+fun NotificationsSettingsScreen() {
 
-        val navigator = LocalNavigator.current
+    var emailEnabled by remember { mutableStateOf(true) }
+    var pushEnabled by remember { mutableStateOf(true) }
+    var soundEnabled by remember { mutableStateOf(true) }
+    var vibrationEnabled by remember { mutableStateOf(true) }
+    var inAppEnabled by remember { mutableStateOf(false) }
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(16.dp)
-            ) {
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        IconButton(onClick = {
-                            navigator!!.pop()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowLeft,
-                                contentDescription = null
-                            )
-                        }
-                        Text(
-                            text = "Notification Settings",
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = MaterialTheme.colorScheme.primary,
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    IconButton(onClick = {
+                        // navigator!!.pop()
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = null
                         )
                     }
-                }
-                item {
-                    NotificationOptionItem(
-                        title = "Email Notifications",
-                        description = "Receive important updates via email.",
-                        isChecked = emailEnabled,
-                        onCheckedChange = { emailEnabled = it }
+                    Text(
+                        text = "Notification Settings",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
-                item {
-                    NotificationOptionItem(
-                        title = "Push Notifications",
-                        description = "Get real-time updates with push notifications.",
-                        isChecked = pushEnabled,
-                        onCheckedChange = { pushEnabled = it }
-                    )
-                }
-                item {
-                    NotificationOptionItem(
-                        title = "Sound Notifications",
-                        description = "Enable sound alerts for notifications.",
-                        isChecked = soundEnabled,
-                        onCheckedChange = { soundEnabled = it }
-                    )
-                }
-                item {
-                    NotificationOptionItem(
-                        title = "Vibration",
-                        description = "Enable vibration for notifications.",
-                        isChecked = vibrationEnabled,
-                        onCheckedChange = { vibrationEnabled = it }
-                    )
-                }
-                // Add more notification options as needed
-                item {
-                    NotificationOptionItem(
-                        title = "In-App Notifications",
-                        description = "Receive notifications within the app.",
-                        isChecked = inAppEnabled,
-                        onCheckedChange = { inAppEnabled = it }
-                    )
-                }
+            }
+            item {
+                NotificationOptionItem(
+                    title = "Email Notifications",
+                    description = "Receive important updates via email.",
+                    isChecked = emailEnabled,
+                    onCheckedChange = { emailEnabled = it }
+                )
+            }
+            item {
+                NotificationOptionItem(
+                    title = "Push Notifications",
+                    description = "Get real-time updates with push notifications.",
+                    isChecked = pushEnabled,
+                    onCheckedChange = { pushEnabled = it }
+                )
+            }
+            item {
+                NotificationOptionItem(
+                    title = "Sound Notifications",
+                    description = "Enable sound alerts for notifications.",
+                    isChecked = soundEnabled,
+                    onCheckedChange = { soundEnabled = it }
+                )
+            }
+            item {
+                NotificationOptionItem(
+                    title = "Vibration",
+                    description = "Enable vibration for notifications.",
+                    isChecked = vibrationEnabled,
+                    onCheckedChange = { vibrationEnabled = it }
+                )
+            }
+            // Add more notification options as needed
+            item {
+                NotificationOptionItem(
+                    title = "In-App Notifications",
+                    description = "Receive notifications within the app.",
+                    isChecked = inAppEnabled,
+                    onCheckedChange = { inAppEnabled = it }
+                )
             }
         }
     }

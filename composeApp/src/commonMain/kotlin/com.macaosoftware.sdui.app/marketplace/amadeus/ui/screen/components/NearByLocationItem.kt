@@ -34,20 +34,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.navigator.LocalNavigator
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.IMAGE
 import com.pablichj.incubator.amadeus.endpoint.hotels.model.HotelListing
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Heart
-import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
@@ -82,7 +79,8 @@ fun NearByLocationList(
             )
         )
     }
-    LazyRow(state = rememberLazyListState(),
+    LazyRow(
+        state = rememberLazyListState(),
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
