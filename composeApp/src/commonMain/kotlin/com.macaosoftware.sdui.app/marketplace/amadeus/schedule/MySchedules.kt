@@ -40,11 +40,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Address
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.Data
-import com.macaosoftware.sdui.app.marketplace.amadeus.data.model.citycode.GeoCode
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.CustomBottomSheet
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util
+import com.pablichj.incubator.amadeus.common.model.Address
+import com.pablichj.incubator.amadeus.common.model.GeoCode
 import io.kamel.core.Resource
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
@@ -77,7 +76,7 @@ fun MySchedules() {
             )
         )
     }
-    val data1 = Data(
+    val data1 = CityModel(
         address = Address("123 Main St"),
         chainCode = "ABC123",
         dupeId = 1,
@@ -88,7 +87,7 @@ fun MySchedules() {
         name = "Hotel 1"
     )
 
-    val data2 = Data(
+    val data2 = CityModel(
         address = Address("456 Oak St"),
         chainCode = "DEF456",
         dupeId = 2,
@@ -99,7 +98,7 @@ fun MySchedules() {
         name = "Hotel 2"
     )
 
-    // Creating a list of Data instances
+    // Creating a list of ScheduleModel instances
     val dataList = listOf(data1, data2)
 
     // Printing the list
@@ -124,7 +123,7 @@ fun MySchedules() {
 }
 
 @Composable
-fun MyScheduleItem(data: Data) {
+fun MyScheduleItem(data: CityModel) {
     //val navigator = LocalNavigator.current
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()

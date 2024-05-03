@@ -1,6 +1,7 @@
 package com.macaosoftware.app
 
 import com.macaosoftware.util.MacaoResult
+import org.koin.core.component.KoinComponent
 
 interface StartupTask {
 
@@ -17,5 +18,5 @@ interface StartupTask {
      * Things like Database Migration and LaunchDarkly initialization
      * are examples of StartupTasks.
      * */
-    suspend fun initialize(koinInjector: KoinInjector): MacaoResult<Unit>
+    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Unit>
 }

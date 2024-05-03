@@ -3,6 +3,7 @@ package com.macaosoftware.sdui.app
 import com.macaosoftware.app.RootKoinModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.AccountPluginEmpty
+import com.macaosoftware.sdui.app.di.commonKoinModule
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
@@ -13,15 +14,16 @@ import org.koin.dsl.module
 
 class JsKoinModuleInitializer : RootKoinModuleInitializer {
 
-    override suspend fun initialize(): Module {
+    override suspend fun initialize(): List<Module> {
 
         val database = createDatabase(BrowserDriverFactory())
 
-        return module {
+        val JsKoinModule = module {
             single<ITimeProvider> { DefaultTimeProvider() }
             single<Database> { database }
             single<AccountPlugin> { AccountPluginEmpty() }
-            // single<AppLifecycleDispatcher> { jsBridge.appLifecycleDispatcher }
         }
+
+        return listOf(JsKoinModule, commonKoinModule)
     }
 }
