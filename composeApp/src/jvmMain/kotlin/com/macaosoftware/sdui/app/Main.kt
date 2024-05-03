@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
@@ -19,6 +20,8 @@ import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.StartupTaskRunnerDefault
 import com.macaosoftware.app.WindowWithCustomTopDecoration
+import com.macaosoftware.component.util.LocalBackPressedDispatcher
+import com.macaosoftware.plugin.DefaultBackPressDispatcherPlugin
 import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
 import com.macaosoftware.sdui.app.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.sdui.app.startup.LaunchDarklyStartupTask
@@ -41,6 +44,7 @@ fun main() {
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
         rootComponentInitializer = ComposeAppRootComponentInitializer()
     )
+    val backPressedDispatcherPlugin = DefaultBackPressDispatcherPlugin()
 
     singleWindowApplication(
         title = "Macao SDUI Demo",
@@ -54,7 +58,7 @@ fun main() {
             onRefreshClick = {
                 applicationState.initialize()
             },
-            onBackClick = { exitProcess(0) }
+            onBackClick = { backPressedDispatcherPlugin.dispatchBackPressed() }
         ) {
             val notification = rememberNotification(
                 title = "Macao Sdui App",
@@ -136,9 +140,11 @@ fun main() {
                     }
                 }
             }
-            MacaoKoinApplication(
-                applicationState = applicationState
-            )
+            CompositionLocalProvider(
+                LocalBackPressedDispatcher provides backPressedDispatcherPlugin
+            ) {
+                MacaoKoinApplication(applicationState = applicationState)
+            }
         }
     }
 }

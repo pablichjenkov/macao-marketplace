@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.SignInRequest
 
@@ -36,6 +37,7 @@ val LoginComponentView: @Composable StateComponent<LoginViewModel>.(
     loginViewModel: LoginViewModel
 ) -> Unit = { modifier: Modifier, loginViewModel: LoginViewModel ->
 
+    BackPressHandler()
     LoginScreen(loginViewModel)
 }
 

@@ -9,9 +9,13 @@ import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.MacaoUser
 import com.macaosoftware.plugin.account.UserData
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetComponentView
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetViewModel
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginComponentView
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModel
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModelMsg
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupComponentView
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupViewModel
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupViewModelFactory
@@ -32,13 +36,21 @@ class AuthViewModel(
     private var currentComponent: Component? = null
 
     private val loginComponent = StateComponent<LoginViewModel>(
-        viewModelFactory = LoginViewModelFactory(accountPlugin = accountPlugin),
+        viewModelFactory = LoginViewModelFactory(
+            accountPlugin = accountPlugin,
+            loginViewModelMessageHandler = ::loginViewModelMessageHandler
+        ),
         content = LoginComponentView
     )
 
     private val signupComponent = StateComponent<SignupViewModel>(
         viewModelFactory = SignupViewModelFactory(accountPlugin = accountPlugin),
         content = SignupComponentView
+    )
+
+    private val forgotCredentialsComponent = StateComponent<ForgetViewModel>(
+        viewModelFactory = ForgetViewModelFactory(accountPlugin = accountPlugin),
+        content = ForgetComponentView
     )
 
     override fun onAttach() {
@@ -110,4 +122,18 @@ class AuthViewModel(
         println("Data Updated Successfully: $updatedUser ")
     }
 
+    private fun loginViewModelMessageHandler(loginViewModelMsg: LoginViewModelMsg) =
+        when (loginViewModelMsg) {
+            LoginViewModelMsg.OnCreateAccountClick -> {
+                stackComponent.navigator.push(signupComponent)
+            }
+
+            LoginViewModelMsg.OnForgotCredentialsClick -> {
+                stackComponent.navigator.push(forgotCredentialsComponent)
+            }
+
+            LoginViewModelMsg.OnLoginWithEmailLinkClick -> {
+
+            }
+        }
 }

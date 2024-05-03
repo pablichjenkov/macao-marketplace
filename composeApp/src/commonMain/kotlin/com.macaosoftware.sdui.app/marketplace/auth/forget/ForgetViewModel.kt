@@ -2,12 +2,14 @@ package com.macaosoftware.sdui.app.marketplace.auth.forget
 
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
+import com.macaosoftware.plugin.account.AccountPlugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ForgetViewModel(
-    private val loginComponent: StateComponent<ForgetViewModel>
+    private val ForgetCredentialsComponent: StateComponent<ForgetViewModel>,
+    private val accountPlugin: AccountPlugin
 ): ComponentViewModel() {
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)

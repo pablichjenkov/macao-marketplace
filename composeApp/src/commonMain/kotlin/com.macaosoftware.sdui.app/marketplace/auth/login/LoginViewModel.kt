@@ -4,7 +4,6 @@ import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.EmailLinkData
-import com.macaosoftware.plugin.account.MacaoUser
 import com.macaosoftware.plugin.account.SignInRequest
 import com.macaosoftware.plugin.account.SignInRequestForEmailLink
 import com.macaosoftware.util.MacaoResult
@@ -14,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginComponent: StateComponent<LoginViewModel>,
-    private val accountPlugin: AccountPlugin
+    private val accountPlugin: AccountPlugin,
+    private val loginViewModelMessageHandler: (LoginViewModelMsg) -> Unit
 ) : ComponentViewModel() {
 
     private val viewModelScope = CoroutineScope(Dispatchers.Main)
@@ -83,14 +83,14 @@ class LoginViewModel(
     }
 
     fun onSignupClick() {
-        //navigator?.push(SignUpScreen(authViewModel))
+        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnCreateAccountClick)
     }
 
     fun onForgetCredentialsClick() {
-        // navigator?.push(ForgetScreen(authViewModel))
+        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnForgotCredentialsClick)
     }
 
     fun onLoginWithEmailLinkClick() {
-        // navigator?.push(LoginWithEmailLinkScreen(authViewModel))
+        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnLoginWithEmailLinkClick)
     }
 }
