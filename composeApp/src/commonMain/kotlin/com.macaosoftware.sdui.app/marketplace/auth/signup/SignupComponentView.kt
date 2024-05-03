@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.macaosoftware.component.core.BackPressHandler
 import com.macaosoftware.component.viewmodel.StateComponent
 
 val SignupComponentView: @Composable StateComponent<SignupViewModel>.(
@@ -34,6 +35,7 @@ val SignupComponentView: @Composable StateComponent<SignupViewModel>.(
     signupViewModel: SignupViewModel
 ) -> Unit = { modifier: Modifier, signupViewModel: SignupViewModel ->
 
+    BackPressHandler()
     SignupScreen(signupViewModel)
 }
 
