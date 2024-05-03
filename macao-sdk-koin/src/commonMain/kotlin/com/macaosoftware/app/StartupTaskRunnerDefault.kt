@@ -2,13 +2,14 @@ package com.macaosoftware.app
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.koin.core.component.KoinComponent
 
 class StartupTaskRunnerDefault(
     val startupTasks: List<StartupTask>
 ) : StartupTaskRunner {
 
     override fun initialize(
-        koinInjector: KoinInjector
+        koinComponent: KoinComponent
     ): Flow<StartupTaskStatus> = flow {
 
         startupTasks.forEach { startupTask ->
@@ -17,7 +18,7 @@ class StartupTaskRunnerDefault(
                 emit(StartupTaskStatus.Running(startupTask.name()))
             }
 
-            startupTask.initialize(koinInjector)
+            startupTask.initialize(koinComponent)
         }
 
         emit(StartupTaskStatus.CompleteSuccess)

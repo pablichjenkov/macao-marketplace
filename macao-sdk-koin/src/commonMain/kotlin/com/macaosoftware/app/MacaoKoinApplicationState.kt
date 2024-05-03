@@ -24,11 +24,11 @@ class MacaoKoinApplicationState(
 
         val koinApplication = withContext(dispatchers.default) {
 
-            val rootModule = rootKoinModuleInitializer.initialize()
-            // val commonModule = initCommonModule()
+            val rootModules = rootKoinModuleInitializer.initialize()
+
             koinApplication {
                 printLogger()
-                modules(rootModule)
+                modules(rootModules)
             }
         }
 

@@ -53,7 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.macaosoftware.plugin.account.MacaoUser
-import com.macaosoftware.sdui.app.marketplace.amadeus.auth.AuthViewModel
+import com.macaosoftware.sdui.app.marketplace.auth.AuthViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.ui.screen.components.SocialLink
 import com.macaosoftware.sdui.app.marketplace.amadeus.util.Util.PROFILE
 import com.macaosoftware.util.MacaoResult
