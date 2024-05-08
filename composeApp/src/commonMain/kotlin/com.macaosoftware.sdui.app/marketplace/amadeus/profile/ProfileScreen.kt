@@ -64,12 +64,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
-    authViewModel: AuthViewModel? = null
+    viewModel: ProfileViewModel
 ) {
 
-    val usersData = authViewModel?.userData?.value
-    val coroutineScope = rememberCoroutineScope()
+    val usersData = viewModel.getUser()
     val currentUser = MacaoUser("email@email.com")//firebaseUser.currentUser
+    val coroutineScope = rememberCoroutineScope()
     val uriHandler = LocalUriHandler.current
     var editProfile by remember { mutableStateOf(false) }
     var displayName by remember { mutableStateOf("") }
@@ -224,7 +224,7 @@ fun ProfileScreen(
                         OutlinedButton(
                             onClick = {
                                 coroutineScope.launch {
-                                    authViewModel?.let {
+                                    viewModel?.let {
                                         val result = it.accountPlugin.signOut()
                                         when (result) {
                                             is MacaoResult.Success -> {
@@ -394,7 +394,7 @@ fun ProfileScreen(
                                 onClick = {
                                     // Save changes
                                     coroutineScope.launch {
-                                        authViewModel?.accountPlugin?.updateFullProfile(
+                                        viewModel?.accountPlugin?.updateFullProfile(
                                             displayName = displayName,
                                             phoneNo = phone,
                                             country = country,

@@ -333,8 +333,13 @@ class SduiComponentFactory(
             }
 
             SduiConstants.ComponentType.Amadeus.Profile -> {
+
+                val accountPlugin: AccountPlugin = get()
+
                 StateComponent<ProfileViewModel>(
-                    viewModelFactory = ProfileViewModelFactory(),
+                    viewModelFactory = ProfileViewModelFactory(
+                        accountPlugin = accountPlugin
+                    ),
                     content = ProfileComponentView
                 )
             }

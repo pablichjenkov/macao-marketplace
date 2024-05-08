@@ -7,10 +7,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ForgetViewModel(
-    private val ForgetCredentialsComponent: StateComponent<ForgetViewModel>,
-    private val accountPlugin: AccountPlugin
-): ComponentViewModel() {
+class ForgotCredentialsViewModel(
+    private val stateComponent: StateComponent<ForgotCredentialsViewModel>,
+    private val accountPlugin: AccountPlugin,
+    private val viewModelMessageHandler: (ForgotCredentialsViewModelMsg) -> Unit
+) : ComponentViewModel() {
 
     val viewModelScope = CoroutineScope(Dispatchers.Default)
 
@@ -39,5 +40,8 @@ class ForgetViewModel(
         //val firebase = Firebase.auth
         //firebase.sendPasswordResetEmail(email)
         println("Reset Email Sent")
+        viewModelMessageHandler.invoke(
+            ForgotCredentialsViewModelMsg.OnSuccess()
+        )
     }
 }

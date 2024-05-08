@@ -9,9 +9,10 @@ import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.AccountPlugin
 import com.macaosoftware.plugin.account.MacaoUser
 import com.macaosoftware.plugin.account.UserData
-import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetComponentView
-import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetViewModel
-import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgetViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgotCredentialsComponentView
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgotCredentialsViewModel
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgotCredentialsViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.auth.forget.ForgotCredentialsViewModelMsg
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginComponentView
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModel
 import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModelFactory
@@ -19,6 +20,7 @@ import com.macaosoftware.sdui.app.marketplace.auth.login.LoginViewModelMsg
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupComponentView
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupViewModel
 import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.auth.signup.SignupViewModelMsg
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,23 +37,35 @@ class AuthViewModel(
 
     private var currentComponent: Component? = null
 
-    private val loginComponent = StateComponent<LoginViewModel>(
-        viewModelFactory = LoginViewModelFactory(
-            accountPlugin = accountPlugin,
-            loginViewModelMessageHandler = ::loginViewModelMessageHandler
-        ),
-        content = LoginComponentView
-    )
+    private val loginComponent: StateComponent<LoginViewModel> by lazy {
+        StateComponent<LoginViewModel>(
+            viewModelFactory = LoginViewModelFactory(
+                accountPlugin = accountPlugin,
+                loginViewModelMessageHandler = ::loginViewModelMessageHandler
+            ),
+            content = LoginComponentView
+        )
+    }
 
-    private val signupComponent = StateComponent<SignupViewModel>(
-        viewModelFactory = SignupViewModelFactory(accountPlugin = accountPlugin),
-        content = SignupComponentView
-    )
+    private val signupComponent: StateComponent<SignupViewModel> by lazy {
+        StateComponent<SignupViewModel>(
+            viewModelFactory = SignupViewModelFactory(
+                accountPlugin = accountPlugin,
+                signupViewModelMessageHandler = ::signupViewModelMessageHandler
+            ),
+            content = SignupComponentView
+        )
+    }
 
-    private val forgotCredentialsComponent = StateComponent<ForgetViewModel>(
-        viewModelFactory = ForgetViewModelFactory(accountPlugin = accountPlugin),
-        content = ForgetComponentView
-    )
+    private val forgotCredentialsComponent: StateComponent<ForgotCredentialsViewModel> by lazy {
+        StateComponent<ForgotCredentialsViewModel>(
+            viewModelFactory = ForgotCredentialsViewModelFactory(
+                accountPlugin = accountPlugin,
+                viewModelMessageHandler = ::forgotCredentialsViewModelMessageHandler
+            ),
+            content = ForgotCredentialsComponentView
+        )
+    }
 
     override fun onAttach() {
         //authPlugin.initialize()
@@ -122,8 +136,8 @@ class AuthViewModel(
         println("Data Updated Successfully: $updatedUser ")
     }
 
-    private fun loginViewModelMessageHandler(loginViewModelMsg: LoginViewModelMsg) =
-        when (loginViewModelMsg) {
+    private fun loginViewModelMessageHandler(viewModelMsg: LoginViewModelMsg) =
+        when (viewModelMsg) {
             LoginViewModelMsg.OnCreateAccountClick -> {
                 stackComponent.navigator.push(signupComponent)
             }
@@ -134,6 +148,35 @@ class AuthViewModel(
 
             LoginViewModelMsg.OnLoginWithEmailLinkClick -> {
 
+            }
+
+            is LoginViewModelMsg.OnError -> {}
+            is LoginViewModelMsg.OnSuccess -> {}
+        }
+
+    private fun signupViewModelMessageHandler(viewModelMsg: SignupViewModelMsg) =
+        when (viewModelMsg) {
+            SignupViewModelMsg.OnGoBack -> {
+                stackComponent.navigator.pop()
+            }
+
+            is SignupViewModelMsg.OnSuccess -> {
+
+            }
+        }
+
+    private fun forgotCredentialsViewModelMessageHandler(viewModelMsg: ForgotCredentialsViewModelMsg) =
+        when (viewModelMsg) {
+            ForgotCredentialsViewModelMsg.OnGoBack -> {
+                stackComponent.navigator.pop()
+            }
+
+            ForgotCredentialsViewModelMsg.OnCreateAccountClick -> {
+                stackComponent.navigator.push(signupComponent)
+            }
+
+            is ForgotCredentialsViewModelMsg.OnSuccess -> {
+                stackComponent.navigator.push(loginComponent)
             }
         }
 }

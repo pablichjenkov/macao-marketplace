@@ -9,5 +9,5 @@ val ProfileComponentView: @Composable StateComponent<ProfileViewModel>.(
     profileViewModel: ProfileViewModel
 ) -> Unit = { modifier: Modifier, profileViewModel: ProfileViewModel ->
 
-    ProfileScreen()
+    ProfileScreen(profileViewModel)
 }

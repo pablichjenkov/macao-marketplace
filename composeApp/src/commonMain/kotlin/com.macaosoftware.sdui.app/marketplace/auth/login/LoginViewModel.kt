@@ -12,9 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginComponent: StateComponent<LoginViewModel>,
+    private val stateComponent: StateComponent<LoginViewModel>,
     private val accountPlugin: AccountPlugin,
-    private val loginViewModelMessageHandler: (LoginViewModelMsg) -> Unit
+    private val viewModelMessageHandler: (LoginViewModelMsg) -> Unit
 ) : ComponentViewModel() {
 
     private val viewModelScope = CoroutineScope(Dispatchers.Main)
@@ -83,14 +83,14 @@ class LoginViewModel(
     }
 
     fun onSignupClick() {
-        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnCreateAccountClick)
+        viewModelMessageHandler.invoke(LoginViewModelMsg.OnCreateAccountClick)
     }
 
     fun onForgetCredentialsClick() {
-        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnForgotCredentialsClick)
+        viewModelMessageHandler.invoke(LoginViewModelMsg.OnForgotCredentialsClick)
     }
 
     fun onLoginWithEmailLinkClick() {
-        loginViewModelMessageHandler.invoke(LoginViewModelMsg.OnLoginWithEmailLinkClick)
+        viewModelMessageHandler.invoke(LoginViewModelMsg.OnLoginWithEmailLinkClick)
     }
 }
