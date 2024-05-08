@@ -8,12 +8,12 @@ import com.macaosoftware.plugin.account.SignUpRequest
 import com.macaosoftware.util.MacaoResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SignupViewModel(
-    private val signupComponent: StateComponent<SignupViewModel>,
-    private val accountPlugin: AccountPlugin
+    private val stateComponent: StateComponent<SignupViewModel>,
+    private val accountPlugin: AccountPlugin,
+    private val viewModelMessageHandler: (SignupViewModelMsg) -> Unit
 ) : ComponentViewModel() {
 
     private val viewModelScope = CoroutineScope(Dispatchers.Default)
@@ -22,16 +22,16 @@ class SignupViewModel(
         println("SignupViewModel -  onAttach() : ")
     }
 
-    override fun onDetach() {
-        println("SignupViewModel -  onDetach() : ")
-    }
-
     override fun onStart() {
         println("SignupViewModel -  onStart() : ")
     }
 
     override fun onStop() {
         println("SignupViewModel -  onStop() : ")
+    }
+
+    override fun onDetach() {
+        println("SignupViewModel -  onDetach() : ")
     }
 
     fun isValidInput(
@@ -63,6 +63,7 @@ class SignupViewModel(
                 /*loadingState = false
                 showMessage = true
                 messageText = "Sign up failed: ${e.message}"*/
+
             }
 
             is MacaoResult.Success -> {
@@ -73,11 +74,14 @@ class SignupViewModel(
                 /*loadingState = false
                 showMessage = true
                 messageText = "Sign up successful!"*/
+                viewModelMessageHandler.invoke(
+                    SignupViewModelMsg.OnSuccess()
+                )
             }
         }
     }
 
-    fun storeData(user: MacaoUser) = viewModelScope.launch {
+    private fun storeData(user: MacaoUser) = viewModelScope.launch {
         //val firebaseUser = Firebase.auth.currentUser?.uid
         //val database = Firebase.database("https://macao-sdui-app-30-default-rtdb.firebaseio.com/")
         //database.reference().child("Users").child("$firebaseUser").setValue(user)
@@ -85,7 +89,7 @@ class SignupViewModel(
     }
 
     fun onAlreadyHaveAnAccountClick() {
-        // navigator!!.push(LoginScreen(authViewModel))
+        viewModelMessageHandler.invoke(SignupViewModelMsg.OnGoBack)
     }
 
 }

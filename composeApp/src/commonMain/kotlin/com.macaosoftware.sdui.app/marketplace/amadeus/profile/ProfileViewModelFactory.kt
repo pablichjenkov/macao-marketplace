@@ -2,13 +2,13 @@ package com.macaosoftware.sdui.app.marketplace.amadeus.profile
 
 import com.macaosoftware.component.viewmodel.ComponentViewModelFactory
 import com.macaosoftware.component.viewmodel.StateComponent
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
+import com.macaosoftware.plugin.account.AccountPlugin
 
 class ProfileViewModelFactory(
-
+    private val accountPlugin: AccountPlugin
 ) : ComponentViewModelFactory<ProfileViewModel> {
+
     override fun create(component: StateComponent<ProfileViewModel>): ProfileViewModel {
-        return ProfileViewModel(component)
+        return ProfileViewModel(component, accountPlugin)
     }
 }
