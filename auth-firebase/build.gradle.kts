@@ -145,9 +145,9 @@ kotlin {
 
 android {
     namespace = "com.macaosoftware.plugin.auth.firebase_macao"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

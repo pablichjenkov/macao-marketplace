@@ -11,6 +11,7 @@ plugins {
 }
 
 version = "1.0.0"
+val flavorProvider = extra["flavorProvider"] as String
 
 kotlin {
 
@@ -51,6 +52,9 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
 
+            // Desktop Previews (uses different Jetbrains library)
+            implementation(compose.components.uiToolingPreview)
+
             //Awesome Icons
             implementation(libs.font.awesome)
 
@@ -73,6 +77,21 @@ kotlin {
             implementation(project(":macao-sdk-koin"))
             implementation(libs.component.toolkit)
             implementation(libs.amadeus.api)
+
+            // Decide which flavor to use based on a build environment variable
+            when (flavorProvider) {
+                "A" -> {
+                    implementation(project(":flavor-theme-a"))
+                }
+
+                "B" -> {
+                    implementation(project(":flavor-theme-b"))
+                }
+
+                else -> { // Default if not provided
+                    implementation(project(":flavor-theme-a"))
+                }
+            }
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
@@ -89,6 +108,9 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
+
+            // Previews
+            implementation(libs.compose.ui.tooling.preview)
 
             // Ktor
             implementation(libs.ktor.client.android)
@@ -149,12 +171,16 @@ buildConfig {
 
 android {
     namespace = "com.macaosoftware.sdui.app"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
+
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
     defaultConfig {
         applicationId = "com.macaosoftware.sdui.app"
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -171,6 +197,10 @@ android {
                 add("META-INF/versions/9/previous-compilation-data.bin")
             }
         }
+    }
+    dependencies {
+        // Previews
+        debugImplementation(libs.compose.ui.tooling)
     }
 }
 

@@ -21,6 +21,7 @@ import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.StartupTaskRunnerDefault
 import com.macaosoftware.app.WindowWithCustomTopDecoration
 import com.macaosoftware.component.util.LocalBackPressedDispatcher
+import com.macaosoftware.plugin.AppTheme
 import com.macaosoftware.plugin.DefaultBackPressDispatcherPlugin
 import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
 import com.macaosoftware.sdui.app.startup.DatabaseMigrationStartupTask
@@ -140,10 +141,12 @@ fun main() {
                     }
                 }
             }
-            CompositionLocalProvider(
-                LocalBackPressedDispatcher provides backPressedDispatcherPlugin
-            ) {
-                MacaoKoinApplication(applicationState = applicationState)
+            AppTheme {
+                CompositionLocalProvider(
+                    LocalBackPressedDispatcher provides backPressedDispatcherPlugin
+                ) {
+                    MacaoKoinApplication(applicationState = applicationState)
+                }
             }
         }
     }

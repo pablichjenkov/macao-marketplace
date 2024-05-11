@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.pablichjenkov"
-version = libs.versions.componentToolkit.get()
+version = libs.versions.macaoComponentToolkit.get()
 val mavenCentralUser = (findProperty("mavenCentral.user") as? String).orEmpty()
 val mavenCentralPass = (findProperty("mavenCentral.pass") as? String).orEmpty()
 
@@ -153,9 +153,9 @@ kotlin {
 
 android {
     namespace = "com.macaosoftware.app.koin"
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
+    compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

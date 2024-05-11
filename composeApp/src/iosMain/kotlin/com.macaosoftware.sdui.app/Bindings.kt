@@ -4,6 +4,7 @@ import androidx.compose.ui.window.ComposeUIViewController
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.StartupTaskRunnerDefault
+import com.macaosoftware.plugin.AppTheme
 import com.macaosoftware.plugin.account.FirebaseAccountPlugin
 import com.macaosoftware.plugin.account.FirebaseAuthKmpWrapper
 import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
@@ -26,7 +27,10 @@ fun buildDemoMacaoApplication(
         startupTaskRunner = StartupTaskRunnerDefault(startupTasks),
         rootComponentInitializer = ComposeAppRootComponentInitializer()
     )
-    MacaoKoinApplication(applicationState = applicationState)
+
+    AppTheme {
+        MacaoKoinApplication(applicationState = applicationState)
+    }
 }
 
 fun createPlatformBridge(

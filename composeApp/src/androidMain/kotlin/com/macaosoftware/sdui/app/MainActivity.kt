@@ -6,11 +6,11 @@ import androidx.activity.compose.setContent
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.StartupTaskRunnerDefault
+import com.macaosoftware.plugin.AppTheme
 import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
 import com.macaosoftware.sdui.app.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.sdui.app.startup.LaunchDarklyStartupTask
 import com.macaosoftware.sdui.app.startup.SdkXyzStartupTask
-import com.macaosoftware.sdui.app.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
 
