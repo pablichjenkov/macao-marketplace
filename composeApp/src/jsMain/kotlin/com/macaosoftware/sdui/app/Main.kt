@@ -4,6 +4,7 @@ import androidx.compose.ui.window.CanvasBasedWindow
 import com.macaosoftware.app.MacaoKoinApplication
 import com.macaosoftware.app.MacaoKoinApplicationState
 import com.macaosoftware.app.StartupTaskRunnerDefault
+import com.macaosoftware.plugin.AppTheme
 import com.macaosoftware.sdui.app.startup.ComposeAppRootComponentInitializer
 import com.macaosoftware.sdui.app.startup.DatabaseMigrationStartupTask
 import com.macaosoftware.sdui.app.startup.LaunchDarklyStartupTask
@@ -26,7 +27,9 @@ fun main() {
         )
 
         CanvasBasedWindow("Macao SDUI JS Demo") {
-            MacaoKoinApplication(applicationState = applicationState)
+            AppTheme {
+                MacaoKoinApplication(applicationState = applicationState)
+            }
         }
     }
 }

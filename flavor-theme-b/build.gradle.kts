@@ -1,8 +1,9 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
-    alias(libs.plugins.multiplatform)
-    alias(libs.plugins.android.library)
+    kotlin("multiplatform")
     alias(libs.plugins.compose)
-    // alias(libs.plugins.kotlinx.serialization)
+    id("com.android.library")
 }
 
 kotlin {
@@ -14,7 +15,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "MacaoAccountSupabase"
+            baseName = "FlavorBModule"
             isStatic = true
         }
     }
@@ -23,36 +24,35 @@ kotlin {
         browser()
     }
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "FlavorBModule"
+        browser()
+        binaries.library()
+    }
+
     jvm()
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core)
-
-            // Macao Libs
-            implementation(libs.component.toolkit)
-
-            // Supabase
-            implementation("io.github.jan-tennert.supabase:gotrue-kt:2.0.4")
-            // implementation("io.github.jan-tennert.supabase:compose-auth:2.0.4")
+            implementation(compose.runtime)
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
         }
         commonTest.dependencies {
-            // implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
-            implementation(libs.kotlinx.coroutines.android)
         }
         jvmMain.dependencies {
-            implementation(libs.kotlinx.coroutines.swing)
         }
         jsMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core.js)
         }
     }
 }
 
 android {
-    namespace = "com.macaosoftware.plugin.auth.supabase"
+    namespace = "com.macaosoftware.plugin.flavorb"
     compileSdk = libs.versions.androidCompileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.androidMinSdk.get().toInt()

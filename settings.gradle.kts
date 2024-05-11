@@ -1,4 +1,6 @@
 rootProject.name = "macao-sdui-app"
+include(":flavor-theme-a")
+include(":flavor-theme-b")
 include(":macao-sdk-koin")
 include(":composeApp")
 

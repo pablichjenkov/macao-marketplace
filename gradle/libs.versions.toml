@@ -1,18 +1,23 @@
 [versions]
 
-amadeusApi = "0.3.4"
-componentToolkit = "0.6.10-rc02"
+androidCompileSdk="34"
+androidTargetSdk="34"
+androidMinSdk="26"
+macaoAmadeusApi = "0.3.4"
+macaoComponentToolkit = "0.6.10-rc02"
+macaoAuthFirebase="0.0.1-dev"
 koinCore = "3.6.0-wasm-alpha2"
 kotlin = "1.9.23"
 agp = "8.1.4"
-compose = "1.6.10-rc01"
-androidx-activityCompose = "1.9.0"
+composeAndroidCompiler = "1.6.6"
+composePlugin = "1.6.10-rc01"
+androidxActivityCompose = "1.9.0"
 kamelImage = "0.9.4"
-kotlinx-coroutines = "1.8.0"
+kotlinxCoroutines = "1.8.0"
 ktor = "2.3.10"
 composeIcons = "1.1.0"
-kotlinx-serialization = "1.6.3"
-kotlinx-datetime = "0.5.0"
+kotlinxSerialization = "1.6.3"
+kotlinxDatetime = "0.5.0"
 multiplatformSettings = "1.1.1"
 gmazzo = "5.3.5"
 sqldelight = "2.0.2"
@@ -22,13 +27,13 @@ realm = "1.12.0"
 [libraries]
 
 ## AndroidX
-androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
 
 ## Coroutines
-kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 
 ## Image Loader
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
@@ -40,8 +45,8 @@ multiplatformSettings = { module = "com.russhwolf:multiplatform-settings", versi
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 
 ## Kotlinx Utils
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 ## Ktor
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -54,11 +59,16 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 
 ## MacaoSoftware
-amadeus-api = { module = "io.github.pablichjenkov:amadeus-api", version.ref = "amadeusApi" }
-component-toolkit = { module = "io.github.pablichjenkov:component-toolkit", version.ref = "componentToolkit" }
+amadeus-api = { module = "io.github.pablichjenkov:amadeus-api", version.ref = "macaoAmadeusApi" }
+component-toolkit = { module = "io.github.pablichjenkov:component-toolkit", version.ref = "macaoComponentToolkit" }
+macao-auth-firebase = { module = "io.github.pablichjenkov:macao-auth-firebase", version.ref = "macaoAuthFirebase" }
 
 ## Other Libs
 font-awesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "composeIcons" }
+
+## Preview
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeAndroidCompiler" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeAndroidCompiler" }
 
 ## Test
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
@@ -66,7 +76,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 [plugins]
 
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
