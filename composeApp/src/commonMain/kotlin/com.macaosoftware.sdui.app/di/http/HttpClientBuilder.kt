@@ -9,7 +9,7 @@ import kotlinx.serialization.json.Json
 
 private const val RequestTimeoutMillis = 15_000L
 
-fun getNewDefaultClient(): HttpClient = HttpClient {
+fun createDefaultHttpClient(): HttpClient = HttpClient {
     install(HttpTimeout) {
         requestTimeoutMillis = RequestTimeoutMillis
     }
