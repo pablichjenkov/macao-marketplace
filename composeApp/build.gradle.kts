@@ -55,12 +55,13 @@ kotlin {
             // Desktop Previews (uses different Jetbrains library)
             implementation(compose.components.uiToolingPreview)
 
-            //Awesome Icons
+            // Awesome Icons
             implementation(libs.font.awesome)
 
-            //Kamel
+            // Kamel
             implementation(libs.kamel.image)
 
+            // Kotlin Utils
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
@@ -106,14 +107,14 @@ kotlin {
             implementation(libs.ktor.client.ios)
         }
         androidMain.dependencies {
-            implementation(libs.androidx.activityCompose)
+            implementation(libs.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
 
             // Previews
             implementation(libs.compose.ui.tooling.preview)
 
             // Ktor
-            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.okhttp)
 
             // Macao Swift Plugins
             implementation(project(":auth-supabase"))
@@ -125,7 +126,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
 
             // Ktor
-            implementation(libs.ktor.client.jvm)
+            implementation(libs.ktor.client.java)
 
             // Supabase
             implementation(project(":auth-supabase"))
