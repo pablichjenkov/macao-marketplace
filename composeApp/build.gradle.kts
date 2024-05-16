@@ -104,7 +104,7 @@ kotlin {
             api(project(":auth-firebase"))
 
             // Ktor
-            implementation(libs.ktor.client.ios)
+            implementation(libs.ktor.client.darwin)
         }
         androidMain.dependencies {
             implementation(libs.activity.compose)
