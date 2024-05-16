@@ -44,13 +44,16 @@ internal class SduiRemoteService(
     }
 
 
-    suspend fun getRemoteRootComponent(ownerId: String): JsonObject? {
+    suspend fun getRemoteRootComponent(ownerId: String): JsonObject? = try {
+
         // val baseUrl = "http://localhost:8080"
         val baseUrl = "https://ktor-gae-401000.appspot.com"
+
         val resp = httpClient.get(
             urlString = "${baseUrl}/customer-project/json-data/${ownerId}"
         )
-        return if (resp.status.isSuccess()) {
+
+        if (resp.status.isSuccess()) {
             val bodyAsText = resp.bodyAsText()
             // println("bodyText = $bodyText")
             val jsonObject = Json.decodeFromString<JsonObject>(bodyAsText)
@@ -60,6 +63,9 @@ internal class SduiRemoteService(
             println("macaoError = $macaoError")
             null
         }
+    } catch (ex: Exception) {
+        println("Exception Caught: ${ex.message}")
+        null
     }
 
 }
