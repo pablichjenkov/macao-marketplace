@@ -9,6 +9,13 @@ struct MacaoDemoApp: App {
     let accountPlugin: AccountPlugin
     let iosBridge: IosBridge
     
+    let iob = IosBridge(
+        accountPlugin: FirebaseAccountPlugin(
+            firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
+        ),
+        name2: Int32(0)
+    )
+    
     // register app delegate for Firebase setup
     // @UIApplicationDelegateAdaptor(MacaoDemoAppDelegate.self) var delegate
     
