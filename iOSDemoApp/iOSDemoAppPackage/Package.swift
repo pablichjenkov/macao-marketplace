@@ -18,14 +18,15 @@ let package = Package(
         .package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "composeApp"),
     ],
     targets: [
-        .binaryTarget(
-            name: "composeApp",
-            path: "../../composeApp/build/XCFrameworks/debug/composeApp.xcframework"
-        ),
+// It wont be needed after JetBrains releases SPM BuildPhase task integration
+//        .binaryTarget(
+//            name: "composeApp",
+//            path: "../../composeApp/build/XCFrameworks/debug/composeApp.xcframework"
+//        ),
         .target(
             name: "iOSDemoAppPackage",
             dependencies: [
-                .byName(name: "composeApp"),
+                //.byName(name: "composeApp"), // It wont be needed after JetBrains releases SPM BuildPhase task integration
                 .product(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"

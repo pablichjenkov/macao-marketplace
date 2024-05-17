@@ -62,3 +62,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+compose {
+    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.9.23"))
+    //kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24-spm")
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24")
+}
