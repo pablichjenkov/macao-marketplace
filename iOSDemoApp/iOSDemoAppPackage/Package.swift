@@ -15,7 +15,7 @@ let package = Package(
         .package(
             url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.19.0"),
         // Bellow consumes firebase-kmp package from github instead of our local.
-        //.package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "main"),
+        .package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "composeApp"),
     ],
     targets: [
         .binaryTarget(
@@ -30,10 +30,10 @@ let package = Package(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"
                 ),
-                //.product(
-                //    name: "FirebaseAuthKmp",
-                //    package: "firebase-kmp"
-                //),
+                .product(
+                    name: "FirebaseAuthKmp",
+                    package: "firebase-kmp"
+                ),
             ]
         ),
         .testTarget(

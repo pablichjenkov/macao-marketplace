@@ -4,6 +4,11 @@ import com.macaosoftware.util.MacaoResult
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * The real implementation of the interface MacaoFirebaseAuthKmpWrapper can be found in
+ * the Swift Package hosted at:
+ * https://github.com/pablichjenkov/firebase-kmp/blob/main/FirebaseAuthKmp/Sources/FirebaseAuthKmpWrapperImpl.swift
+ * */
 class FirebaseAccountPlugin(
     private val firebaseAuthKmpWrapper: FirebaseAuthKmpWrapper
 ) : AccountPlugin {
