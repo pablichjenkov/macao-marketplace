@@ -1,20 +1,25 @@
 import SwiftUI
-import composeApp
+import ComposeApp
 import FirebaseAuthKmp
 import iOSDemoAppPackage
 
 @main
 struct MacaoDemoApp: App {
     
-    let iosBridge = BindingsKt.createPlatformBridge(
-        firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
-    )
+    let accountPlugin: AccountPlugin
+    let iosBridge: IosBridge
     
     // register app delegate for Firebase setup
-    @UIApplicationDelegateAdaptor(MacaoDemoAppDelegate.self) var delegate
+    // @UIApplicationDelegateAdaptor(MacaoDemoAppDelegate.self) var delegate
     
     init() {
-        // FirebaseAuthKmpInitializer().applicationStart()
+        // If using @UIApplicationDelegateAdaptor then comment out bellow line
+        FirebaseAuthKmpInitializer().applicationStart()
+        
+        accountPlugin = FirebaseAccountPlugin(
+            firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
+        )
+        iosBridge = BindingsKt.createPlatformBridge(accountPlugin: accountPlugin)
     }
     
     var body: some Scene {
