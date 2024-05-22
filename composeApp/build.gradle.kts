@@ -26,9 +26,20 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            //baseName = "MacaoSuiDemoKt"
+
+            // All swift packages kmp modules have to be exported through the umbrella
+            // framework so the swift side can see it.
             export(project(":auth-firebase"))
-            baseName = "composeApp"
+            export(libs.component.toolkit)
+
+            // Macao convention requires iOS umbrella framework to be named "ComposeApp".
+
+            // DON'T
+            // baseName = "MacaoServerUiDemoKt"
+
+            // OK
+            baseName = "ComposeApp"
+
             isStatic = true
             xcf.add(this)
         }
@@ -76,7 +87,7 @@ kotlin {
             // Macao Libs
             implementation(libs.koin.core)
             implementation(project(":macao-sdk-koin"))
-            implementation(libs.component.toolkit)
+            api(libs.component.toolkit)
             implementation(libs.amadeus.api)
 
             // Decide which flavor to use based on a build environment variable
