@@ -15,6 +15,7 @@
 		9401746D2A777BE500BA34D2 /* iOSDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746C2A777BE500BA34D2 /* iOSDemoAppUITests.swift */; };
 		9401746F2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9401746E2A777BE500BA34D2 /* iOSDemoAppUITestsLaunchTests.swift */; };
 		948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */; };
+		94D867142C006A4F00CA8E7F /* FirebaseAuthKmp in Frameworks */ = {isa = PBXBuildFile; productRef = 94D867132C006A4F00CA8E7F /* FirebaseAuthKmp */; };
 		94D9FB7B2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7C2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
 		94D9FB7D2B32A74C004396A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 94D9FB7A2B32A74C004396A2 /* GoogleService-Info.plist */; };
@@ -59,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94D867142C006A4F00CA8E7F /* FirebaseAuthKmp in Frameworks */,
 				948FD8CF2B4D0A3600A9B754 /* iOSDemoAppPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +157,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 940174722A777BE500BA34D2 /* Build configuration list for PBXNativeTarget "iOSDemoApp" */;
 			buildPhases = (
+				94477A4E2C0703C300EF5670 /* Compile Kotlin Framework */,
 				940174492A777BE400BA34D2 /* Sources */,
 				9401744A2A777BE400BA34D2 /* Frameworks */,
 				9401744B2A777BE400BA34D2 /* Resources */,
@@ -166,6 +169,7 @@
 			name = iOSDemoApp;
 			packageProductDependencies = (
 				948FD8CE2B4D0A3600A9B754 /* iOSDemoAppPackage */,
+				94D867132C006A4F00CA8E7F /* FirebaseAuthKmp */,
 			);
 			productName = iOSDemoApp;
 			productReference = 9401744D2A777BE400BA34D2 /* iOSDemoApp.app */;
@@ -282,6 +286,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		94477A4E2C0703C300EF5670 /* Compile Kotlin Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Compile Kotlin Framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		940174492A777BE400BA34D2 /* Sources */ = {
@@ -674,6 +699,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 948FD8CD2B4D090E00A9B754 /* XCLocalSwiftPackageReference "iOSDemoAppPackage" */;
 			productName = iOSDemoAppPackage;
+		};
+		94D867132C006A4F00CA8E7F /* FirebaseAuthKmp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 942F83682B52357400A0CD1A /* XCLocalSwiftPackageReference "../../firebase-kmp" */;
+			productName = FirebaseAuthKmp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
