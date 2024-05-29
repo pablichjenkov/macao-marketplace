@@ -38,7 +38,5 @@ fun createPlatformBridge(
 
     // val accountPlugin = SupabaseAccountPlugin()
 
-    return IosBridge(
-        accountPlugin = accountPlugin
-    )
+    return IosBridge(accountPlugin = accountPlugin)
 }

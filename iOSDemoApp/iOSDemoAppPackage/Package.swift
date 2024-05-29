@@ -14,27 +14,21 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.19.0"),
-        // Bellow consumes firebase-kmp package from github instead of our local.
-        .package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "composeApp"),
+        // Bellow consumes firebase-kmp package from github instead of our local package. For development use local, to build in the pipeline use the remote pacakge.
+        //.package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "main"),
     ],
     targets: [
-// It wont be needed after JetBrains releases SPM BuildPhase task integration
-//        .binaryTarget(
-//            name: "composeApp",
-//            path: "../../composeApp/build/XCFrameworks/debug/composeApp.xcframework"
-//        ),
         .target(
             name: "iOSDemoAppPackage",
             dependencies: [
-                //.byName(name: "composeApp"), // It wont be needed after JetBrains releases SPM BuildPhase task integration
                 .product(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"
                 ),
-                .product(
-                    name: "FirebaseAuthKmp",
-                    package: "firebase-kmp"
-                ),
+//                .product(
+//                    name: "FirebaseAuthKmp",
+//                    package: "firebase-kmp"
+//                ),
             ]
         ),
         .testTarget(
