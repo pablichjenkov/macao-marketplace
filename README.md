@@ -11,7 +11,7 @@ The project also showcase an opinionated architecture to inject swift 3rd party 
 
 3. **iOSDemoApp**: Where the iOS app lives. This module consumes the **ComposeApp.framework** produced by composeApp as `direct or local framework integration`. Also this project is configured to use **SPM** as the dependency resolver.
 
-4. **flavor-theme-a**: A module that provides specific styles and assets for a demonstration of how to achieve equivalent purpose as using Android flavors.
+4. **flavor-theme-a**: A module that provides specific styles and assets for a demonstration of what would be the KMP equivalent of Android flavors.
 
 5. **flavor-theme-b**: A different module providing styles and assets for the Android flavors equivalent demonstration.
 
