@@ -1,20 +1,46 @@
-## Macao SUI
-Macao SUI is a Server Driven UI(SDUI or SUI) application written purely with Compose Multiplatform.
+## Macao Server UI
+This repo is an experiment with server driven ui concepts. A remote server sends a json file which describe the hierarchy of components to render. The project relies on the [Macao Components](https://github.com/pablichjenkov/macao-sdk) library. Such a library has the flexibility to extend functionality in existing components but also create custom ones.
 <BR/>
-Bellow is a video showcasing a short demo. In this demo there is a **Ktor Server Application** running locally that serves a `.json` file. This json file contains metadata that is used by a desktop application to render specific set of components. A desktop was selected for the video but it is available in Android, iOS and the Browser too.
-<BR/>
-The video bellow can be explained in 3 steps:
-<BR/>
-1. The json metadata is initiated with a Drawer as root navigation model. You can see how the App fetches the presentational metadata from the server and sets a Drawer as the root navigation component.
-2. Then the json metadata is modified in the server to have a BottomNavigation as root navigation component. Soon as the App fetches the new metadata, you can see how a BottomNavigation appears in the App as root component . 
-3. Then the server switches back to Drawer and when the App loads the new json file, again a Drawer is seen in the App.
+The project also showcase an opinionated architecture to inject swift 3rd party library implementations 
 
-<table border="0">
- <tr>
-   <video width="620" src="https://github.com/pablichjenkov/macao-sdui-app/assets/5303301/da6410a8-c096-4489-9dc5-e85ebde77ed4" />
- </tr>
-</table>
 
-Also notice how the screens used for this demo, consume a public API provided by Amadeus Hotel and Flights.
+### Modules
+1. **macao-sdk-koin**: The foundation to build an App that integrates koin and the Macao component-toolkit. It has already implemented an App startup flow including Koin module initializers and the basic scaffolding to inject pure swift implementations of Macao plugins.
+
+2. **composeApp**: The compose application demo using **macao-sdk-koin** arch.
+
+3. **iOSDemoApp**: Where the iOS app lives. This module consumes the **ComposeApp.framework** produced by composeApp as `direct or local framework integration`. Also this project is configured to use **SPM** as the dependency resolver.
+
+4. **flavor-theme-a**: A module that provides specific styles and assets for a demonstration of how to achieve equivalent purpose as using Android flavors.
+
+5. **flavor-theme-b**: A different module providing styles and assets for the Android flavors equivalent demonstration.
+
+6. **auth-firebase**: This module contains the abstractions to wrap the **MacaoAccountPlugin** with the Firebase swift SDK. The implementation lives in a hosted swift package located here:
+
+   https://github.com/pablichjenkov/firebase-kmp/blob/main/FirebaseAuthKmp/Sources/FirebaseAuthKmpWrapperImpl.swift
+
+   The local swift package **iOSDemoAppPackage** located in **iOSDemoApp** will declare **FirebaseAuthKmp** package as a dependency. So the hosted package will be pull down in the xcode build process to provide the swift actual implementation of **auth-firebase** abstractions.
+
+7. **auth-supabase**: Similar to **auth-firebase**, this module implements the **MacaoAccountPlugin** but in kotlin land. Since supabase supports KMP we don't have to inject swift code, everything is done in kotlin. It is used to demontrate how you can swap Macao Plugins implementations at build time, based on build configurations. The so called opinionated `Plugin Architecture` mentioned before.
+
+To run the App locally it is required an API key and secret from [Amadeus Travel](https://amadeus.com/) company. Place the respective values in a local `gradle.properties` file or supply them as environment variable.
 <BR/>
-Macao SUI SDK allows customers to create any type of Bussiness Logic Component, and present it with the navigation model of choice. Current navigation options are `Drawer`, `BottomNavigation`, `Panel`, `TopBar` and `Stack` but clients can create new navigation components as well as customized the existing ones.
+<BR/>
+**amadeus.apiKey**=**Your-Given-Amadeus-Api-Key**
+<BR/>
+**amadeus.apiSecret**=**Your-Given-Amadeus-Api-Secret**
+<BR/>
+<BR/>
+You will also need an account in firebase with **firebase authorization** product enabled. Place the **google-services.json** given by firebase, in the root directory of **composeApp** module.
+
+<image width="500" src="https://github.com/pablichjenkov/macao-marketplace/assets/5303301/99efccca-8f13-4b1b-a7df-29538f26872a"/>
+
+
+   
+
+
+
+
+
+
+
