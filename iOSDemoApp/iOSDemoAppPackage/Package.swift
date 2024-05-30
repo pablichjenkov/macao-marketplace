@@ -14,8 +14,10 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.19.0"),
-        // Bellow consumes firebase-kmp package from github instead of our local package. For development use local, to build in the pipeline use the remote pacakge.
-        //.package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "main"),
+        // Even though we set Xcode to consume our package locally, it is needed
+        // to indicate SPM where is the url where this package is located.
+        // Otherwise Xcode/SPM starts complaining about not finding the package.
+        .package(url: "https://github.com/pablichjenkov/firebase-kmp.git", branch: "main"),
     ],
     targets: [
         .target(
@@ -25,10 +27,10 @@ let package = Package(
                     name: "FirebaseAuth",
                     package: "firebase-ios-sdk"
                 ),
-//                .product(
-//                    name: "FirebaseAuthKmp",
-//                    package: "firebase-kmp"
-//                ),
+                .product(
+                    name: "FirebaseAuthKmp",
+                    package: "firebase-kmp"
+                ),
             ]
         ),
         .testTarget(
