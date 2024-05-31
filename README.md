@@ -33,7 +33,12 @@ To run the App locally it is required an API key and secret from [Amadeus Travel
 <BR/>
 You will also need an account in firebase with **firebase authorization** product enabled. Place the **google-services.json** given by firebase, in the root directory of **composeApp** module.
 
+### Demo App
+
 <image width="500" src="https://github.com/pablichjenkov/macao-marketplace/assets/5303301/99efccca-8f13-4b1b-a7df-29538f26872a"/>
+
+### Contributions
+We welcome contributions from the community! If you have ideas for new features, bug fixes, or improvements, please open an issue or submit a pull request.
 
 
    
