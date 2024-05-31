@@ -63,7 +63,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-
-compose {
-    kotlinCompilerPlugin = "org.jetbrains.kotlin:kotlin-compose-compiler-plugin-embeddable:2.0.0"
-}
