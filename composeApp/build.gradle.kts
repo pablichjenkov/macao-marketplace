@@ -1,10 +1,10 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
-    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.gmazzo)
     id("com.google.gms.google-services")
@@ -19,7 +19,6 @@ kotlin {
     androidTarget()
 
     // IOS
-    val xcf = XCFramework()
     listOf(
         iosX64(),
         iosArm64(),
@@ -39,9 +38,7 @@ kotlin {
 
             // OK
             baseName = "ComposeApp"
-
             isStatic = true
-            xcf.add(this)
         }
     }
 
@@ -252,9 +249,7 @@ compose {
     experimental {
         web.application {}
     }
-    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.9.23"))
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24")
-    //kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24-spm")
+    kotlinCompilerPlugin = "org.jetbrains.kotlin:kotlin-compose-compiler-plugin-embeddable:2.0.0"
 }
 
 /*compose.desktop {
