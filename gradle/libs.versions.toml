@@ -7,7 +7,7 @@ macaoAmadeusApi = "0.3.4"
 macaoComponentToolkit = "0.6.10"
 macaoAuthFirebase = "0.0.1-dev"
 koinCore = "3.6.0-wasm-alpha2"
-kotlin = "1.9.24-spm"
+kotlin = "2.0.0"
 agp = "8.1.4"
 composeAndroidCompiler = "1.6.7"
 composePlugin = "1.6.10"
@@ -75,7 +75,8 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 
 [plugins]
 
-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

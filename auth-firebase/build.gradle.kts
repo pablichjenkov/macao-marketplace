@@ -1,8 +1,9 @@
 plugins {
-    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.dokka)
     id("maven-publish")
     id("signing")
     // alias(libs.plugins.kotlinx.serialization)
@@ -156,7 +157,5 @@ android {
 }
 
 compose {
-    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.9.23"))
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24")
-    //kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.24-spm")
+    kotlinCompilerPlugin = "org.jetbrains.kotlin:kotlin-compose-compiler-plugin-embeddable:2.0.0"
 }
