@@ -14,6 +14,7 @@ build/
 out/
 .fleet/
 .kotlin
+kotlin-js-store/
 
 ### iOS Xcode generated ###
 iOSDemoApp/iOSDemoApp.xcodeproj/*
