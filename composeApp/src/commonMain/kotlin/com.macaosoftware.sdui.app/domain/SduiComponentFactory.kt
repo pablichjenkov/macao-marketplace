@@ -27,11 +27,10 @@ import com.macaosoftware.component.topbar.TopBarComponent
 import com.macaosoftware.component.topbar.TopBarComponentDefaults
 import com.macaosoftware.component.viewmodel.StateComponent
 import com.macaosoftware.plugin.account.AccountPlugin
+import com.macaosoftware.sdui.app.domain.error.ComponentMissingImplementation
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.airport.AirportDemoViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.auth.AuthViewModel
-import com.macaosoftware.sdui.app.marketplace.auth.AuthViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.home.AmadeusHomeCoordinatorViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.amadeus.hotel.HotelDemoComponentView
@@ -46,9 +45,8 @@ import com.macaosoftware.sdui.app.marketplace.amadeus.schedule.ScheduleViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchComponentView
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModel
 import com.macaosoftware.sdui.app.marketplace.amadeus.search.SearchViewModelFactory
-import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBar
-import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBarFactory
-import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBarViewModel
+import com.macaosoftware.sdui.app.marketplace.auth.AuthViewModel
+import com.macaosoftware.sdui.app.marketplace.auth.AuthViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationSduiHandler
 import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigator.drawer.DrawerSduiHandler
@@ -57,6 +55,9 @@ import com.macaosoftware.sdui.app.marketplace.navigator.panel.PanelSduiHandler
 import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelViewModel.PanelSettingViewModel
 import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelSettingViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.navigator.panel.panelfactory.PanelViewModelFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBar
+import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBarFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.topbar.CustomTopAppBarViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.PanelSettingComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModel
@@ -64,19 +65,23 @@ import com.macaosoftware.sdui.app.marketplace.settings.SettingsViewModelFactory
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeComponentView
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModel
 import com.macaosoftware.sdui.app.marketplace.settings.home.HomeViewModelFactory
-import com.macaosoftware.sdui.app.domain.error.ComponentMissingImplementation
 import com.macaosoftware.sdui.data.SduiConstants
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.ITimeProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import org.koin.core.Koin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class SduiComponentFactory(
-    private val koinComponent: KoinComponent
-) : MacaoComponentFactory, KoinComponent by koinComponent {
+    private val koin: Koin
+) : MacaoComponentFactory, KoinComponent {
+
+    override fun getKoin(): Koin {
+        return koin
+    }
 
     override fun getNavItemOf(
         componentJson: JsonObject
@@ -228,6 +233,7 @@ class SduiComponentFactory(
             SduiConstants.ComponentType.Panel -> {
                 PanelComponent(
                     viewModelFactory = PanelViewModelFactory(
+                        koinComponent = this@SduiComponentFactory,
                         sduiHandler = PanelSduiHandler(componentJson, this),
                         panelStatePresenter = PanelComponentDefaults.createPanelStatePresenter(
                             dispatcher = Dispatchers.Main
@@ -238,9 +244,14 @@ class SduiComponentFactory(
             }
 
             SduiConstants.ComponentType.Drawer -> {
+
                 DrawerComponent(
                     viewModelFactory = DrawerViewModelFactory(
-                        sduiHandler = DrawerSduiHandler(componentJson, this),
+                        koinComponent = this@SduiComponentFactory,
+                        sduiHandler = DrawerSduiHandler(
+                            componentJson,
+                            this@SduiComponentFactory
+                        ),
                         drawerStatePresenter = DrawerComponentDefaults.createDrawerStatePresenter(
                             dispatcher = Dispatchers.Main
                         )
@@ -250,9 +261,14 @@ class SduiComponentFactory(
             }
 
             SduiConstants.ComponentType.BottomNavigation -> {
+
                 BottomNavigationComponent(
                     viewModelFactory = BottomNavigationViewModelFactory(
-                        sduiHandler = BottomNavigationSduiHandler(componentJson, this),
+                        koinComponent = this@SduiComponentFactory,
+                        sduiHandler = BottomNavigationSduiHandler(
+                            jsonObject = componentJson,
+                            sduiComponentFactory = this@SduiComponentFactory
+                        ),
                         bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                             dispatcher = Dispatchers.Main
                         )
@@ -284,7 +300,9 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.SimpleTopAppBar -> {
                 StateComponent<CustomTopAppBarViewModel>(
-                    viewModelFactory = CustomTopAppBarFactory(),
+                    viewModelFactory = CustomTopAppBarFactory(
+                        koinComponent = this@SduiComponentFactory
+                    ),
                     content = CustomTopAppBar
                 )
             }
@@ -305,7 +323,9 @@ class SduiComponentFactory(
 
             SduiConstants.ComponentType.PanelSetting -> {
                 StateComponent<PanelSettingViewModel>(
-                    viewModelFactory = PanelSettingViewModelFactory(),
+                    viewModelFactory = PanelSettingViewModelFactory(
+                        koinComponent = this@SduiComponentFactory
+                    ),
                     content = PanelSettingComponentView
                 )
             }

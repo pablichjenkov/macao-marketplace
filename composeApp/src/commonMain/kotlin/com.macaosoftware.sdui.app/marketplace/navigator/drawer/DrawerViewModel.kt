@@ -7,12 +7,14 @@ import com.macaosoftware.component.drawer.DrawerStatePresenterDefault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
 class DrawerViewModel(
+    koinComponent: KoinComponent,
     private val sduiHandler: DrawerSduiHandler,
     drawerComponent: DrawerComponent<DrawerViewModel>,
     override val drawerStatePresenter: DrawerStatePresenterDefault,
-) : DrawerComponentViewModel(drawerComponent) {
+) : DrawerComponentViewModel(drawerComponent), KoinComponent by koinComponent {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 

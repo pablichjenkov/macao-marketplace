@@ -7,12 +7,14 @@ import com.macaosoftware.component.core.setNavItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
 class BottomNavigationViewModel(
+    koinComponent: KoinComponent,
     private val sduiHandler: BottomNavigationSduiHandler,
     bottomNavigationComponent: BottomNavigationComponent<BottomNavigationViewModel>,
     override val bottomNavigationStatePresenter: BottomNavigationStatePresenterDefault,
-) : BottomNavigationComponentViewModel(bottomNavigationComponent) {
+) : BottomNavigationComponentViewModel(bottomNavigationComponent), KoinComponent by koinComponent {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 

@@ -2,10 +2,12 @@ package com.macaosoftware.sdui.app.marketplace.navigator.topbar
 
 import com.macaosoftware.component.viewmodel.ComponentViewModel
 import com.macaosoftware.component.viewmodel.StateComponent
+import org.koin.core.component.KoinComponent
 
 class CustomTopAppBarViewModel(
+    koinComponent: KoinComponent,
     private val topAppBarComponent: StateComponent<CustomTopAppBarViewModel>
-) : ComponentViewModel() {
+) : ComponentViewModel(), KoinComponent by koinComponent {
     override fun onAttach() {
         println("Custom Top App Bar onAttach: ${topAppBarComponent.id}")
     }

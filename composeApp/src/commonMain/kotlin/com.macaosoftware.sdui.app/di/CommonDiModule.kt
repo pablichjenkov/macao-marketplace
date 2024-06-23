@@ -2,6 +2,8 @@ package com.macaosoftware.sdui.app.di
 
 import com.macaosoftware.sdui.app.data.SduiRemoteService
 import com.macaosoftware.sdui.app.di.http.createDefaultHttpClient
+import com.macaosoftware.sdui.app.domain.SduiComponentFactory
+import com.macaosoftware.sdui.app.marketplace.navigator.bottomnavigation.BottomNavigationSduiHandler
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
 import com.pablichj.incubator.amadeus.common.ITimeProvider
 import io.ktor.client.HttpClient
@@ -16,4 +18,9 @@ internal val commonKoinModule = module {
         createDefaultHttpClient()
     }
     singleOf(::SduiRemoteService)
+
+    single<SduiComponentFactory> {
+        SduiComponentFactory(getKoin())
+    }
+
 }
