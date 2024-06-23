@@ -75,7 +75,7 @@ import org.koin.core.Koin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-class SduiComponentFactory(
+class ViewModelFactory(
     private val koin: Koin
 ) : MacaoComponentFactory, KoinComponent {
 
@@ -233,7 +233,7 @@ class SduiComponentFactory(
             SduiConstants.ComponentType.Panel -> {
                 PanelComponent(
                     viewModelFactory = PanelViewModelFactory(
-                        koinComponent = this@SduiComponentFactory,
+                        koinComponent = this@ViewModelFactory,
                         sduiHandler = PanelSduiHandler(componentJson, this),
                         panelStatePresenter = PanelComponentDefaults.createPanelStatePresenter(
                             dispatcher = Dispatchers.Main
@@ -247,10 +247,10 @@ class SduiComponentFactory(
 
                 DrawerComponent(
                     viewModelFactory = DrawerViewModelFactory(
-                        koinComponent = this@SduiComponentFactory,
+                        koinComponent = this@ViewModelFactory,
                         sduiHandler = DrawerSduiHandler(
                             componentJson,
-                            this@SduiComponentFactory
+                            this@ViewModelFactory
                         ),
                         drawerStatePresenter = DrawerComponentDefaults.createDrawerStatePresenter(
                             dispatcher = Dispatchers.Main
@@ -264,10 +264,10 @@ class SduiComponentFactory(
 
                 BottomNavigationComponent(
                     viewModelFactory = BottomNavigationViewModelFactory(
-                        koinComponent = this@SduiComponentFactory,
+                        koinComponent = this@ViewModelFactory,
                         sduiHandler = BottomNavigationSduiHandler(
                             jsonObject = componentJson,
-                            sduiComponentFactory = this@SduiComponentFactory
+                            viewModelFactory = this@ViewModelFactory
                         ),
                         bottomNavigationStatePresenter = BottomNavigationComponentDefaults.createBottomNavigationStatePresenter(
                             dispatcher = Dispatchers.Main
@@ -301,7 +301,7 @@ class SduiComponentFactory(
             SduiConstants.ComponentType.SimpleTopAppBar -> {
                 StateComponent<CustomTopAppBarViewModel>(
                     viewModelFactory = CustomTopAppBarFactory(
-                        koinComponent = this@SduiComponentFactory
+                        koinComponent = this@ViewModelFactory
                     ),
                     content = CustomTopAppBar
                 )
@@ -324,7 +324,7 @@ class SduiComponentFactory(
             SduiConstants.ComponentType.PanelSetting -> {
                 StateComponent<PanelSettingViewModel>(
                     viewModelFactory = PanelSettingViewModelFactory(
-                        koinComponent = this@SduiComponentFactory
+                        koinComponent = this@ViewModelFactory
                     ),
                     content = PanelSettingComponentView
                 )

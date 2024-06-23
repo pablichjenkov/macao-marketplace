@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.component.core.deeplink.DeepLinkResult
-import com.macaosoftware.sdui.app.domain.SduiComponentFactory
+import com.macaosoftware.sdui.app.domain.ViewModelFactory
 
 class AppCoordinatorComponent(
-    sduiComponentFactory: SduiComponentFactory
+    viewModelFactory: ViewModelFactory
 ) : Component() {
 
     //private var activeComponent: Component =
