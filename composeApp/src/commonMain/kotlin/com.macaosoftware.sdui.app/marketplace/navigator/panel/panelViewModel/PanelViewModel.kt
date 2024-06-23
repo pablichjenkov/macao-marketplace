@@ -8,12 +8,14 @@ import com.macaosoftware.sdui.app.marketplace.navigator.panel.PanelSduiHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
 
 class PanelViewModel(
+    koinComponent: KoinComponent,
     private val sduiHandler: PanelSduiHandler,
     panelComponent: PanelComponent<PanelViewModel>,
     override val panelStatePresenter: PanelStatePresenterDefault,
-) : PanelComponentViewModel(panelComponent) {
+) : PanelComponentViewModel(panelComponent), KoinComponent by koinComponent {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
