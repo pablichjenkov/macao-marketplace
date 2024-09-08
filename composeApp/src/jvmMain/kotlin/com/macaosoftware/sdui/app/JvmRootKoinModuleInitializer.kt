@@ -2,7 +2,6 @@ package com.macaosoftware.sdui.app
 
 import com.macaosoftware.app.RootKoinModuleInitializer
 import com.macaosoftware.plugin.account.AccountPlugin
-import com.macaosoftware.plugin.account.SupabaseAccountPlugin
 import com.macaosoftware.sdui.app.di.commonKoinModule
 import com.pablichj.incubator.amadeus.Database
 import com.pablichj.incubator.amadeus.common.DefaultTimeProvider
@@ -20,7 +19,7 @@ class JvmRootKoinModuleInitializer : RootKoinModuleInitializer {
 
         val JvmKoinModule = module {
             single<Database> { database }
-            single<AccountPlugin> { SupabaseAccountPlugin() }
+            // single<AccountPlugin> { SupabaseAccountPlugin() }
         }
 
         return listOf(JvmKoinModule, commonKoinModule)
