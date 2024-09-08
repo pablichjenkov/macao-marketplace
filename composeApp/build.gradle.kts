@@ -11,7 +11,8 @@ plugins {
 }
 
 version = "1.0.0"
-val flavorProvider = extra["flavorProvider"] as String
+val themeFlavorProvider = extra["ThemeFlavorProvider"] as String
+val authPluginFlavorProvider = extra["AuthPluginFlavorProvider"] as String
 
 kotlin {
 
@@ -88,7 +89,7 @@ kotlin {
             implementation(libs.amadeus.api)
 
             // Decide which flavor to use based on a build environment variable
-            when (flavorProvider) {
+            when (themeFlavorProvider) {
                 "A" -> {
                     implementation(project(":flavor-theme-a"))
                 }
@@ -108,12 +109,12 @@ kotlin {
         }
         iosMain.dependencies {
             // Macao Swift Plugins
-            when (flavorProvider) {
-                "A" -> {
+            when (authPluginFlavorProvider) {
+                "Firebase" -> {
                     api(project(":auth-firebase"))
                 }
 
-                "B" -> {
+                "Supabase" -> {
                     implementation(project(":auth-supabase"))
                 }
 
@@ -136,12 +137,12 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
 
             // Macao Swift Plugins
-            when (flavorProvider) {
-                "A" -> {
+            when (authPluginFlavorProvider) {
+                "Firebase" -> {
                     api(project(":auth-firebase"))
                 }
 
-                "B" -> {
+                "Supabase" -> {
                     implementation(project(":auth-supabase"))
                 }
 
@@ -159,13 +160,13 @@ kotlin {
             implementation(libs.ktor.client.java)
 
             // Macao Swift Plugins
-            when (flavorProvider) {
-                "A" -> {
+            when (authPluginFlavorProvider) {
+                "Firebase" -> {
                     // There is no support for Firebase in Desktop so we ignire it
                     // api(project(":auth-firebase"))
                 }
 
-                "B" -> {
+                "Supabase" -> {
                     implementation(project(":auth-supabase"))
                 }
 
