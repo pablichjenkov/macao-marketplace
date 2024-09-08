@@ -9,11 +9,11 @@ struct MacaoDemoApp: App {
     let accountPlugin: AccountPlugin
     let iosBridge: IosBridge
     
-    let iob = IosBridge(
-        accountPlugin: FirebaseAccountPlugin(
-            firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
-        )
-    )
+//    let iob = IosBridge(
+//        accountPlugin: FirebaseAccountPlugin(
+//            firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
+//        )
+//    )
     
     // register app delegate for Firebase setup
     // @UIApplicationDelegateAdaptor(MacaoDemoAppDelegate.self) var delegate
@@ -25,7 +25,9 @@ struct MacaoDemoApp: App {
         accountPlugin = FirebaseAccountPlugin(
             firebaseAuthKmpWrapper: FirebaseAuthKmpWrapperImpl()
         )
-        iosBridge = BindingsKt.createPlatformBridge(accountPlugin: accountPlugin)
+        //iosBridge = BindingsKt.createPlatformBridge(accountPlugin: accountPlugin)
+        iosBridge = BindingsKt.createPlatformBridge2(accountPluginWrapperBase: FirebaseAuthKmpWrapperImpl()
+        )
     }
     
     var body: some Scene {
@@ -34,7 +36,6 @@ struct MacaoDemoApp: App {
                 Color.white.ignoresSafeArea(.all) // status bar color
                 ContentView(iosBridge: iosBridge)
             }.preferredColorScheme(.light)
-            
         }
     }
 }
