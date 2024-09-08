@@ -6,7 +6,7 @@ package com.macaosoftware.plugin.account
  * https://github.com/pablichjenkov/firebase-kmp/blob/main/FirebaseAuthKmp/Sources/FirebaseAuthKmpWrapperImpl.swift
  * */
 @ObjCName(name = "MacaoFirebaseAuthKmpWrapper", exact = true)
-interface FirebaseAuthKmpWrapper {
+interface FirebaseAuthKmpWrapper : AccountPluginWrapperBase {
 
     fun createUserWithEmailAndPassword(
         email: String,

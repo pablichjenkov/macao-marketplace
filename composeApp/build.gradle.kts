@@ -108,8 +108,19 @@ kotlin {
         }
         iosMain.dependencies {
             // Macao Swift Plugins
-            implementation(project(":auth-supabase"))
-            api(project(":auth-firebase"))
+            when (flavorProvider) {
+                "A" -> {
+                    api(project(":auth-firebase"))
+                }
+
+                "B" -> {
+                    implementation(project(":auth-supabase"))
+                }
+
+                else -> { // Default if not provided
+                    implementation(project(":auth-supabase"))
+                }
+            }
 
             // Ktor
             implementation(libs.ktor.client.darwin)
@@ -125,8 +136,19 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
 
             // Macao Swift Plugins
-            implementation(project(":auth-supabase"))
-            api(project(":auth-firebase"))
+            when (flavorProvider) {
+                "A" -> {
+                    api(project(":auth-firebase"))
+                }
+
+                "B" -> {
+                    implementation(project(":auth-supabase"))
+                }
+
+                else -> { // Default if not provided
+                    implementation(project(":auth-supabase"))
+                }
+            }
         }
         jvmMain.dependencies {
             implementation(compose.desktop.common)
@@ -136,8 +158,21 @@ kotlin {
             // Ktor
             implementation(libs.ktor.client.java)
 
-            // Supabase
-            implementation(project(":auth-supabase"))
+            // Macao Swift Plugins
+            when (flavorProvider) {
+                "A" -> {
+                    // There is no support for Firebase in Desktop so we ignire it
+                    // api(project(":auth-firebase"))
+                }
+
+                "B" -> {
+                    implementation(project(":auth-supabase"))
+                }
+
+                else -> { // Default if not provided
+                    implementation(project(":auth-supabase"))
+                }
+            }
         }
         jsMain.dependencies {
             implementation(libs.kotlinx.coroutines.core.js)
