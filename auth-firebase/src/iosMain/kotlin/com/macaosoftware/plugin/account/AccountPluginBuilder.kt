@@ -1,8 +1,8 @@
 package com.macaosoftware.plugin.account
 
 fun createAccountPlugin(
-    accountPluginWrapperBase: AccountPluginWrapperBase
+    accountPluginSwiftWrapperBase: AccountPluginSwiftWrapperBase
 ): AccountPlugin {
-    val firebaseAuthKmpWrapper  = accountPluginWrapperBase as FirebaseAuthKmpWrapper
+    val firebaseAuthKmpWrapper  = accountPluginSwiftWrapperBase as FirebaseAuthKmpSwiftWrapper
     return FirebaseAccountPlugin(firebaseAuthKmpWrapper)
 }

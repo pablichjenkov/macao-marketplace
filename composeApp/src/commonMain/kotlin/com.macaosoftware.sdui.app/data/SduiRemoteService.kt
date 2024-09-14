@@ -1,6 +1,5 @@
 package com.macaosoftware.sdui.app.data
 
-import com.macaosoftware.sdui.app.domain.MacaoApiError
 import com.macaosoftware.sdui.data.SduiConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -59,7 +58,7 @@ internal class SduiRemoteService(
             val jsonObject = Json.decodeFromString<JsonObject>(bodyAsText)
             jsonObject
         } else {
-            val macaoError = resp.body<MacaoApiError>()
+            val macaoError = resp.body<GetRemoteRootComponentError>()
             println("macaoError = $macaoError")
             null
         }

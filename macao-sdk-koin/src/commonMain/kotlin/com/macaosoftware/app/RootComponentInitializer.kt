@@ -8,5 +8,7 @@ import kotlin.native.ObjCName
 @ObjCName("RootComponentProvider")
 interface RootComponentInitializer {
     fun shouldShowLoader(): Boolean
-    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Component>
+    suspend fun initialize(koinComponent: KoinComponent): MacaoResult<Component, RootComponentInitializerError>
 }
+
+open class RootComponentInitializerError

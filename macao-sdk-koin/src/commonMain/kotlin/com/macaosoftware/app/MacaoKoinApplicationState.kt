@@ -67,10 +67,10 @@ class MacaoKoinApplicationState(
         }
 
         when(result) {
-            is MacaoResult.Error -> {
+            is MacaoResult.Error<RootComponentInitializerError> -> {
                 stage.value = InitializationError(result.error.toString())
             }
-            is MacaoResult.Success -> {
+            is MacaoResult.Success<Component> -> {
                 stage.value = InitializationSuccess(result.value)
             }
         }

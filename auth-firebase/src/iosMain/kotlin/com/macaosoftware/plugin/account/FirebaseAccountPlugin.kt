@@ -10,7 +10,7 @@ import kotlin.coroutines.suspendCoroutine
  * https://github.com/pablichjenkov/firebase-kmp/blob/main/FirebaseAuthKmp/Sources/FirebaseAuthKmpWrapperImpl.swift
  * */
 class FirebaseAccountPlugin(
-    private val firebaseAuthKmpWrapper: FirebaseAuthKmpWrapper
+    private val firebaseAuthKmpWrapper: FirebaseAuthKmpSwiftWrapper
 ) : AccountPlugin {
 
     private val TAG = "FirebaseAuthPlugin"
@@ -19,7 +19,7 @@ class FirebaseAccountPlugin(
         return true
     }
 
-    override suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser> {
+    override suspend fun createUserWithEmailAndPassword(signUpRequest: SignUpRequest): MacaoResult<MacaoUser, SignupError> {
 
         return suspendCoroutine { continuation ->
             firebaseAuthKmpWrapper.createUserWithEmailAndPassword(
@@ -29,13 +29,13 @@ class FirebaseAccountPlugin(
                     continuation.resume(MacaoResult.Success(it))
                 },
                 onError = {
-                    continuation.resume(MacaoResult.Error(LoginError(errorDescription = it)))
+                    continuation.resume(MacaoResult.Error(SignupError(errorDescription = it)))
                 }
             )
         }
     }
 
-    override suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser> {
+    override suspend fun signInWithEmailAndPassword(signInRequest: SignInRequest): MacaoResult<MacaoUser, LoginError> {
 
         return suspendCoroutine { continuation ->
             firebaseAuthKmpWrapper.signInWithEmailAndPassword(
@@ -51,7 +51,7 @@ class FirebaseAccountPlugin(
         }
     }
 
-    override suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser> {
+    override suspend fun signInWithEmailLink(signInRequest: SignInRequestForEmailLink): MacaoResult<MacaoUser, LoginError> {
 
         return suspendCoroutine { continuation ->
             firebaseAuthKmpWrapper.signInWithEmailLink(
@@ -67,17 +67,17 @@ class FirebaseAccountPlugin(
         }
     }
 
-    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit> {
+    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit, AccountPluginError> {
         println("IosFirebase_sendSignInLinkToEmail")
         return MacaoResult.Success(Unit)
     }
 
-    override suspend fun getCurrentUser(): MacaoResult<MacaoUser> {
+    override suspend fun getCurrentUser(): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_getCurrentUser")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun getProviderData(): MacaoResult<ProviderData> {
+    override suspend fun getProviderData(): MacaoResult<ProviderData, SignupError> {
         println("IosFirebase_getProviderData")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
@@ -85,7 +85,7 @@ class FirebaseAccountPlugin(
     override suspend fun updateProfile(
         displayName: String,
         photoUrl: String
-    ): MacaoResult<MacaoUser> {
+    ): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_updateProfile")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
@@ -98,47 +98,47 @@ class FirebaseAccountPlugin(
         facebookLink: String?,
         linkedIn: String?,
         github: String?
-    ): MacaoResult<UserData> {
+    ): MacaoResult<UserData, SignupError> {
         println("IosFirebase_updateFullProfile")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
+    override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_updateEmail")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser> {
+    override suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_updatePassword")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun sendEmailVerification(): MacaoResult<MacaoUser> {
+    override suspend fun sendEmailVerification(): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_sendEmailVerification")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun sendPasswordReset(): MacaoResult<MacaoUser> {
+    override suspend fun sendPasswordReset(): MacaoResult<MacaoUser, SignupError> {
         println("IosFirebase_sendPasswordReset")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun deleteUser(): MacaoResult<Unit> {
+    override suspend fun deleteUser(): MacaoResult<Unit, SignupError> {
         println("IosFirebase_deleteUser")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun fetchUserData(): MacaoResult<UserData> {
+    override suspend fun fetchUserData(): MacaoResult<UserData, SignupError> {
         println("IosFirebase_fetchUserData")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData, SignupError> {
         println("IosFirebase_checkAndFetchUserData")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }
 
-    override suspend fun signOut(): MacaoResult<Unit> {
+    override suspend fun signOut(): MacaoResult<Unit, SignupError> {
         println("IosFirebase_logoutUser")
         return MacaoResult.Error(SignupError(errorDescription = ""))
     }

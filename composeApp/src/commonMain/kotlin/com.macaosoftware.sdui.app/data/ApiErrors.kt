@@ -1,11 +1,10 @@
-package com.macaosoftware.sdui.app.domain
+package com.macaosoftware.sdui.app.data
 
-import com.macaosoftware.util.MacaoError
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MacaoApiError(
+data class GetRemoteRootComponentError(
     val instanceId: Long = -1L,
     val errorCode: Int,
     val errorDescription: String
-) : MacaoError
+)
