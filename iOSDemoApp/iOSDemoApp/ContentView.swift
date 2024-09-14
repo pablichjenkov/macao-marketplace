@@ -4,12 +4,12 @@ import ComposeApp
 
 struct ComposeView : UIViewControllerRepresentable {
     
-    var iosBridge: IosBridge
+    var swiftWrappersFactory: SwiftWrappersFactory
     
     func makeUIViewController(context: Context) -> UIViewController {
         
         let mainViewController = BindingsKt.buildDemoMacaoApplication(
-            iosBridge: iosBridge
+            swiftWrappersFactory: swiftWrappersFactory
         )
         
         return mainViewController
@@ -20,10 +20,10 @@ struct ComposeView : UIViewControllerRepresentable {
 
 struct ContentView: View {
     
-    var iosBridge: IosBridge
+    var swiftWrappersFactory: SwiftWrappersFactory
     
     var body: some View {
-        ComposeView(iosBridge: iosBridge)
+        ComposeView(swiftWrappersFactory: swiftWrappersFactory)
         //.ignoresSafeArea(.keyboard) // Compose has own keyboard handler
         .ignoresSafeArea(.all, edges: .all) // If prefered to handle this in compose land
         
@@ -34,10 +34,9 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let accountPlugin = MacaoAccountPluginEmpty()
+        let swiftWrappersFactory = SwiftWrappersFactory()
         
-        let iosBridge = BindingsKt.createPlatformBridge(accountPlugin: accountPlugin)
         
-        ContentView(iosBridge: iosBridge)
+        ContentView(swiftWrappersFactory: swiftWrappersFactory)
     }
 }

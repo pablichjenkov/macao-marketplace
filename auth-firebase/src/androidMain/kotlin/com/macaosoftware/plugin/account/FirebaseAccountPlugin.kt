@@ -24,7 +24,7 @@ class FirebaseAccountPlugin : AccountPlugin {
 
     override suspend fun createUserWithEmailAndPassword(
         signUpRequest: SignUpRequest
-    ): MacaoResult<MacaoUser> = try {
+    ): MacaoResult<MacaoUser, SignupError> = try {
 
         val taskResult = firebaseAuth
             .createUserWithEmailAndPassword(signUpRequest.email, signUpRequest.password)
@@ -49,7 +49,7 @@ class FirebaseAccountPlugin : AccountPlugin {
 
     override suspend fun signInWithEmailAndPassword(
         signInRequest: SignInRequest
-    ): MacaoResult<MacaoUser> {
+    ): MacaoResult<MacaoUser, LoginError> {
 
         if (!isValidEmail(signInRequest.email) || !isValidPassword(signInRequest.password)) {
             return MacaoResult.Error(
@@ -75,7 +75,7 @@ class FirebaseAccountPlugin : AccountPlugin {
 
     override suspend fun signInWithEmailLink(
         signInRequest: SignInRequestForEmailLink
-    ): MacaoResult<MacaoUser> = try {
+    ): MacaoResult<MacaoUser, AccountPluginError> = try {
 
         val taskResult = firebaseAuth
             .signInWithEmailLink(signInRequest.email, signInRequest.magicLink)
@@ -91,7 +91,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         MacaoResult.Error(LoginError(errorDescription = ex.message.orEmpty()))
     }
 
-    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit> {
+    override suspend fun sendSignInLinkToEmail(emailLinkData: EmailLinkData): MacaoResult<Unit, AccountPluginError> {
 
         val actionCodeSettings = actionCodeSettings {
             // URL you want to redirect back to. The domain (www.example.com) for this
@@ -119,7 +119,7 @@ class FirebaseAccountPlugin : AccountPlugin {
 
     }
 
-    override suspend fun getCurrentUser(): MacaoResult<MacaoUser> {
+    override suspend fun getCurrentUser(): MacaoResult<MacaoUser, AccountPluginError> {
 
         return try {
             val user = firebaseAuth.currentUser
@@ -133,7 +133,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun getProviderData(): MacaoResult<ProviderData> {
+    override suspend fun getProviderData(): MacaoResult<ProviderData, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             val providerData = user?.providerData?.firstOrNull()
@@ -153,7 +153,7 @@ class FirebaseAccountPlugin : AccountPlugin {
     override suspend fun updateProfile(
         displayName: String,
         photoUrl: String
-    ): MacaoResult<MacaoUser> {
+    ): MacaoResult<MacaoUser, AccountPluginError> {
 
         return try {
             val user = firebaseAuth.currentUser
@@ -183,7 +183,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         facebookLink: String?,
         linkedIn: String?,
         github: String?
-    ): MacaoResult<UserData> {
+    ): MacaoResult<UserData, AccountPluginError> {
 
         try {
             val userData = UserData(
@@ -216,7 +216,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser> {
+    override suspend fun updateEmail(newEmail: String): MacaoResult<MacaoUser, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -232,7 +232,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser> {
+    override suspend fun updatePassword(newPassword: String): MacaoResult<MacaoUser, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -248,7 +248,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun sendEmailVerification(): MacaoResult<MacaoUser> {
+    override suspend fun sendEmailVerification(): MacaoResult<MacaoUser, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -264,7 +264,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun sendPasswordReset(): MacaoResult<MacaoUser> {
+    override suspend fun sendPasswordReset(): MacaoResult<MacaoUser, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -280,7 +280,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun deleteUser(): MacaoResult<Unit> {
+    override suspend fun deleteUser(): MacaoResult<Unit, AccountPluginError> {
         return try {
             val user = firebaseAuth.currentUser
             user?.let {
@@ -296,7 +296,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun fetchUserData(): MacaoResult<UserData> {
+    override suspend fun fetchUserData(): MacaoResult<UserData, AccountPluginError> {
 
         return try {
             val usersReference = firebaseDatastore.reference.child("Users")
@@ -320,7 +320,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun checkAndFetchUserData(): MacaoResult<UserData> {
+    override suspend fun checkAndFetchUserData(): MacaoResult<UserData, AccountPluginError> {
         // Check if user is signed in (non-null)
         val currentUser = firebaseAuth.currentUser
         return if (currentUser != null) {
@@ -337,7 +337,7 @@ class FirebaseAccountPlugin : AccountPlugin {
         }
     }
 
-    override suspend fun signOut(): MacaoResult<Unit> = try {
+    override suspend fun signOut(): MacaoResult<Unit, AccountPluginError> = try {
         firebaseAuth.signOut()
         MacaoResult.Success(Unit)
     } catch (e: Exception) {

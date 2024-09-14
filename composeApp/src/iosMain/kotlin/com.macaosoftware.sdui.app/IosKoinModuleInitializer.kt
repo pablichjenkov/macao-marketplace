@@ -10,7 +10,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 class IosKoinModuleInitializer(
-    private val iosBridge: IosBridge
+    private val swiftWrappersFactory: SwiftWrappersFactory
 ) : RootKoinModuleInitializer {
 
     override suspend fun initialize(): List<Module> {
@@ -19,7 +19,7 @@ class IosKoinModuleInitializer(
 
         val iOSKoinModule = module {
             single<Database> { database }
-            single<AccountPlugin> { iosBridge.accountPlugin }
+            single<AccountPlugin> { swiftWrappersFactory.provideAccountPlugin() }
         }
 
         return listOf(iOSKoinModule, commonKoinModule)

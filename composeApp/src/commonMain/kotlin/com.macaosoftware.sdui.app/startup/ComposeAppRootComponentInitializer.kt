@@ -1,9 +1,9 @@
 package com.macaosoftware.sdui.app.startup
 
 import com.macaosoftware.app.RootComponentInitializer
+import com.macaosoftware.app.RootComponentInitializerError
 import com.macaosoftware.component.core.Component
 import com.macaosoftware.sdui.app.data.SduiRemoteService
-import com.macaosoftware.sdui.app.domain.MacaoApiError
 import com.macaosoftware.sdui.app.domain.ViewModelFactory
 import com.macaosoftware.util.MacaoResult
 import org.koin.core.component.KoinComponent
@@ -17,7 +17,7 @@ class ComposeAppRootComponentInitializer : RootComponentInitializer {
 
     override suspend fun initialize(
         koinComponent: KoinComponent
-    ): MacaoResult<Component>  = try {
+    ): MacaoResult<Component, RootComponentInitializerError>  = try {
 
         val sduiRemoteService = koinComponent.get<SduiRemoteService>()
 
@@ -35,8 +35,6 @@ class ComposeAppRootComponentInitializer : RootComponentInitializer {
 
         MacaoResult.Success(rootComponent)
     } catch (th: Throwable) {
-        MacaoResult.Error(
-            MacaoApiError(errorCode = 1,  errorDescription = th.toString())
-        )
+        MacaoResult.Error(RootComponentInitializerError())
     }
 }

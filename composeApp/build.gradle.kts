@@ -139,7 +139,7 @@ kotlin {
             // Macao Swift Plugins
             when (authPluginFlavorProvider) {
                 "Firebase" -> {
-                    api(project(":auth-firebase"))
+                    implementation(project(":auth-firebase"))
                 }
 
                 "Supabase" -> {
@@ -162,8 +162,9 @@ kotlin {
             // Macao Swift Plugins
             when (authPluginFlavorProvider) {
                 "Firebase" -> {
-                    // There is no support for Firebase in Desktop so we ignire it
-                    // api(project(":auth-firebase"))
+                    // There is no support for Firebase in Desktop so we
+                    // will use the AccountPluginEmpty implementation provided by macao-sdk
+                    // implementation(project(":auth-firebase"))
                 }
 
                 "Supabase" -> {
@@ -183,6 +184,9 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.js)
+
+            // None of the AccountPlugin providers are available for the browser.
+            // So we will use the AccountPluginEmpty implementation from macao-sdk
         }
     }
 
