@@ -3,6 +3,12 @@ This repo is an experiment with server driven ui concepts. A remote server sends
 <BR/>
 The project also showcase an opinionated architecture to inject swift 3rd party library implementations 
 
+### Swfit Import
+Bellow is a diagram representing how "Swift Only" SDKs are consumed in the KMP side of Macao App. This pattern is combined with Koin DI framework to achieve maximum scalability.
+<BR/>
+Diagram uses Firebase SDK as example.
+
+<img width="600" alt="Swift Import" src="https://github.com/user-attachments/assets/5f899237-97ab-4bca-a386-684cbccc28a5"/>
 
 ### Modules
 1. **macao-sdk-koin**: The foundation to build an App that integrates koin and the Macao component-toolkit. It has already implemented an App startup flow including Koin module initializers and the basic scaffolding to inject pure swift implementations of Macao plugins.
