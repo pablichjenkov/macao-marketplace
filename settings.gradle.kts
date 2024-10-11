@@ -1,12 +1,19 @@
 rootProject.name = "macao-sdui-app"
-include(":flavor-theme-a")
-include(":flavor-theme-b")
+
 include(":macao-sdk-koin")
 include(":composeApp")
+
+// Theme Plugin implementations
+include(":flavor-theme-a")
+include(":flavor-theme-b")
 
 // Auth Plugin implementations
 include(":auth-firebase")
 include(":auth-supabase")
+
+// Logger Plugin implementations
+include(":logger-dev")
+include(":logger-prod")
 
 pluginManagement {
     repositories {

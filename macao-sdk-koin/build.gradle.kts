@@ -14,6 +14,7 @@ group = "io.github.pablichjenkov"
 version = libs.versions.macaoComponentToolkit.get()
 val mavenCentralUser = (findProperty("mavenCentral.user") as? String).orEmpty()
 val mavenCentralPass = (findProperty("mavenCentral.pass") as? String).orEmpty()
+val loggerPluginProvider = extra["LoggerPluginProvider"] as String
 
 // Configure Dokka
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask>().configureEach {
@@ -98,7 +99,7 @@ kotlin {
     androidTarget {
         publishLibraryVariants("release", "debug")
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -136,6 +137,17 @@ kotlin {
             // Koin
             // api("io.insert-koin:koin-core:3.5.3")
             api(libs.koin.core)
+
+            // Logger
+            when (loggerPluginProvider) {
+                "Development" -> {
+                    implementation(project(":logger-dev"))
+                }
+
+                "Production" -> {
+                    implementation(project(":logger-prod"))
+                }
+            }
         }
         commonTest.dependencies {
             // implementation(libs.kotlin.test)

@@ -13,6 +13,7 @@ plugins {
 version = "1.0.0"
 val themeFlavorProvider = extra["ThemeFlavorProvider"] as String
 val authPluginFlavorProvider = extra["AuthPluginFlavorProvider"] as String
+val loggerPluginProvider = extra["LoggerPluginProvider"] as String
 
 kotlin {
 
@@ -100,6 +101,17 @@ kotlin {
 
                 else -> { // Default if not provided
                     implementation(project(":flavor-theme-a"))
+                }
+            }
+
+            // Decide which Logger to use based on a build environment variable
+            when (loggerPluginProvider) {
+                "Development" -> {
+                    implementation(project(":logger-dev"))
+                }
+
+                "Production" -> {
+                    implementation(project(":logger-prod"))
                 }
             }
         }
